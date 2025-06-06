@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('segment')->nullable(); // 'homme', 'femme', 'jeune fille', etc.
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('whatsapp')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

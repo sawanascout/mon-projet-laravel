@@ -1,71 +1,93 @@
 @extends('layouts.client')
 
 @section('content')
-<div class="container mx-auto px-4 py-8 max-w-xl">
-    <h1 class="text-2xl font-bold mb-6">Passer une commande</h1>
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">🛒 Finalisez votre commande</h1>
 
-    @if(isset($product))
-        <div class="mb-6 border p-4 rounded-lg bg-gray-50 shadow">
-            <h2 class="text-lg font-semibold mb-2">Produit sélectionné :</h2>
-            <div class="flex items-center space-x-4">
-                
-<img src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default.jpg') }}"
-     alt="{{ $product->name }}"
-     class="w-full h-48 object-cover rounded-t-lg">                <div>
-                    <p class="font-bold">{{ $product->name }}</p>
-                    <p class="text-indigo-600 font-semibold">{{ $product->price }} FCFA</p>
-                </div>
-            </div>
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded mb-6">
+            {{ session('error') }}
         </div>
     @endif
 
-    <form action="{{ route('commandes.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('commandes.store') }}" method="POST" class="space-y-6 bg-white shadow-lg p-6 rounded-lg border">
         @csrf
 
-        @if(isset($product))
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-        @endif
+        <!-- Infos client -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <label for="customer_name" class="block font-semibold text-gray-700 mb-1">👤 Nom complet</label>
+                <input type="text" name="customer_name" id="customer_name" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+            </div>
 
-        <div>
-            <label for="fullname" class="block font-medium">Nom complet</label>
-            <input type="text" name="fullname" id="fullname" class="w-full p-3 border rounded-lg" required>
+            <div>
+                <label for="city" class="block font-semibold text-gray-700 mb-1">🏙️ Ville</label>
+                <input type="text" name="city" id="city" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+
+                
+            </div>
+
+            <div>
+                <label for="phone_code" class="block font-semibold text-gray-700 mb-1">📞 Indicatif pays</label>
+                <select name="phone_code" id="phone_code" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="" disabled selected>Choisissez l'indicatif</option>
+                    <option value="+228">+228 (Togo)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="whatsapp_number" class="block font-semibold text-gray-700 mb-1">💬 Numéro WhatsApp</label>
+                <input type="text" name="whatsapp_number" id="whatsapp_number" placeholder="Ex: 90000000" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <small class="text-gray-500">Entrez le numéro sans indicatif.</small>
+            </div>
         </div>
 
-        <div>
-            <label for="country_code" class="block font-medium">Indicatif du pays</label>
-            <select name="country_code" id="country_code" class="w-full p-3 border rounded-lg" required>
-                <option value="+228">Togo (+228)</option>
-                <option value="+229">Bénin (+229)</option>
-                <option value="+225">Côte d'Ivoire (+225)</option>
-                <option value="+237">Cameroun (+237)</option>
-            </select>
+        <!-- Panier -->
+        <h2 class="text-2xl font-semibold text-gray-800 mt-10 mb-4 border-b pb-2">🧺 Contenu du panier</h2>
+
+        <ul class="space-y-6">
+            @foreach($cart as $key => $item)
+                <li class="bg-gray-50 border rounded-lg p-4 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-medium text-gray-800">{{ $item['name'] }}</h3>
+                        <span class="text-sm text-gray-600">x{{ $item['quantity'] }}</span>
+                    </div>
+
+                    <div class="flex justify-between text-sm text-gray-600 mb-3">
+                        <span>Prix unitaire :</span>
+                        <span>{{ number_format($item['price'], 2, ',', ' ') }} FCFA</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">🎨 Couleur</label>
+                            <input type="text" name="cart[{{ $key }}][color]" value="{{ $item['color'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">📏 Taille</label>
+                            <input type="text" name="cart[{{ $key }}][size]" value="{{ $item['size'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+
+        <!-- Total -->
+        <div class="text-right text-xl font-bold text-purple-700 mt-6">
+            Total : {{ number_format(collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']), 2, ',', ' ') }} FCFA
         </div>
 
-        <div>
-            <label for="phone" class="block font-medium">Numéro WhatsApp</label>
-            <input type="text" name="phone" id="phone" class="w-full p-3 border rounded-lg" required>
-        </div>
+        <!-- Boutons -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+            <a href="{{ route('produits.index') }}" class="text-purple-600 hover:text-purple-800 underline">
+                ← Continuer mes achats
+            </a>
 
-        <div>
-            <label for="city" class="block font-medium">Ville</label>
-            <input type="text" name="city" id="city" class="w-full p-3 border rounded-lg" required>
+            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-md transition duration-200">
+                ✅ Confirmer la commande
+            </button>
         </div>
-
-        <div>
-            <label for="address" class="block font-medium">Adresse de livraison</label>
-            <textarea name="address" id="address" class="w-full p-3 border rounded-lg" required></textarea>
-        </div>
-
-        <div class="bg-gray-100 p-4 rounded-lg">
-            <p class="text-sm text-gray-700">
-                <strong>Instructions de paiement :</strong><br>
-                Veuillez effectuer le paiement via Mixx by Yas en composant <strong>*145*5#</strong> ou en utilisant l'application mobile Mixx by Yas. <br>
-                Envoyez le montant total à ce numéro : <strong>+228 90 00 00 00</strong> (exemple).<br>
-                Après le paiement, veuillez télécharger et envoyer une capture d'écran de la transaction.
-            </p>
-        </div>
-
-        <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700">Confirmer la commande</button>
     </form>
 </div>
 @endsection

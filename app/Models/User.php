@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'segment','whatsapp',
     ];
 
     /**
@@ -57,4 +58,33 @@ class User extends Authenticatable
     {
         return $this->hasMany(CustomProduct::class);
     }
+    // User.php
+protected static function boot()
+{
+    parent::boot();
+
+    static::creating(function ($user) {
+        $user->referral_code = self::generateUniqueReferralCode();
+    });
+}
+
+public static function generateUniqueReferralCode()
+{
+    do {
+        $code = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6)); // ex: 6 chars hex
+    } while (self::where('referral_code', $code)->exists());
+
+    return $code;
+}
+public function filleuls()
+{
+    return $this->hasMany(User::class, 'parrain_id');
+}
+
+public function commandes()
+{
+    return $this->hasMany(Order::class);
+}
+
+
 }

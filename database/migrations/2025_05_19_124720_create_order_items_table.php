@@ -13,6 +13,8 @@ class CreateOrderItemsTable extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
+            $table->string('color')->nullable();
+        $table->string('size')->nullable();
             $table->decimal('unit_price', 10, 2);
             $table->timestamps();
         });

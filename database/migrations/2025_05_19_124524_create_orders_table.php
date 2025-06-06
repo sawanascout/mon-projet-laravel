@@ -10,11 +10,13 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            // Suppression du user_id pour commande indépendante
+            $table->string('order_number')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->string('customer_name');
             $table->string('whatsapp_number')->nullable();
             $table->string('city');
-            $table->text('address');
+            $table->text('commentaire')->nullable();
+            //$table->string('address')->nullable();
             $table->string('status')->default('pending'); // pending, processing, completed, cancelled
             $table->decimal('total', 10, 2)->default(0);
             $table->timestamps();

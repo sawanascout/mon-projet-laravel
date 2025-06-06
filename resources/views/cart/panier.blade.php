@@ -61,12 +61,18 @@
             Total : {{ number_format($total, 0, ',', ' ') }} FCFA
         </div>
 
-        <!-- Commander -->
         <div class="mt-6 text-right">
-            <a href="{{ route('commandes.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition">
-                Finaliser la commande
-            </a>
-        </div>
+    @auth
+        <a href="{{ route('commandes.create') }}" class="bg-[#ab3fd6] hover:bg-[#922ebc] text-white px-6 py-3 rounded-lg font-medium transition">
+            Finaliser la commande
+        </a>
+    @else
+        <a href="{{ route('login') }}" class="bg-[#ab3fd6] hover:bg-[#922ebc] text-white px-6 py-3 rounded-lg font-medium transition">
+            Se connecter pour commander
+        </a>
+    @endauth
+</div>
+
     @else
         <div class="text-center text-gray-600">
             Votre panier est vide.
@@ -74,7 +80,7 @@
     @endif
 
     <div class="mt-8">
-        <a href="{{ route('produits.index') }}" class="text-indigo-600 hover:underline">← Continuer les achats</a>
+        <a href="{{ route('produits.index') }}" class="text-[#ab3fd6] hover:underline">← Continuer les achats</a>
     </div>
 </div>
 @endsection

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     protected $fillable = [
-        'order_id', 'product_id', 'quantity', 'unit_price',
+        'order_id', 'product_id', 'quantity', 'unit_price','color','size',
     ];
 
     // Un élément de commande appartient à une commande

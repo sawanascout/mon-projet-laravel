@@ -57,7 +57,10 @@
                 class="w-full bg-green-600 text-white p-4 rounded-lg font-semibold hover:bg-green-700 transition">
                 Envoyer la demande
             </button>
-        </div>
+            
     </form>
+    <div class="mt-8">
+        <a href="{{ route('produits.index') }}" class="text-indigo-600 hover:underline">← Continuer les achats</a>
+    </div>
 </div>
 @endsection

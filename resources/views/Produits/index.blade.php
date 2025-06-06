@@ -3,82 +3,71 @@
 @section('content')
 <div class="container mx-auto px-4 py-10">
 
-    <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">🛒 Produits disponibles</h1>
-
-    <!-- Formulaire de recherche et de filtre -->
-    <form method="GET" action="{{ route('produits.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-        <input 
-            type="text" 
-            name="search" 
-            value="{{ request('search') }}" 
-            placeholder="🔍 Rechercher un produit..." 
-            class="p-3 border border-gray-300 rounded-lg w-full shadow-sm focus:ring-2 focus:ring-indigo-500"
-        >
-
-        <select name="category" class="p-3 border border-gray-300 rounded-lg w-full shadow-sm focus:ring-2 focus:ring-indigo-500">
-            <option value="">📁 Toutes les catégories</option>
-            <option value="habit femme" {{ request('category') == 'habit femme' ? 'selected' : '' }}>👗 Habit Femme</option>
-            <option value="chaussure homme" {{ request('category') == 'chaussure homme' ? 'selected' : '' }}>👞 Chaussure Homme</option>
-            <option value="électronique" {{ request('category') == 'électronique' ? 'selected' : '' }}>💻 Électronique</option>
-            <option value="accessoires" {{ request('category') == 'accessoires' ? 'selected' : '' }}>👜 Accessoires</option>
-        </select>
-
-        <button type="submit" class="bg-indigo-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-indigo-700 transition w-full">
-            🔎 Filtrer
-        </button>
-    </form>
-
     <!-- Grille des produits -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @forelse ($products as $product)
-            <div class="bg-white rounded-xl border shadow group hover:shadow-xl transition flex flex-col">
-                <a href="{{ route('produits.show', $product->id) }}">
-                    <img 
-                        src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default.jpg') }}" 
-                        alt="{{ $product->name }}" 
-                        class="w-full h-48 object-cover rounded-t-xl group-hover:scale-105 transition duration-300"
-                    >
-                </a>
+<div class="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @forelse ($products as $product)
+        <div class="group relative bg-white rounded-xl border shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 flex flex-col">
+            
+            <!-- Badge promo -->
+            @if ($product->old_price && $product->old_price > $product->price)
+                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full z-10">
+                    Promo
+                </div>
+            @endif
 
-                <div class="p-4 flex flex-col flex-grow">
-                    <h2 class="text-base font-semibold mb-1 text-gray-800">{{ $product->name }}</h2>
+            <a href="{{ route('produits.show', $product->id) }}">
+                <img 
+                    src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default.jpg') }}" 
+                    alt="{{ $product->name }}" 
+                    class="w-full h-48 object-cover rounded-t-xl group-hover:scale-105 transition duration-300"
+                >
+            </a>
 
-                    <!-- Notation étoilée -->
-                    <div class="flex items-center mb-2">
-                        @for ($i = 1; $i <= 5; $i++)
-                            @if ($i <= round($product->rating))
-                                <span class="text-yellow-400">★</span>
-                            @else
-                                <span class="text-gray-300">★</span>
-                            @endif
-                        @endfor
-                        <span class="text-xs text-gray-500 ml-2">{{ number_format($product->rating, 1) }}/5</span>
+            <div class="flex flex-col flex-grow p-4">
+                <h2 class="text-base font-semibold mb-1 text-gray-800">{{ $product->name }}</h2>
+
+                <!-- Notation étoilée -->
+                <div class="flex items-center mb-2">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <span class="{{ $i <= round($product->rating) ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
+                    @endfor
+                    <span class="text-xs text-gray-500 ml-2">{{ number_format($product->rating, 1) }}/5</span>
+                </div>
+
+                <!-- Description -->
+                <p class="text-sm text-gray-600 mb-4">{{ Str::limit($product->description, 60) }}</p>
+
+                <!-- Prix et bouton bien alignés en bas -->
+                <div class="mt-auto flex justify-between items-end">
+                    <div>
+                        @if ($product->old_price && $product->old_price > $product->price)
+                            <span class="text-sm text-gray-400 line-through">
+                                {{ number_format($product->old_price, 0, ',', ' ') }} FCFA
+                            </span><br>
+                        @endif
+                        <span class="text-[#ab3fd6] font-bold text-lg">
+                            {{ number_format($product->price, 0, ',', ' ') }} FCFA
+                        </span>
                     </div>
 
-
-
-
-
-                    <!-- Description -->
-                    <p class="text-sm text-gray-600 mb-4">{{ Str::limit($product->description, 60) }}</p>
-
-                    <!-- Prix et bouton -->
-                    <div class="flex justify-between items-center mt-auto">
-                        <span class="text-indigo-600 font-bold text-lg">{{ number_format($product->price, 0, ',', ' ') }} FCFA</span>
-
-                        <a href="{{ route('produits.show', $product->id) }}" class="bg-green-500 text-white text-sm px-3 py-1 rounded hover:bg-green-600 text-center">
-    🛒 
-</a>
-
-                    </div>
+                    <a href="{{ route('produits.show', $product->id) }}" 
+                       class="bg-[#ab3fd6] hover:bg-purple-700 text-white text-sm px-3 py-1 rounded flex items-center gap-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+                        </svg>
+                        Ajouter
+                    </a>
                 </div>
             </div>
-        @empty
-            <div class="col-span-full text-center text-gray-500">
-                Aucun produit trouvé.
-            </div>
-        @endforelse
-    </div>
+        </div>
+    @empty
+        <div class="col-span-full text-center text-gray-500">
+            Aucun produit trouvé.
+        </div>
+    @endforelse
+</div>
+
 
     <!-- Pagination -->
     <div class="mt-10 flex justify-center">
