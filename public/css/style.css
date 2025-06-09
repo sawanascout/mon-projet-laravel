@@ -1,0 +1,41 @@
+  /* Couleurs personnalisées */
+    body {
+        background-color: #f1f4f4; /* beige clair */
+        color: #2f4f4f; /* vert foncé/gris */
+    }
+    h1, h2 {
+        color: #2a6f42; /* vert tréillis */
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(42, 111, 66, 0.1);
+        background-color: #fffbea; /* beige très clair */
+    }
+    .card-footer {
+        background-color: #f4f5f5; /* vert très clair */
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+    }
+    .btn-primary {
+        background-color: #2a6f42; /* vert tréillis */
+        border-color: #2a6f42;
+    }
+    .btn-primary:hover, 
+    .btn-primary:focus {
+        background-color: #1f4b2a;
+        border-color: #1f4b2a;
+    }
+    .bg-light, .bg-white {
+        background-color: #fffbea !important; /* beige très clair */
+    }
+    .shadow-sm {
+        box-shadow: 0 2px 6px rgba(42, 111, 66, 0.15) !important;
+    }
+    ul.list-unstyled li strong {
+        color: #2a6f42;
+    }
+    /* Image avec ombre douce */
+    img.img-fluid {
+        box-shadow: 0 6px 15px rgba(42, 111, 66, 0.15);
+    }
