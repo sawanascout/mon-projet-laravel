@@ -176,6 +176,58 @@ body {
 <script async src="https://www.tiktok.com/embed.js"></script>
 
     <h1>Bienvenue sur GLOBALDROP !</h1>
+    <section class="mt-6 py-6 bg-white border-t border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-6">
+            Pourquoi <span class="text-[#ab3fd6]">choisir GlobalDrop</span> ?
+        </h2>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+            <!-- Item 1 -->
+            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Livraison rapide</h3>
+                    <p class="text-xs text-gray-600">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Prix compétitifs</h3>
+                    <p class="text-xs text-gray-600">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Paiement sécurisé</h3>
+                    <p class="text-xs text-gray-600">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
     <p>Découvrez nos derniers produits :</p>
 
     {{-- Section Produits --}}
@@ -205,8 +257,7 @@ body {
     </div>
 </div>
 
-
-    </div>
+</div>
 
     {{-- Section Présentation --}}
     <div class="mb-5 p-4 bg-light rounded shadow-sm">
