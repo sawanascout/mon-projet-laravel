@@ -3,18 +3,24 @@
 @section('content')
 <div class="container">
     {{-- En-tête avec titre et bouton paramètres --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Mon Profil</h1>
-        <div>
-            {{-- Bouton Paramètres --}}
-            <button class="btn btn-primary rounded-circle ms-2" 
-                    style="width: 40px; height: 40px; padding: 0;"
-                    data-bs-toggle="modal" data-bs-target="#parametresModal"
-                    title="Paramètres">
-                <i class="bi bi-gear-fill"></i>
-            </button>
-        </div>
-    </div>
+   <div class="d-flex align-items-center">
+    {{-- Bouton Paramètres --}}
+    <button class="btn btn-primary rounded-circle ms-2" 
+            style="width: 40px; height: 40px; padding: 0;"
+            data-bs-toggle="modal" data-bs-target="#parametresModal"
+            title="Paramètres">
+        <i class="bi bi-gear-fill"></i>
+    </button>
+
+    {{-- Bouton Déconnexion --}}
+    <form action="{{ route('auth.logout') }}" method="POST" class="ms-2">
+        @csrf
+        <button type="submit" class="btn btn-outline-danger" style="height: 40px;" title="Déconnexion">
+            <i class="bi bi-box-arrow-right"></i>
+        </button>
+    </form>
+</div>
+
 
     {{-- Modal Paramètres --}}
     <div class="modal fade" id="parametresModal" tabindex="-1" aria-hidden="true">

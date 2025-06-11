@@ -77,13 +77,13 @@ class ProduitsController extends Controller
         $request->validate([
             'nom' => 'required|string|max:255',
             'prix' => 'required|numeric',
-            'description' => 'required|string',
-            'ancien_prix' => 'required|string',
+            'description' => 'nullabe|string',
+            'ancien_prix' => 'nullable|string',
             'categories_id' => 'required|exists:categories,id',
             'photo' => 'nullable|image|max:2048',
             'disponible' => 'required|string',
-            'taille' => 'nullable|array',
-            'couleur' => 'nullable|array',
+            'taille' => 'required|array',
+            'couleur' => 'required|array',
         ]);
 
         if ($request->hasFile('photo')) {

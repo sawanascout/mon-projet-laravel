@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
 <div class="container mt-4">
     <h1 class="mb-4">Tableau de bord administrateur</h1>
     <div class="row mb-4">
@@ -80,6 +77,9 @@
         <a class="dropdown-item btn btn-purple text-white" href="{{ route('admin.clients.segment.role') }}">
           Utilisateurs par segment et rôle
         </a>
+        <a class="dropdown-item btn btn-purple text-white" href="{{ route('admin.historique.index') }}">
+          Historique des commandes passées
+        </a>
       </li>
       <li><hr class="dropdown-divider"></li>
     </ul>
@@ -95,12 +95,18 @@
      <button type="button" class="btn btn-mauve text-white" data-bs-toggle="modal" data-bs-target="#createAdminModal">
         Creer Nouveau Administrateur
     </button>
+    
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHistoriqueModal">
+    Ajouter une commande à l'historique
+</button>
+
 </div>
 @include('admin.modals.produit-create')
 @include('admin.modals.categories-create')
 @include('admin.modals.admin-create')
 @include('admin.modals.commandes-par-date')
 @include('admin.modals.commandes-segment-par-date')
+@include('admin.modals.historiques-create')
 
 
 

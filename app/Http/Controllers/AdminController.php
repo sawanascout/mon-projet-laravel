@@ -65,7 +65,7 @@ class AdminController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'segment' => 'required|string',
                 'password' => 'required|string|min:8|confirmed',
-                'telephone' => 'required|number|unique:users,telephone',
+                'telephone' => 'required|string|unique:users,telephone',
             ]);
             User::create([
                 'name' => $request->name,
@@ -78,7 +78,7 @@ class AdminController extends Controller
             ]);
           
 
-            return redirect()->route('admin.admins.create')->with('success', 'Admin créé avec succès.');
+            return redirect()->route('admin.dashboard')->with('success', 'Admin créé avec succès.');
         }
 
         public function commandesParSegment(Request $request)

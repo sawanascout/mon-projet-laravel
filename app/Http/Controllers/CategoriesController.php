@@ -21,7 +21,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories-create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class CategoriesController extends Controller
 
         Categories::create($request->all());
 
-        return redirect()->route('admin.categories-index')
+        return redirect()->route('admin.categories.index')
                          ->with('success', 'Catégorie créée avec succès.');
     }
 
@@ -53,7 +53,7 @@ class CategoriesController extends Controller
      */
     public function edit(Categories $category)
     {
-        return view('admin.categories-edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -67,7 +67,7 @@ public function update(Request $request, Categories $category)
 
     $category->update($validated);
 
-    return redirect()->route('admin.categories-index')
+    return redirect()->route('admin.categories.index')
                      ->with('success', 'Catégorie mise à jour avec succès.');
 }
 
@@ -79,7 +79,7 @@ public function update(Request $request, Categories $category)
     {
         $category->delete();
 
-        return redirect()->route('admin.categories-index')
+        return redirect()->route('admin.categories.index')
                          ->with('success', 'Catégorie supprimée avec succès.');
     }
 }

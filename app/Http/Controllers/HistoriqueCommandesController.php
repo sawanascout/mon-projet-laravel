@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HistoriqueCommandes;
+use App\Models\HistoriqueCommande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +15,7 @@ class HistoriqueCommandesController extends Controller
      */
      public function index()
     {
-        $commandes = HistoriqueCommandes::where('user_id', Auth::id())
+        $commandes = HistoriqueCommande::where('user_id', Auth::id())
                         ->orderBy('created_at', 'desc')
                         ->get();
 
@@ -32,7 +32,7 @@ class HistoriqueCommandesController extends Controller
             'prix' => 'required|numeric',
         ]);
 
-        HistoriqueCommandes::create([
+        HistoriqueCommande::create([
             'user_id' => Auth::id(),
             'Numcommande' => $request->Numcommande,
             'NbrCategories' => $request->NbrCategories,
@@ -46,10 +46,10 @@ class HistoriqueCommandesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\HistoriqueCommandes  $historiqueCommandes
+     * @param  \App\Models\HistoriqueCommande  $historiqueCommandes
      * @return \Illuminate\Http\Response
      */
-    public function show(HistoriqueCommandes $historiqueCommandes)
+    public function show(HistoriqueCommande $historiqueCommandes)
     {
         //
     }
@@ -57,10 +57,10 @@ class HistoriqueCommandesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\HistoriqueCommandes  $historiqueCommandes
+     * @param  \App\Models\HistoriqueCommande  $historiqueCommandes
      * @return \Illuminate\Http\Response
      */
-    public function edit(HistoriqueCommandes $historiqueCommandes)
+    public function edit(HistoriqueCommande $historiqueCommandes)
     {
         //
     }
@@ -69,10 +69,10 @@ class HistoriqueCommandesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\HistoriqueCommandes  $historiqueCommandes
+     * @param  \App\Models\HistoriqueCommande  $historiqueCommandes
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HistoriqueCommandes $historiqueCommandes)
+    public function update(Request $request, HistoriqueCommande $historiqueCommandes)
     {
         //
     }
@@ -80,10 +80,10 @@ class HistoriqueCommandesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\HistoriqueCommandes  $historiqueCommandes
+     * @param  \App\Models\HistoriqueCommande  $historiqueCommandes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HistoriqueCommandes $historiqueCommandes)
+    public function destroy(HistoriqueCommande $historiqueCommandes)
     {
         //
     }

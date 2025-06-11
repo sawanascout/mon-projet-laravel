@@ -10,6 +10,7 @@
         <thead>
             <tr>
                 <th>Numéro</th>
+                <th>Nom de l'administrateur</th>
                 <th>Produits</th>
                 <th>Catégories</th>
                 <th>Prix total</th>
@@ -20,9 +21,10 @@
         @foreach($commandes as $commande)
             <tr>
                 <td>{{ $commande->Numcommande }}</td>
+                <td>{{ $commande->user->name ?? 'Admin inconnu' }}</td>
                 <td>{{ $commande->NbrProduits }}</td>
                 <td>{{ $commande->NbrCategories }}</td>
-                <td>{{ number_format($commande->prix, 2) }} €</td>
+                <td>{{ number_format($commande->prix, 2) }} CFA</td>
                 <td>{{ $commande->created_at->format('d/m/Y') }}</td>
             </tr>
         @endforeach

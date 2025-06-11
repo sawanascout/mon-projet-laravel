@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     AvisController,
     CategoriesController,
     ElementsPaniersController,
+    HistoriqueCommandesController,
     ParrainageController
 };
 
@@ -39,6 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('produits-admin', [ProduitsController::class, 'indexadmin'])->name('admin.produits');
 
     Route::resource('categories', CategoriesController::class)->names('admin.categories');
+    Route::resource('historiqueCommandes', HistoriqueCommandesController::class)->names('admin.historique');
     Route::resource('produits', ProduitsController::class)->names('admin.produits');
     Route::resource('commandes', CommandesController::class)->only(['index','update'])->names('admin.commandes');
     Route::resource('produits.avis', AvisController::class)->only(['index'])->names('admin.avis');
