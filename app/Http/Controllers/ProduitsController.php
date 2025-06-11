@@ -28,38 +28,39 @@ class ProduitsController extends Controller
         return view('admin.produits-create', compact('categories'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-              'nom' => 'required|string|max:255',
-            'prix' => 'required|numeric',
-            'description' => 'required|string',
-            'ancien_prix' => 'required|string',
-            'categories_id' => 'required|exists:categories,id',
-            'photo' => 'nullable|image|max:2048',
-            'disponible' => 'required|string',
-            'taille' => 'nullable|array',
-            'couleur' => 'nullable|array',
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nom' => 'required|string|max:255',
+        'prix' => 'required|numeric',
+        'description' => 'nullable|string',
+        'ancien_prix' => 'nullable|string',
+        'categories_id' => 'required|exists:categories,id',
+        'photo' => 'nullable|image|max:2048',
+        'disponible' => 'required|string',
+        'taille' => 'required|array',
+        'couleur' => 'required|array',
+    ]);
 
-        ]);
-        $disponible = $request->disponible ?? 'oui';
+    // Gérer l'upload de la photo
+    $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+ $disponible = $request->has('disponible') ? 1 : 0;
+    // Créer le produit
+    Produits::create([
+        'nom' => $validated['nom'],
+        'prix' => $validated['prix'],
+        'description' => $validated['description'] ?? null,
+        'ancien_prix' => $validated['ancien_prix'] ?? null,
+        'categories_id' => $validated['categories_id'],
+        'photo' => $path,
+        'disponible' => $disponible,
+        'taille' => $validated['taille'],
+        'couleur' => $validated['couleur'],
+    ]);
 
-        $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+    return redirect()->route('admin.dashboard')->with('success', 'Produit ajouté avec succès.');
+}
 
-        Produits::create([
-                'nom' => $request->nom,
-            'prix' => $request->prix,
-            'description' => $request->description,
-            'ancien_prix' => $request->ancien_prix,
-            'categories_id' => $request->categories_id,
-            'photo' => $produit->photo,
-            'disponible' =>$request->disponible,
-            'taille' => $request->taille,
-            'couleur' =>$request->couleur,
-        ]);
-
-        return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès.');
-    }
 
    public function edit(Produits $produit)
 {

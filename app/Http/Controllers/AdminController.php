@@ -26,6 +26,7 @@ class AdminController extends Controller
                 if (Auth::user()->role !== 'admin') {
                         abort(403, 'Accès refusé.');
                     }
+                    $admin= Auth::user();
                 $totalProduits = Produits::count();
                 $produits = Produits::all();
                 $commandes = Commandes::all();
@@ -40,7 +41,8 @@ class AdminController extends Controller
                             'totalCommandes',
                             'produits',
                             'commandes', 
-                            'categories'
+                            'categories',
+                            'admin'
                     ));
         }
         // Affiche le formulaire de création d'un nouvel admin

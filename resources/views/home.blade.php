@@ -1,14 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="banniere-info">
-    <marquee behavior="scroll" direction="left">🎉 Livraison gratuite! | 📞 Service client 7j/7 | 🛍️ Nouveautés chaque semaine sur GLOBALDROP !</marquee>
+<div class="banniere-container mb-4 rounded shadow">
+    <div class="banniere-animée">
+        <img src="{{ asset('images/baniere.png') }}" alt="Bannière animée">
+    </div>
 </div>
+
 
 <!-- TikTok SDK -->
 <script async src="https://www.tiktok.com/embed.js"></script>
 
 <style>
+  .banniere-container {
+    background-color: #6f42c1; /* Violet Bootstrap (ou change selon ta charte) */
+    overflow: hidden;
+    position: relative;
+    height: 200px; /* Hauteur de la bannière */
+}
+
+.banniere-animée {
+    position: absolute;
+    white-space: nowrap;
+    animation: defilement 5s linear infinite;
+}
+
+.banniere-animée img {
+    height: 100%;
+    object-fit: cover;
+}
+@keyframes defilement {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
   :root {
   --primary-color: #7B4BB7; /* Mauve */
   --secondary-color: #3B8D54; /* Vert */
