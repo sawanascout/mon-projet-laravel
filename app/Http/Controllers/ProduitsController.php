@@ -31,12 +31,15 @@ class ProduitsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required|string|max:255',
+              'nom' => 'required|string|max:255',
             'prix' => 'required|numeric',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
+            'ancien_prix' => 'required|string',
             'categories_id' => 'required|exists:categories,id',
-            'photo' => 'required|image|max:2048',
-            'disponible' => 'nullable|string', // par défaut
+            'photo' => 'nullable|image|max:2048',
+            'disponible' => 'required|string',
+            'taille' => 'nullable|array',
+            'couleur' => 'nullable|array',
 
         ]);
         $disponible = $request->disponible ?? 'oui';
@@ -44,13 +47,15 @@ class ProduitsController extends Controller
         $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
         Produits::create([
-            'nom' => $request->nom,
+                'nom' => $request->nom,
             'prix' => $request->prix,
-            'ancien_prix' =>$request->ancien_prix ?? null,
             'description' => $request->description,
+            'ancien_prix' => $request->ancien_prix,
             'categories_id' => $request->categories_id,
-            'photo' => $path,
-            'disponible' => $disponible,
+            'photo' => $produit->photo,
+            'disponible' =>$request->disponible,
+            'taille' => $request->taille,
+            'couleur' =>$request->couleur,
         ]);
 
         return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès.');
@@ -77,6 +82,8 @@ class ProduitsController extends Controller
             'categories_id' => 'required|exists:categories,id',
             'photo' => 'nullable|image|max:2048',
             'disponible' => 'required|string',
+            'taille' => 'nullable|array',
+            'couleur' => 'nullable|array',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -94,14 +101,20 @@ class ProduitsController extends Controller
             'categories_id' => $request->categories_id,
             'photo' => $produit->photo,
             'disponible' =>$request->disponible,
+            'taille' => $request->taille,
+        'couleur' =>$request->couleur,
         ]);
 
         return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès.');
     }
 public function show(Produits $produit)
 {
+    // Charge les avis avec leurs utilisateurs
+    $produit->load('avis.user');
+
     return view('produits.show', compact('produit'));
 }
+
 public function find(Request $request)
 {
     $nom = $request->input('nom');

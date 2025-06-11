@@ -87,50 +87,68 @@
             </p>
 
           </div>
-          <div class="card-footer d-flex justify-content-between">
-            <button class="btn btn-sm btn-success"
-    onclick="handleAddToCart({{ $produit->id }})">
-    Ajouter au panier
-</button>
+    <div class="card-footer d-flex justify-content-between align-items-center">
+    <button class="btn btn-sm btn-success"
+        onclick="handleAddToCart({{ $produit->id }})"
+        @if(!$produit->disponible) disabled @endif>
+        Ajouter au panier
+    </button>
 
+    <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-sm btn-primary">
+        Voir le produit
+    </a>
 
+    <span class="badge {{ $produit->disponible ? 'bg-success' : 'bg-secondary' }}">
+        {{ $produit->disponible ? 'Disponible' : 'Indisponible' }}
+    </span>
+</div>
 
-          </div>
         </div>
       </div>
 
       <!-- Modal Ajouter au panier -->
-      <div class="modal fade" id="ajouterPanierModal{{ $produit->id }}" tabindex="-1" aria-labelledby="ajouterPanierModalLabel{{ $produit->id }}" aria-hidden="true">
-        <div class="modal-dialog">
-          <form action="{{ route('client.panier.ajouter', $produit->id) }}" method="POST">
-            @csrf
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="ajouterPanierModalLabel{{ $produit->id }}">Ajouter au panier : {{ $produit->nom }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label class="form-label">Couleur</label>
-                  <input type="text" name="couleur" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Taille</label>
-                  <input type="text" name="taille" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Quantité</label>
-                  <input type="number" name="quantite" class="form-control" value="1" min="1" max="1000" required>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Ajouter</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-              </div>
-            </div>
-          </form>
+ <div class="modal fade" id="ajouterPanierModal{{ $produit->id }}" tabindex="-1" aria-labelledby="ajouterPanierModalLabel{{ $produit->id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="{{ route('client.panier.ajouter', $produit->id) }}" method="POST">
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ajouterPanierModalLabel{{ $produit->id }}">Ajouter au panier : {{ $produit->nom }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Couleur</label>
+            <select name="couleur" class="form-select" required>
+              <option value="" disabled selected>Choisir une couleur</option>
+              @foreach($produit->couleur ?? [] as $couleur)
+                <option value="{{ $couleur }}">{{ ucfirst($couleur) }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Taille</label>
+            <select name="taille" class="form-select" required>
+              <option value="" disabled selected>Choisir une taille</option>
+              @foreach($produit->taille ?? [] as $taille)
+                <option value="{{ $taille }}">{{ strtoupper($taille) }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantité</label>
+            <input type="number" name="quantite" class="form-control" value="1" min="1" max="1000" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Ajouter</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         </div>
       </div>
+    </form>
+  </div>
+</div>
+
 
       @empty
       <p class="text-muted">Aucun produit dans cette catégorie.</p>

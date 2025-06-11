@@ -1,27 +1,38 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\Produits;
-use App\Models\Categories;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker; 
+use Faker\Factory as Faker;
+use Illuminate\Support\Arr;
 
 class ProduitsTableSeeder extends Seeder
 {
     public function run()
     {
         $faker = Faker::create();
-        // On récupère les IDs des catégories existantes
+
+        // IDs des catégories
         $categoriesIds = DB::table('categories')->pluck('id')->toArray();
-        
+
         if (empty($categoriesIds)) {
             $this->command->error("Il faut d'abord remplir la table categories !");
             return;
         }
+
+        // Listes possibles de couleurs et tailles
+        $couleursPossibles = ['rouge', 'bleu', 'vert', 'noir', 'blanc', 'jaune', 'violet', 'orange'];
+        $taillesPossibles = ['S', 'M', 'L', 'XL', 'XXL'];
+
         for ($i = 1; $i <= 30; $i++) {
             $prix = $faker->randomFloat(2, 5, 200);
             $ancienPrix = $faker->boolean(50) ? $prix + $faker->randomFloat(2, 5, 50) : null;
+
+            // Choisir aléatoirement 2 à 4 couleurs et tailles pour chaque produit
+            $couleurs = $faker->randomElements($couleursPossibles, rand(2, 4));
+            $tailles = $faker->randomElements($taillesPossibles, rand(2, 5));
 
             Produits::create([
                 'nom' => $faker->words(3, true),
@@ -29,12 +40,13 @@ class ProduitsTableSeeder extends Seeder
                 'ancien_prix' => $ancienPrix,
                 'description' => $faker->paragraph(),
                 'categories_id' => $faker->randomElement($categoriesIds),
-                'photo' => 'produits/produit' . $i . '.jpg', // Assure-toi d'avoir ces images ou adapte
+                'photo' => 'produits/produit' . $i . '.jpg', // adapte si besoin
                 'disponible' => $faker->boolean(90),
+                'couleur' => ($couleurs),  // encode en JSON
+                'taille' =>($tailles),    // encode en JSON
             ]);
         }
 
-        $this->command->info('30 produits insérés avec succès.');
-
+        $this->command->info('30 produits insérés avec couleurs et tailles.');
     }
 }

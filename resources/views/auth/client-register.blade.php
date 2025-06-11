@@ -24,10 +24,10 @@
         box-shadow: 0 8px 24px rgba(123, 75, 183, 0.25);
         width: 100%;
         max-width: 420px;
+        text-align: center;
     }
 
     .register-card h2 {
-        text-align: center;
         color: #7B4BB7;
         margin-bottom: 25px;
         font-weight: bold;
@@ -35,7 +35,7 @@
 
     input, select {
         width: 100%;
-        padding: 12px 14px;
+        padding: 12px;
         margin-bottom: 16px;
         border: 2px solid #ccc;
         border-radius: 6px;
@@ -65,64 +65,103 @@
         background-color: #693aa5;
     }
 
-    .btn-link {
-        background: none;
+    .btn-social {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-google {
+        background-color: #ffffff;
+        border: 2px solid #ddd;
+        color: #333;
+    }
+
+    .btn-google:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-apple {
+        background-color: #000;
+        color: #fff;
         border: none;
-        color: #7B4BB7;
+    }
+
+    .btn-apple:hover {
+        background-color: #333;
+    }
+
+    .divider {
         text-align: center;
-        display: block;
-        margin-top: 12px;
-        text-decoration: underline;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        color: #888;
+        margin: 16px 0;
+        position: relative;
     }
 
-    .btn-link:hover {
-        color: #3B8D54;
+    .divider::before, .divider::after {
+        content: '';
+        display: inline-block;
+        width: 45%;
+        height: 1px;
+        background-color: #ddd;
+        vertical-align: middle;
     }
 
-    small {
-        color: #d9534f;
+    .divider span {
+        padding: 0 12px;
     }
 </style>
 
 <div class="register-container">
-    <form method="POST" action="{{ route('auth.client-register') }}" class="register-card">
+    <div class="register-card">
         <h2>Créer un compte</h2>
-        @csrf
 
-        <input type="text" name="name" placeholder="Nom" value="{{ old('name') }}" required>
-        @error('name') <small>{{ $message }}</small> @enderror
+        <!-- Connexion rapide -->
+      <a href="{{ route('social.google') }}" class="btn-social btn-google">
+    <i class="bi bi-google"></i>
 
-        <input type="text" name="prenom" placeholder="Prénom" value="{{ old('prenom') }}" required>
-        @error('prenom') <small>{{ $message }}</small> @enderror
+    Continuer avec Google
+</a>
 
-        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
-        @error('email') <small>{{ $message }}</small> @enderror
+        <a href="{{ route('social.apple') }}" class="btn-social btn-apple">
+            <i class="bi bi-apple"></i> Continuer avec Apple
+        </a>
 
-        <input type="password" name="password" placeholder="Mot de passe" required>
-        @error('password') <small>{{ $message }}</small> @enderror
 
-        <input type="password" name="password_confirmation" placeholder="Confirmation mot de passe" required>
+        <!-- Formulaire traditionnel -->
+        <form method="POST" action="{{ route('auth.client-register') }}">
+            @csrf
 
-        <input type="text" name="telephone" placeholder="Numéro de téléphone" value="{{ old('telephone') }}" required>
-        @error('telephone') <small>{{ $message }}</small> @enderror
+            <input type="text" name="name" placeholder="Nom" value="{{ old('name') }}" required>
+            <input type="text" name="prenom" placeholder="Prénom" value="{{ old('prenom') }}" required>
+            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <input type="password" name="password_confirmation" placeholder="Confirmation mot de passe" required>
+            <input type="text" name="telephone" placeholder="Numéro de téléphone" value="{{ old('telephone') }}" required>
 
-        <select name="segment" required>
-            <option value="" disabled {{ old('segment') ? '' : 'selected' }}>Choisissez votre segment</option>
-            <option value="homme" {{ old('segment') == 'homme' ? 'selected' : '' }}>Homme</option>
-            <option value="femme" {{ old('segment') == 'femme' ? 'selected' : '' }}>Femme</option>
-            <option value="jeune_homme" {{ old('segment') == 'jeune_homme' ? 'selected' : '' }}>Jeune homme (≤ 30 ans)</option>
-            <option value="jeune_femme" {{ old('segment') == 'jeune_femme' ? 'selected' : '' }}>Jeune femme (≤ 30 ans)</option>
-        </select>
-        @error('segment') <small>{{ $message }}</small> @enderror
+            <select name="segment" required>
+                <option value="" disabled selected>Choisissez votre segment</option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+                <option value="jeune_homme">Jeune homme (≤ 30 ans)</option>
+                <option value="jeune_femme">Jeune femme (≤ 30 ans)</option>
+            </select>
 
-        <button type="submit">S'inscrire</button>
+            <button type="submit">S'inscrire</button>
+        </form>
 
         <button type="button" class="btn-link" onclick="window.location='{{ route('auth.login.form') }}'">
             Déjà inscrit ? Se connecter
         </button>
-    </form>
+    </div>
 </div>
 @endsection

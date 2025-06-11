@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
             $table->string('photo')->nullable(); // chemin vers la photo
             $table->boolean('disponible')->default(true);
+            $table->json('taille');// chemin vers la photo
+            $table->json('couleur');
             $table->timestamps();
         });
     }

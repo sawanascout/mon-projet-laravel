@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Produits extends Model
 {
     protected $table = 'produits';
+    protected $casts = [
+    'taille' => 'array',
+    'couleur' => 'array',
+];
+
 
     // Champs modifiables en masse
     protected $fillable = [
@@ -17,6 +22,8 @@ class Produits extends Model
         'categories_id',
         'photo',
         'disponible',
+         'taille',
+    'couleur',
     ];
 
     /**
@@ -56,4 +63,16 @@ class Produits extends Model
     {
         return $this->hasMany(Paniers::class);
     }
+    // Toujours retourner un tableau pour 'taille'
+public function getTailleAttribute($value)
+{
+    return is_array($value) ? $value : json_decode($value, true);
+}
+
+// Toujours retourner un tableau pour 'couleur'
+public function getCouleurAttribute($value)
+{
+    return is_array($value) ? $value : json_decode($value, true);
+}
+
 }

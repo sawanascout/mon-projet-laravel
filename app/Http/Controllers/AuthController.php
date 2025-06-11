@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Paniers;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class AuthController extends Controller
 {
@@ -102,6 +104,71 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'Déconnexion réussie.');
+    }
+     public function showPasswordResetForm()
+    {
+        return view('auth.password-reset');
+    }
+
+    // Envoi du lien de réinitialisation
+    public function sendResetLink(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        // Logique d'envoi du lien ici (Laravel Password Reset)
+        return back()->with('success', 'Lien de réinitialisation envoyé.');
+    }
+
+    // Connexion via Google
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+
+        $existingUser = User::where('email', $user->getEmail())->first();
+        if ($existingUser) {
+            Auth::login($existingUser);
+            return redirect()->route('password.dashboard');
+        }
+
+        $newUser = User::create([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => Hash::make('defaultpassword'),
+        ]);
+
+        Auth::login($newUser);
+        return redirect()->route('password.dashboard');
+    }
+
+    // Connexion via Apple
+    public function redirectToApple()
+    {
+        return Socialite::driver('apple')->redirect();
+    }
+
+    public function handleAppleCallback()
+    {
+        $user = Socialite::driver('apple')->user();
+
+        $existingUser = User::where('email', $user->getEmail())->first();
+        if ($existingUser) {
+            Auth::login($existingUser);
+            return redirect()->route('password.dashboard');
+        }
+
+        $newUser = User::create([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => Hash::make('defaultpassword'),
+        ]);
+
+        Auth::login($newUser);
+        return redirect()->route('password.dashboard');
     }
 
     /**

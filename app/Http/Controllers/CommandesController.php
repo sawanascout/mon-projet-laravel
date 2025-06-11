@@ -138,6 +138,14 @@ public function Afficher_Tout()
 
         return view('client.commandes-suivi', compact('commande'));
     }
+        public function mesCommandes()
+{
+    $userId = Auth::id();
 
+    $orders = Commandes::where('user_id', $userId)->latest()->paginate(10);
+
+
+    return view('client.profil', compact('orders'));
+}
 
 }

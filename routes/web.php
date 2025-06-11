@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     LigneCommandesController,
     AvisController,
     CategoriesController,
-    ElementsPaniersController
+    ElementsPaniersController,
+    ParrainageController
 };
 
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
@@ -62,18 +63,30 @@ Route::prefix('client')->middleware(['auth', 'is_client'])->group(function () {
     Route::resource('panier/elements', ElementsPaniersController::class)
         ->only(['update', 'destroy'])
         ->names('client.panier-elements');
+        Route::get('/mes-commandes', [CommandesController::class, 'mesCommandes'])->name('client.commandes');
+        Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
+        Route::get('/invite', [ParrainageController::class, 'invite'])->name('invite');
+        Route::get('/parametres', [ClientController::class, 'parametres'])->name('client.parametres');
+    
+    Route::get('/panier', [PaniersController::class, 'index'])->name('client.panier-index');
+    Route::post('/panier/ajouter/{produit_id}', [PaniersController::class, 'store'])->name('client.panier.ajouter');
+    Route::delete('/panier/supprimer/{id}', [PaniersController::class, 'supprimer'])->name('client.panier.supprimer');
+    Route::post('/panier/vider', [PaniersController::class, 'vider'])->name('client.panier.vider');
+    Route::put('/panier/quantite/{id}', [PaniersController::class, 'mettreAJourQuantite'])->name('client.panier.quantite');
 });
-Route::get('/panier', [PaniersController::class, 'index'])->name('client.panier-index');
-Route::post('/panier/ajouter/{produit_id}', [PaniersController::class, 'store'])->name('client.panier.ajouter');
-Route::delete('/panier/supprimer/{id}', [PaniersController::class, 'supprimer'])->name('client.panier.supprimer');
-Route::post('/panier/vider', [PaniersController::class, 'vider'])->name('client.panier.vider');
-Route::put('/panier/quantite/{id}', [PaniersController::class, 'mettreAJourQuantite'])->name('client.panier.quantite');
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login.form');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.client-login');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('auth.register.form');
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.client-register');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('/password/reset', [AuthController::class, 'showPasswordResetForm'])->name('auth.password.request');
+    Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('auth.password.email');
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login.form');
-Route::post('/login', [AuthController::class, 'login'])->name('auth.client-login');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('auth.register.form');
-Route::post('/register', [AuthController::class, 'register'])->name('auth.client-register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('social.google');
+    Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
+    Route::get('/auth/apple', [AuthController::class, 'redirectToApple'])->name('social.apple');
+    Route::get('/auth/apple/callback', [AuthController::class, 'handleAppleCallback']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/produits/{produit_id}/avis/create', [AvisController::class, 'create'])->name('avis.create');

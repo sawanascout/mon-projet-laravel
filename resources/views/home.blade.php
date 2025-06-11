@@ -1,271 +1,143 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="baniere-info" style="overflow: hidden;">
-    <marquee behavior="scroll" direction="left">
-        🎉 Livraison gratuite! | 📞 Service client 7j/7 | 🛍️ Nouveautés chaque semaine sur GLOBALDROP !
-    </marquee>
+<div class="banniere-info">
+    <marquee behavior="scroll" direction="left">🎉 Livraison gratuite! | 📞 Service client 7j/7 | 🛍️ Nouveautés chaque semaine sur GLOBALDROP !</marquee>
 </div>
 
 <!-- TikTok SDK -->
 <script async src="https://www.tiktok.com/embed.js"></script>
 
-
 <style>
   :root {
-  --couleur-primaire: #7B4BB7; /* Mauve */
-  --couleur-secondaire: #556B2F; /* Vert treillis */
-  --couleur-fond: #f8f9fa;
-  --couleur-texte: #333;
-}
-#tiktok-widget {
-  transition: all 0.3s ease-in-out;
-}
-
-#tiktok-widget:hover {
-  box-shadow: 0 0 15px rgba(123, 75, 183, 0.3);
+  --primary-color: #7B4BB7; /* Mauve */
+  --secondary-color: #3B8D54; /* Vert */
+  --background-color: #f8f9fa;
+  --text-color: #333;
 }
 
 body {
-  background-color: var(--couleur-fond);
-  color: var(--couleur-texte);
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* Boutons */
 .btn-primary {
-  background-color: var(--couleur-primaire);
-  border-color: var(--couleur-primaire);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #6b3ca5;
-  border-color: #6b3ca5;
+  background-color: #693aa5;
 }
 
 .btn-outline-secondary {
-  color: var(--couleur-secondaire);
-  border-color: var(--couleur-secondaire);
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  transition: all 0.3s ease;
 }
 
 .btn-outline-secondary:hover {
-  background-color: var(--couleur-secondaire);
+  background-color: var(--secondary-color);
   color: white;
 }
 
+/* Cartes Produits */
 .card {
   border: 1px solid #ddd;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 10px rgba(123, 75, 183, 0.2);
-}
-
-.navbar {
-  background-color: var(--couleur-secondaire);
-}
-
-.navbar .nav-link,
-.navbar .navbar-brand {
-  color: white;
-}
-
-.navbar .nav-link:hover {
-  color: #ddd;
-}
-
-.badge.bg-danger {
-  background-color: #d9534f !important;
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(123, 75, 183, 0.2);
 }
 
 /* Bannière défilante */
 .banniere-info {
-  background-color: var(--couleur-primaire);
+  background-color: var(--primary-color);
   color: white;
-  padding: 0.5rem;
-  overflow: hidden;
-  white-space: nowrap;
+  text-align: center;
+  padding: 0.6rem;
 }
 
-.banniere-info span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: defilement 15s linear infinite;
-}
-
-@keyframes defilement {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
 .text-mauve {
-    color: #7B4BB7;
-}
-
-.btn-mauve {
-    background-color: #7B4BB7;
-    color: white;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn-mauve:hover {
-    background-color: #693aa5;
-}
-
-.btn-outline-mauve {
-    border: 2px solid #7B4BB7;
-    color: #7B4BB7;
-    background-color: transparent;
-    transition: all 0.3s ease;
-}
-
-.btn-outline-mauve:hover {
-    background-color: #7B4BB7;
-    color: white;
+  color: var(--primary-color);
 }
 
 .produit-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    border: 2px solid transparent;
-    border-top: 4px solid #3B8D54; /* Bordure supérieure verte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  border-top: 4px solid var(--secondary-color);
 }
 
 .produit-card:hover {
-    transform: scale(1.03); /* Légère élévation */
-    box-shadow: 0 8px 20px rgba(123, 75, 183, 0.2); /* Ombre douce */
-    border: 2px solid var(--couleur-primaire); /* Bordure mauve visible au survol */
-}
-.card-body {
-    transition: background-color 0.3s ease;
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(123, 75, 183, 0.2);
+  border-color: var(--primary-color);
 }
 
-.produit-card:hover .card-body {
-    background-color: rgba(123, 75, 183, 0.03); /* Légère touche de mauve */
-}
-
-#tiktok-banner {
-  background: #fff;
-  padding: 0.5rem;
-  border-left: 5px solid var(--couleur-primaire);
-  transition: transform 0.3s ease;
-}
-
-#tiktok-banner:hover {
-  transform: scale(1.01);
-}
 </style>
 
-<div class="container mt-5">  {{-- Conteneur principal --}}
-<!-- Vidéo TikTok flottante -->
-<div id="tiktok-float" class="position-fixed top-0 start-50 translate-middle-x bg-white border rounded shadow p-2 zindex-tooltip" style="z-index: 1050; max-width: 300px; margin-top: 10px;">
-    <button onclick="document.getElementById('tiktok-float').remove()" class="btn-close position-absolute top-0 end-0 m-1" aria-label="Fermer"></button>
-    <a href="https://www.tiktok.com/@globaldrop41" target="_blank" class="d-block text-decoration-none">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@globaldrop41/video/0000000000000000000" data-video-id="0000000000000000000" style="max-width: 100%;">
-            <section>Loading...</section>
-        </blockquote>
-    </a>
-</div>
-<script async src="https://www.tiktok.com/embed.js"></script>
-
-
-<script async src="https://www.tiktok.com/embed.js"></script>
-
+<div class="container mt-5">
     <h1>Bienvenue sur GLOBALDROP !</h1>
-    <section class="mt-6 py-6 bg-white border-t border-b border-gray-200">
-    <div class="max-w-6xl mx-auto px-4 md:px-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-6">
-            Pourquoi <span class="text-[#ab3fd6]">choisir GlobalDrop</span> ?
-        </h2>
-
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-
-            <!-- Item 1 -->
-            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
-                    </svg>
+    
+    <section class="mt-6 py-6">
+        <div class="max-w-6xl mx-auto px-4 md:px-8">
+            <h2 class="text-2xl font-bold text-center mb-6">
+                Pourquoi <span class="text-mauve">choisir GlobalDrop</span> ?
+            </h2>
+            
+            <div class="d-flex flex-wrap justify-content-center">
+                <!-- Item 1 -->
+                <div class="produit-card p-3 m-2 shadow-sm rounded">
+                    <h3>🚚 Livraison rapide</h3>
+                    <p>Expédition rapide grâce à notre logistique performante.</p>
                 </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Livraison rapide</h3>
-                    <p class="text-xs text-gray-600">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
+                
+                <!-- Item 2 -->
+                <div class="produit-card p-3 m-2 shadow-sm rounded">
+                    <h3>💰 Prix compétitifs</h3>
+                    <p>Des tarifs abordables sur des produits tendance.</p>
                 </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Prix compétitifs</h3>
-                    <p class="text-xs text-gray-600">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
+                
+                <!-- Item 3 -->
+                <div class="produit-card p-3 m-2 shadow-sm rounded">
+                    <h3>🔒 Paiement sécurisé</h3>
+                    <p>Plateforme protégée pour des transactions sûres.</p>
                 </div>
             </div>
-
-            <!-- Item 3 -->
-            <div class="flex items-start gap-4 bg-gray-50 rounded-xl p-4 shadow-sm flex-1 border hover:shadow-md transition">
-                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#ab3fd6]/10 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#ab3fd6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-800 mb-1">Paiement sécurisé</h3>
-                    <p class="text-xs text-gray-600">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
+
     <p>Découvrez nos derniers produits :</p>
 
-    {{-- Section Produits --}}
-  <div class="row mb-5 produit-highlight ">
-    @forelse($produits->take(4) as $produit)
-        <div class="col-md-3 mb-4">
-            <div class="card h-100 shadow-sm border-0 produit-card">
-                @if($produit->photo)
-                    <img src="{{ asset('storage/' . $produit->photo) }}" class="card-img-top rounded-top" alt="Photo du produit">
-                @endif
-                <div class="card-body">
-                    <h5 class="card-title text-mauve">{{ $produit->nom }}</h5>
-                    <p class="text-muted">Prix : {{ number_format($produit->prix, 2) }} €</p>
-                    <p class="text-muted">Catégorie : {{ $produit->categorie->nom ?? 'N/A' }}</p>
-                </div>
-                <div class="card-footer bg-white border-0">
-                    <a href="{{ route('produits.show', $produit) }}" class="btn btn-sm btn-mauve">Voir détails</a>
+    {{-- Produits --}}
+    <div class="row mb-5 produit-highlight">
+        @forelse($produits->take(4) as $produit)
+            <div class="col-md-3 mb-4">
+                <div class="card produit-card">
+                    @if($produit->photo)
+                        <img src="{{ asset('storage/' . $produit->photo) }}" class="card-img-top" alt="Photo du produit">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="text-mauve">{{ $produit->nom }}</h5>
+                        <p>Prix : {{ number_format($produit->prix, 2) }} €</p>
+                        <p>Catégorie : {{ $produit->categorie->nom ?? 'N/A' }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{{ route('produits.show', $produit) }}" class="btn btn-primary">Voir détails</a>
+                    </div>
                 </div>
             </div>
+        @empty
+            <p>Aucun produit disponible actuellement.</p>
+        @endforelse
+
+        <div class="text-center mt-4">
+            <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Voir tous les produits</a>
         </div>
-    @empty
-        <p>Aucun produit disponible actuellement.</p>
-    @endforelse
-
-    <div class="text-center mt-4">
-        <a href="{{ route('produits.index') }}" class="btn btn-outline-mauve">Voir tous les produits</a>
     </div>
-</div>
-
-</div>
-
-    {{-- Section Présentation --}}
-    <div class="mb-5 p-4 bg-light rounded shadow-sm">
-        <h2>À propos de Global Drop</h2>
-        <p>Global Drop est une entreprise dédiée à vous offrir les meilleurs produits de qualité à des prix compétitifs. Notre mission est de faciliter vos achats avec un service client exceptionnel.</p>
-    </div>
-
-
-  
 </div>
 @endsection

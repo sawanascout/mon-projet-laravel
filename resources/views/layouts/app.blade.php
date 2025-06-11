@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>GLOBALDROP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <style>
     /* Couleurs personnalisées */
     :root {
@@ -15,6 +16,14 @@
         --vert-treillis: rgb(1, 32, 1);
         --blanc: #ffffff;
     }
+.star-rating {
+  font-size: 1.2rem; /* taille des étoiles */
+  color: #ccc;       /* couleur des étoiles "inactives" */
+}
+
+.star-rating .filled {
+  color: gold;       /* couleur des étoiles "pleines" */
+}
 
     /* Bouton mauve personnalisé */
     .btn-mauve {
