@@ -9,24 +9,37 @@ use Illuminate\Support\Facades\Auth;
 
 class ElementsPaniersController extends Controller
 {
-   public function update(Request $request, $id)
-    {
+public function update(Request $request, $id)
+{
+    $element = Elements_Paniers::findOrFail($id);
+
+    if ($element->panier && $element->panier->user_id === Auth::id()) {
         $request->validate([
-            'quantite' => 'required|integer|min:1',
+            'quantite' => 'required|integer|min:1|max:1000',
+            // Si tu veux modifier aussi taille et couleur, tu peux les laisser en string :
+            'taille' => 'nullable|string|max:255',
+            'couleur' => 'nullable|string|max:255',
         ]);
 
-        $element = Elements_Paniers::findOrFail($id);
+        $element->quantite = $request->quantite;
 
-        // Vérifie que l’élément appartient bien au panier de l’utilisateur connecté
-        if ($element->panier->user_id !== Auth::id()) {
-            abort(403);
+        if ($request->filled('taille')) {
+            $element->taille = $request->taille;
         }
 
-        $element->quantite = $request->quantite;
+        if ($request->filled('couleur')) {
+            $element->couleur = $request->couleur;
+        }
+
         $element->save();
 
         return redirect()->route('client.panier-index')->with('success', 'Quantité mise à jour.');
     }
+
+    return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
+}
+
+
 
     /**
      * Supprime un élément du panier.

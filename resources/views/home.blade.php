@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Vidéo TikTok flottante -->
+<!-- Vidéo TikTok flottante avec fermeture -->
+<div class="tiktok-float" id="tiktokFloat">
+    <button class="close-btn" onclick="document.getElementById('tiktokFloat').style.display='none'">✕</button>
+    <a href="https://www.tiktok.com/@globaldrop41" target="_blank">
+        <iframe src="https://www.tiktok.com/embed/v2/VIDÉO_ID"
+                allowfullscreen 
+                scrolling="no">
+        </iframe>
+    </a>
+</div>
+
+
 <div class="banniere-container mb-4 rounded shadow">
     <div class="banniere-animée">
         <img src="{{ asset('images/baniere.png') }}" alt="Bannière animée">
@@ -12,6 +25,41 @@
 <script async src="https://www.tiktok.com/embed.js"></script>
 
 <style>
+.tiktok-float {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 200px;
+    height: 360px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.tiktok-float iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+.tiktok-float .close-btn {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10000;
+    padding: 0 6px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
   .banniere-container {
     background-color: #6f42c1; /* Violet Bootstrap (ou change selon ta charte) */
     overflow: hidden;

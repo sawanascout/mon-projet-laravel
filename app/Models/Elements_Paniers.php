@@ -22,16 +22,16 @@ class Elements_Paniers extends Model
     /**
      * Relation : l'élément appartient à un panier
      */
-    public function panier()
-    {
-        return $this->belongsTo(Paniers::class);
-    }
+   public function panier()
+{
+    return $this->belongsTo(Paniers::class, 'paniers_id');
+}
 
     /**
      * Relation : l'élément correspond à un produit
      */
     public function produit()
     {
-        return $this->belongsTo(Produits::class);
+        return $this->belongsTo(Produits::class, 'produits_id');
     }
 }

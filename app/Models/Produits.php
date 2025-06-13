@@ -74,5 +74,8 @@ public function getCouleurAttribute($value)
 {
     return is_array($value) ? $value : json_decode($value, true);
 }
+// App\Models\Produits.php
+
+
 
 }

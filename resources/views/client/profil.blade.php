@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>Bienvenue {{ Auth::user()->name ?? 'Invité' }}</h1>
+
 <div class="container">
     {{-- En-tête avec titre et bouton paramètres --}}
    <div class="d-flex align-items-center">
@@ -37,18 +39,19 @@
                         <h6 class="border-bottom pb-2">
                             <i class="bi bi-person-circle me-2"></i>Informations personnelles
                         </h6>
+                        @isset($client)
                         <form id="infoForm">
                             <div class="mb-3">
                                 <label class="form-label">Nom complet</label>
-                                <input type="text" class="form-control" value="{{ $client->name }}" id="nomClient" disabled>
+                                <input type="text" class="form-control" value="{{ Auth::user()->name }}" id="nomClient" disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Numéro de téléphone</label>
-                                <input type="text" class="form-control" value="{{ $client->telephone }}" id="telephoneClient" disabled>
+                                <input type="text" class="form-control" value="{{ Auth::user()->telephone }}" id="telephoneClient" disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Adresse email</label>
-                                <input type="email" class="form-control" value="{{ $client->email }}" id="emailClient" disabled>
+                                <input type="email" class="form-control" value="{{ Auth::user()->email }}" id="emailClient" disabled>
                             </div>
                             <button type="button" id="editInfo" class="btn btn-outline-primary">
                                 <i class="bi bi-pencil me-1"></i>Modifier
@@ -57,6 +60,7 @@
                                 <i class="bi bi-check-circle me-1"></i>Enregistrer
                             </button>
                         </form>
+                        @endisset
                     </div>
 
                     <div class="mb-4">
@@ -96,7 +100,7 @@
         <a href="{{ route('client.panier-index') }}" class="btn btn-primary">
             <i class="bi bi-cart"></i> Mon Panier
         </a>
-        <a href="{{ route('client.commandes') }}" class="btn btn-primary">
+        <a href="{{ route('client.commandes.index') }}" class="btn btn-primary">
             <i class="bi bi-receipt"></i> Mes Commandes
         </a>
         <a href="{{ route('parrainage.index') }}" class="btn btn-outline-primary">

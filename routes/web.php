@@ -20,7 +20,11 @@ use App\Http\Controllers\{
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
+     Route::get('paiements', [PaiementController::class, 'index'])->name('admin.paiements.index');
+    Route::get('paiements/{id}', [PaiementController::class, 'show'])->name('admin.paiements.show');
+    Route::get('paiements/{id}/edit', [PaiementController::class, 'edit'])->name('admin.paiements.edit');
+    Route::put('paiements/{id}', [PaiementController::class, 'update'])->name('admin.paiements.update');
+    Route::delete('paiements/{id}', [PaiementController::class, 'destroy'])->name('admin.paiements.destroy');
     // Admins
     Route::post('/ajout-admin', [AdminController::class, 'store'])->name('admin.ajout-admin');
     Route::post('/grant', [AdminController::class, 'addPrivileges'])->name('admin.grant');
@@ -60,7 +64,8 @@ Route::prefix('client')->middleware(['auth', 'is_client'])->group(function () {
 
     // Commandes
     Route::resource('commandes', CommandesController::class)->only(['index', 'store', 'show'])->names('client.commandes');
-
+Route::get('paiements/create/{commande_id}', [PaiementController::class, 'create'])->name('client.paiements.create');
+    Route::post('paiements', [PaiementController::class, 'store'])->name('client.paiements.store');
     // Panier (éléments)
     Route::resource('panier/elements', ElementsPaniersController::class)
         ->only(['update', 'destroy'])
@@ -106,3 +111,4 @@ Route::get('/commandes/{commandeId}/lignes', [LigneCommandesController::class, '
 Route::get('/lignes-commandes/{id}', [LigneCommandesController::class, 'show'])->name('commandes.lignes.show');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/produits/rechercher', [ProduitsController::class, 'rechercher'])->name('produits.rechercher');
+
