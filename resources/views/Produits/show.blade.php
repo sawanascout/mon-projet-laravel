@@ -85,7 +85,6 @@
 
     <form action="{{ route('reviews.store', $product->id) }}" method="POST" class="space-y-4">
         @csrf
-
         <div>
             <label class="block text-gray-700 font-medium mb-1">Note :</label>
             <div id="star-rating" class="flex space-x-1 text-2xl cursor-pointer text-gray-300">

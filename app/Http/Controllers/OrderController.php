@@ -18,9 +18,12 @@ class OrderController extends Controller
     $userId = Auth::id();
 
     $orders = Order::where('user_id', $userId)->latest()->paginate(10);
+        $orderCount = Order::where('user_id', $userId)->count();
+    // ✅ Total cumulé des achats
+    $totalSpent = Order::where('user_id', $userId)->sum('total');
 
 
-    return view('commandes.mes-commandes', compact('orders'));
+    return view('commandes.mes-commandes', compact('orders','orderCount','totalSpent'));
 }
 
 
@@ -71,16 +74,15 @@ class OrderController extends Controller
     }
 
     $now = Carbon::now();
-$year = $now->format('Y');      // Exemple: 2025
-$month = $now->format('m');     // Exemple: 06
+$year = $now->format('Y');      
+$month = $now->format('m');
+$day = $now->format('d');
 
-// Compter combien de commandes ont été passées ce mois
-$countThisMonth = Order::whereYear('created_at', $year)
-                       ->whereMonth('created_at', $month)
-                       ->count();
+// Compter combien de commandes ont été passées ce jour-là
+$countToday = Order::whereDate('created_at', $now->toDateString())->count();
 
-$increment = str_pad($countThisMonth + 1, 2, '0', STR_PAD_LEFT); // Ex: 01, 02...
-$orderNumber = 'GD' . $year . $month . $increment;
+$increment = str_pad($countToday + 1, 2, '0', STR_PAD_LEFT); 
+$orderNumber = 'GD' . $year . $month . $day . $increment;
 
 $order = Order::create([
     'user_id' => Auth::id(),
@@ -109,25 +111,7 @@ $order = Order::create([
 }
 
 
-public function finaliser(Request $request, $id)
-{
-    $order = Order::findOrFail($id);
 
-    // Valider le moyen de paiement
-    $request->validate([
-        'payment_method' => 'required|in:cod,yas',
-    ]);
-
-    // Mettre à jour la commande
-    $order->payment_method = $request->payment_method;
-    $order->status = 'confirmed';
-    $order->save();
-
-    // Rediriger vers la page de confirmation
-    return redirect()->route('commandes.terminee', ['id' => $order->id])
-    ->with('success', 'Votre commande a été finalisée avec succès.');
-
-}
 
 public function feedback(Request $request, $id)
 {
@@ -143,9 +127,19 @@ public function feedback(Request $request, $id)
 }
 
 
-public function terminee($id)
+public function terminee(Request $request, $id)
 {
     $order = Order::findOrFail($id);
+
+    // Valider le moyen de paiement
+    $request->validate([
+    'payment_method' => 'required|in:cod,yas,flooz',
+    ]);
+
+    // Mettre à jour la commande
+    $order->payment_method = $request->payment_method;
+    $order->status = 'confirmed';
+    $order->save();
     return view('commandes.terminee', compact('order'));
 }
 

@@ -24,5 +24,10 @@ public function averageRating()
 {
     return round($this->reviews()->avg('rating'), 1);
 }
+public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
 
 }

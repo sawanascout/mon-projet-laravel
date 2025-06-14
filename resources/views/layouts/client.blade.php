@@ -42,18 +42,31 @@
         <!-- Icônes -->
         <div class="flex items-center space-x-4">
             @auth
-                <span class="text-sm text-gray-700">Bienvenue, {{ auth()->user()->name }}</span>
-                
-                <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                   class="text-sm text-violet-500 hover:underline">Déconnexion</a>
-                   
+                <div class="flex items-center space-x-4 bg-violet-50 px-4 py-2 rounded-lg max-w-sm mx-auto">
+    <span class="text-sm text-gray-700 font-semibold">
+        👋 Bienvenue, <span class="text-violet-700 hover:text-violet-900 cursor-pointer transition">{{ auth()->user()->name }}</span>
+    </span>
+    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+        @csrf
+    </form>
+
+    <a href="{{ route('logout') }}"
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+       class="text-sm text-violet-600 hover:text-violet-800 font-medium underline decoration-violet-400 hover:decoration-violet-600 transition cursor-pointer">
+         Déconnexion
+    </a>
+</div>
+
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                     @csrf
                 </form>
                         <a href="{{ route('commandes.mes-commandes') }}" class="inline-flex items-center gap-2 text-[color:var(--main-color)] border border-[color:var(--main-color)] px-4 py-2 rounded-full hover:bg-[color:var(--main-color)] hover:text-white transition shadow-md">📋 Mes commandes</a>
 <a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 text-green-600 border border-green-600 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white transition shadow-md">
     🎁 Mon lien de parrainage
+</a>
+<a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white transition shadow-md">
+    🌐 Nous suivre
 </a>
 
             @else
@@ -67,8 +80,12 @@
         <a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 text-green-600 border border-green-600 px-4 py-2 rounded-full hover:bg-green-600 hover:text-white transition shadow-md">
     🎁 Mon lien de parrainage
 </a>
-        
+        <a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white transition shadow-md">
+    🌐 Nous suivre
+</a>
+
     </div>
+    
 @endauth
 
 
@@ -94,15 +111,16 @@
     </div>
 
     <!-- Navigation principale -->
-    <nav class="bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 py-2 flex space-x-4 overflow-x-auto">
-            <a href="{{ route('produits.index') }}" class="text-sm text-gray-700 hover:text-[color:var(--main-color)]">Toutes</a>
-            <a href="{{ route('produits.index', ['category' => 'vetements pour femme']) }}" class="text-sm text-gray-700 hover:text-[color:var(--main-color)]">Vetements pour femme</a>
-            <a href="{{ route('produits.index', ['category' => 'chaussures pour homme']) }}" class="text-sm text-gray-700 hover:text-[color:var(--main-color)]">ChaussureS pour Homme</a>
-            <a href="{{ route('produits.index', ['category' => 'électroniques']) }}" class="text-sm text-gray-700 hover:text-[color:var(--main-color)]">Électroniques</a>
-            <a href="{{ route('produits.index', ['category' => 'accessoires']) }}" class="text-sm text-gray-700 hover:text-[color:var(--main-color)]">Accessoires</a>
-        </div>
-    </nav>
+    <!-- 🧭 Navigation catégories -->
+        <nav class="bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex space-x-4 overflow-x-auto text-sm text-gray-700">
+        @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+            <a href="{{ route('produits.index', ['category' => $cat = 'Toutes' ? $cat : null]) }}"
+                class="font-bold hover:text-[color:var(--main-color)] whitespace-nowrap">{{ $cat }}</a>
+        @endforeach
+    </div>
+</nav>
+
 </header>
 <!-- Pourquoi choisir GlobalDrop - Style TEMU -->
 <section class="mt-6 py-6 bg-white border-t border-b border-gray-200">
@@ -156,9 +174,12 @@
 
         </div>
     </div>
+    
 </section>
 
-
+<div class="bg-gray-200 text-center py-4 text-xs text-gray-500">
+        &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
+    </div>
 <main class="flex-grow">
     @yield('content')
 </main>
@@ -173,16 +194,9 @@
 <div>
     <h3 class="text-gray-800 font-semibold mb-2">Suivez-nous</h3>
     <div class="flex space-x-4 text-[color:var(--main-color)]">
-        <!-- TikTok -->
-        <a href="http://www.tiktok.com/@globaldrop41" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="hover:text-pink-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9.5 3h3v12.79a3.21 3.21 0 1 1-3-3v-9.79z"/>
-                <path d="M15.5 6.54a6 6 0 0 0 3 5.43v3.5a9 9 0 1 1-9-9v2a6 6 0 0 0 3 1.57z"/>
-            </svg>
-        </a>
 
         <!-- WhatsApp -->
-        <a href="https://wa.me/212723455155" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="hover:text-green-600">
+        <a href="https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="hover:text-green-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29zM12 19a7 7 0 0 1-3.68-1.03l-.26-.15-2.21.58.59-2.15-.17-.28A7 7 0 1 1 12 19zm3.44-4.33c-.2-.1-1.18-.58-1.36-.65s-.31-.1-.44.1-.51.65-.62.78-.23.15-.43.05a5.7 5.7 0 0 1-1.68-1.04 6.37 6.37 0 0 1-1.18-1.46c-.12-.2 0-.31.08-.41s.19-.23.29-.34a.5.5 0 0 0 .07-.46c-.07-.15-.44-1.06-.6-1.46s-.32-.34-.44-.34-.26-.02-.4-.02a.83.83 0 0 0-.6.29 2.55 2.55 0 0 0-.77 1.83 4.42 4.42 0 0 0 .84 2.11 9.14 9.14 0 0 0 4.32 3.71 5.09 5.09 0 0 0 2.26.39 3.54 3.54 0 0 0 2.26-1.44 3.68 3.68 0 0 0 .25-1.42c0-.24-.18-.34-.38-.44z"/>
             </svg>
@@ -196,13 +210,24 @@
                 <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
             </svg>
         </a>
-
         <!-- Facebook -->
-        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-blue-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12a9.94 9.94 0 0 0 7.21 9.68v-6.85H6.9v-2.83h2.31v-2.17c0-2.28 1.36-3.54 3.45-3.54.99 0 2.03.18 2.03.18v2.23h-1.14c-1.13 0-1.48.7-1.48 1.42v1.88h2.52l-.4 2.83h-2.12v6.85A9.94 9.94 0 0 0 22 12z"/>
-            </svg>
-        </a>
+<a href="https://www.facebook.com/share/19BrbhLzb2/" 
+   target="_blank" rel="noopener noreferrer" aria-label="Facebook" 
+   class="hover:text-blue-600 ml-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5.006 3.657 9.128 8.438 9.878v-6.987H7.898v-2.89h2.54V9.845c0-2.507 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 17.006 22 12z"/>
+    </svg>
+</a>
+<!-- TikTok -->
+<a href="http://www.tiktok.com/@globaldrop41" 
+   target="_blank" rel="noopener noreferrer" aria-label="TikTok" 
+   class="hover:text-black ml-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9.5 3C8.119 3 7 4.119 7 5.5v13C7 19.881 8.119 21 9.5 21s2.5-1.119 2.5-2.5v-5.671c.416.112.855.171 1.309.171 2.485 0 4.5-2.015 4.5-4.5V4h-2v4.5c0 1.378-1.122 2.5-2.5 2.5S11 9.878 11 8.5V5.5C11 4.119 9.881 3 8.5 3h-1z"/>
+    </svg>
+</a>
+
+        
     </div>
 </div>
 
@@ -305,7 +330,7 @@
 
 
 <!-- Bouton WhatsApp flottant -->
-<a href="https://wa.me/212723455155" target="_blank" class="fixed bottom-4 right-4 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg flex items-center justify-center">
+<a href="https://wa.me/22890171179" target="_blank" class="fixed bottom-4 right-4 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg flex items-center justify-center">
     <!-- Icône WhatsApp -->
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
         <path d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29zM12 19a7 7 0 0 1-3.68-1.03l-.26-.15-2.21.58.59-2.15-.17-.28A7 7 0 1 1 12 19zm3.44-4.33c-.2-.1-1.18-.58-1.36-.65s-.31-.1-.44.1-.51.65-.62.78-.23.15-.43.05a5.7 5.7 0 0 1-1.68-1.04 6.37 6.37 0 0 1-1.18-1.46c-.12-.2 0-.31.08-.41s.19-.23.29-.34a.5.5 0 0 0 .07-.46c-.07-.15-.44-1.06-.6-1.46s-.32-.34-.44-.34-.26-.02-.4-.02a.83.83 0 0 0-.6.29 2.55 2.55 0 0 0-.77 1.83 4.42 4.42 0 0 0 .84 2.11 9.14 9.14 0 0 0 4.32 3.71 5.09 5.09 0 0 0 2.26.39 3.54 3.54 0 0 0 2.26-1.44 3.68 3.68 0 0 0 .25-1.42c0-.24-.18-.34-.38-.44z"/>

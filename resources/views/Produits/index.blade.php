@@ -49,7 +49,7 @@
                             {{ number_format($product->price, 0, ',', ' ') }} FCFA
                         </span>
                     </div>
-
+                    
                     <a href="{{ route('produits.show', $product->id) }}" 
                        class="bg-[#ab3fd6] hover:bg-purple-700 text-white text-sm px-3 py-1 rounded flex items-center gap-1 transition duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

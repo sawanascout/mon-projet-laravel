@@ -21,14 +21,14 @@
             </div>
 
             <div>
-                <label for="city" class="block font-semibold text-gray-700 mb-1">🏙️ Ville</label>
+                <label for="city" class="block font-semibold text-gray-700 mb-1"> Ville</label>
                 <input type="text" name="city" id="city" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
 
                 
             </div>
 
             <div>
-                <label for="phone_code" class="block font-semibold text-gray-700 mb-1">📞 Indicatif pays</label>
+                <label for="phone_code" class="block font-semibold text-gray-700 mb-1"> Indicatif pays</label>
                 <select name="phone_code" id="phone_code" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
                     <option value="" disabled selected>Choisissez l'indicatif</option>
                     <option value="+228">+228 (Togo)</option>
@@ -36,14 +36,14 @@
             </div>
 
             <div>
-                <label for="whatsapp_number" class="block font-semibold text-gray-700 mb-1">💬 Numéro WhatsApp</label>
+                <label for="whatsapp_number" class="block font-semibold text-gray-700 mb-1"> Numéro WhatsApp</label>
                 <input type="text" name="whatsapp_number" id="whatsapp_number" placeholder="Ex: 90000000" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
                 <small class="text-gray-500">Entrez le numéro sans indicatif.</small>
             </div>
         </div>
 
         <!-- Panier -->
-        <h2 class="text-2xl font-semibold text-gray-800 mt-10 mb-4 border-b pb-2">🧺 Contenu du panier</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 mt-10 mb-4 border-b pb-2"> Contenu du panier</h2>
 
         <ul class="space-y-6">
             @foreach($cart as $key => $item)
@@ -60,12 +60,12 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">🎨 Couleur</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1"> Couleur</label>
                             <input type="text" name="cart[{{ $key }}][color]" value="{{ $item['color'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">📏 Taille</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Dimension</label>
                             <input type="text" name="cart[{{ $key }}][size]" value="{{ $item['size'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
                         </div>
                     </div>

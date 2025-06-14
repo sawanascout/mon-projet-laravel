@@ -65,5 +65,26 @@
             </a>
         </div>
     @endif
+    @if ($totalSpent >= 30000)
+    <div class="mt-10 text-center bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+        <div class="text-2xl mb-2">🏆 Félicitations !</div>
+        <p class="text-gray-700 mb-4">
+            Vous avez dépensé un total de <strong>{{ number_format($totalSpent, 0, ',', ' ') }} FCFA</strong>.
+            Rejoignez notre groupe VIP pour clients fidèles et profitez d’avantages exclusifs !
+        </p>
+        <a href="https://chat.whatsapp.com/K7EdZFjch2M2UFmz08f8tN" target="_blank"
+           class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-5 rounded-full transition">
+            👑 Devenir VIP
+        </a>
+    </div>
+@else
+    <div class="mt-10 text-center text-sm text-gray-500">
+        🕓 Vous devez cumuler au moins <strong>30 000 FCFA</strong> d’achats pour accéder au groupe VIP.
+        <br>
+        Total actuel : <strong>{{ number_format($totalSpent, 0, ',', ' ') }} FCFA</strong>
+    </div>
+@endif
+
+
 </div>
 @endsection

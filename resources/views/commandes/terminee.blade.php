@@ -7,6 +7,7 @@
     <p class="text-lg mb-4">Votre commande <strong>{{ $order->order_number }}</strong> a été enregistrée avec succès.</p>
 
     <p class="text-gray-700 mb-6">Nous vous contacterons bientôt pour la livraison. </p>
+    <p class="text-gray-700 mb-6">Cliquer sur le watsapp de la page pour envoyer votre capture de payement </p>
 
     <div class="flex justify-center gap-4">
         <a href="{{ route('produits.index') }}" class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-2 rounded">

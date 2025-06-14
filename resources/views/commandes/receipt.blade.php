@@ -132,7 +132,7 @@
                         </div>
                         <div class="item-details">
                             Couleur : {{ $item->color ?? 'Non précisée' }}<br>
-                            Taille : {{ $item->size ?? 'Non précisée' }}
+                            Dimension : {{ $item->size ?? 'Non précisée' }}
                         </div>
                     </li>
                 @endforeach
@@ -144,7 +144,7 @@
             <p>Merci pour votre commande chez GlobalDrop !</p>
             <p>Pour envoyer la capture de votre paiement, cliquez ici :
                 <a 
-                   href="https://wa.me/212723455155?text=Bonjour%2C%20je%20vous%20envoie%20la%20capture%20de%20ma%20transaction%20pour%20la%20commande%20%23{{ $order->id }}." 
+                   href="https://wa.me/22890171179?text=Bonjour%2C%20je%20vous%20envoie%20la%20capture%20de%20ma%20transaction%20pour%20la%20commande%20%23{{ $order->id }}." 
                    target="_blank" 
                    class="whatsapp-link"
                 >
@@ -154,7 +154,7 @@
         </div>
 
         <div class="contact-info">
-            <p>GlobalDrop – Tél : +228 90000000 – Email : globaldrop2428@gmail.com</p>
+            <p>GlobalDrop – Tél : +228 90171179 – Email : globaldrop2428@gmail.com</p>
             <p>© {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.</p>
         </div>
     </div>

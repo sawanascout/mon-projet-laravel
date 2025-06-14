@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-            $this->call(ProductSeeder::class);
-        
+    {            $this->call (CategorySeeder::class);
+
+             $this->call(ProductSeeder::class);
+
+
+
 
     }
 }

@@ -28,7 +28,7 @@ public function invite(Request $request)
     }
 
     // Rediriger vers le groupe WhatsApp
-    return redirect('https://chat.whatsapp.com/EAiiYNGNOJfIkhgqDN1Wol');
+    return redirect('https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q');
 }
 
 

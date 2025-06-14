@@ -19,6 +19,9 @@ Route::get('/', [ProductController::class, 'index'])->name('produits.index');
 Route::prefix('produits')->group(function () {
     Route::get('/{id}', [ProductController::class, 'show'])->name('produits.show');
 });
+Route::get('/promotions', [ProductController::class, 'promotions'])->name('promotions');
+Route::get('/categorie/{slug}', [ProductController::class, 'byCategory'])->name('category.products');
+
 
 Route::get('/categorie/{category}', [ProductController::class, 'byCategory'])->name('produits.category');
 
@@ -37,11 +40,12 @@ Route::prefix('custom')->group(function () {
 // --------- PANIER ---------
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/add/{id}', [CartController::class, 'add'])->name('cart.add');
+});
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('/clear', [CartController::class, 'clear'])->name('cart.clear');
-});
+
 
 // --------- AVIS PRODUITS ---------
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
@@ -51,6 +55,9 @@ Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->
 
 Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
 Route::get('/invite', [ParrainageController::class, 'invite'])->name('invite');
+Route::get('/nous-suivre', function () {
+    return view('page'); // page.blade.php
+})->name('page');
 
 
 // --------- ROUTES PROTÉGÉES (si besoin) ---------

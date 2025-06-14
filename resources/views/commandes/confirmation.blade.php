@@ -24,8 +24,8 @@
                         <span>{{ $item->name }} <span class="text-sm font-normal">x{{ $item->quantity }}</span></span>
                     </div>
                     <div class="text-sm text-gray-600 ml-2 mt-1">
-                        <p>🎨 Couleur : {{ $item->color ?? 'Non précisée' }}</p>
-                        <p>📏 Taille : {{ $item->size ?? 'Non précisée' }}</p>
+                        <p>Couleur : {{ $item->color ?? 'Non précisée' }}</p>
+                        <p>Dimension : {{ $item->size ?? 'Non précisée' }}</p>
                     </div>
                 </li>
             @endforeach
@@ -58,48 +58,49 @@
         </div>
 
         <!-- Choix du moyen de paiement -->
-        <!-- Choix du moyen de paiement -->
-<div id="payment-methods" class="hidden">
-    <!-- Mix By Yas -->
-    <div class="mb-3">
-        <label class="flex items-center cursor-pointer">
-            <input type="radio" name="payment_method" id="yas" value="yas" class="form-radio text-purple-600">
-            <span class="ml-3">Mix By Yas</span>
-        </label>
-        <div class="ml-6 mt-2 hidden" id="yas-info">
-            <ul class="text-sm text-gray-700 list-disc list-inside">
-                <p>Tapez *145*1# et suiver les procedure de transfert </p>
+        <div id="payment-methods" class="hidden">
+            <!-- Mix By Yas -->
+            <div class="mb-3">
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="payment_method" id="yas" value="yas" class="form-radio text-purple-600">
+                    <span class="ml-3">Mix By Yas</span>
+                </label>
+                <div class="ml-6 mt-2 hidden" id="yas-info">
+                    <ul class="text-sm text-gray-700 list-disc list-inside">
+                        <p>Tapez *145# et suivez les procédures de transfert.</p>
+                        <li><strong>Numéro :</strong> +228 90 17 11 79</li>
+                        <li><strong>Bénéficiaire :</strong>  </li>
+                    </ul>
+<p class="mt-4 text-sm text-yellow-800 bg-yellow-100 border-l-4 border-yellow-500 p-3 rounded">
+    ⚠️ <strong>Important :</strong> Après votre paiement, <u>il est obligatoire</u> d’envoyer une capture d’écran sur WhatsApp pour que votre transaction soit validée.
+</p>
+                </div>
+            </div>
 
-                <li><strong>Numéro :</strong> +228 90 17 11 79</li>
-                <li><strong>Bénéficiaire :</strong> GLOBAL DROP</li>
-            </ul>
-            <p class="mt-2 text-sm text-gray-600">Envoyez une capture sur WhatsApp après paiement pour validation.</p>
+            <!-- Flooz -->
+            <div class="mb-3">
+                <label class="flex items-center cursor-pointer">
+                    <input type="radio" name="payment_method" id="flooz" value="flooz" class="form-radio text-purple-600">
+                    <span class="ml-3">Flooz</span>
+                </label>
+                <div class="ml-6 mt-2 hidden" id="flooz-info">
+                    <ul class="text-sm text-gray-700 list-disc list-inside">
+                        <p>Tapez *155# et suivez les procédures de transfert.</p>
+                        <li><strong>Numéro :</strong> +228 98 30 47 69</li>
+                        <li><strong>Bénéficiaire :</strong> </li>
+                    </ul>
+<p class="mt-4 text-sm text-yellow-800 bg-yellow-100 border-l-4 border-yellow-500 p-3 rounded">
+    ⚠️ <strong>Important :</strong> Après votre paiement, <u>il est obligatoire</u> d’envoyer une capture d’écran sur WhatsApp pour que votre transaction soit validée.
+</p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Flooz -->
-    <div class="mb-3">
-        <label class="flex items-center cursor-pointer">
-            <input type="radio" name="payment_method" id="flooz" value="flooz" class="form-radio text-purple-600">
-            <span class="ml-3">Flooz</span>
-        </label>
-        <div class="ml-6 mt-2 hidden" id="flooz-info">
-            <ul class="text-sm text-gray-700 list-disc list-inside">
-                <p>Tapez *155*1# et suiver les procedure de transfert </p>
-                <li><strong>Numéro :</strong> +228 98 30 47 69</li>
-                <li><strong>Bénéficiaire :</strong> GLOBAL DROP</li>
-            </ul>
-            <p class="mt-2 text-sm text-gray-600">Envoyez une capture sur WhatsApp après paiement pour validation.</p>
-        </div>
-    </div>
-</div>
-
     </div>
 
     <!-- Formulaire -->
-    <form action="{{ route('commandes.terminee', $order->id) }}" method="GET">       
-         @csrf
-        <input type="hidden" name="payment_method" id="payment_method_selected" value="yas">
+    <form action="{{ route('commandes.terminee', $order->id) }}" method="GET">
+        @csrf
+        <input type="hidden" name="payment_method" id="payment_method_selected" value="">
         <div class="text-center mt-8">
             <button
                 type="submit"
