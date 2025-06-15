@@ -2,150 +2,145 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Commandes;
-use App\Models\Paniers;
-use App\Models\Elements_Paniers;
 use App\Models\Ligne_Commandes;
-use Illuminate\Support\Str; 
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-
+use App\Models\Produits;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\View;
 
 class CommandesController extends Controller
 {
-    /**
-     * Affiche la liste des commandes du client connecté.
-     */
-    public function index()
+    public function mesCommandes()
     {
-        $commandes = Commandes::where('user_id', Auth::id())->with('lignes.produit')->latest()->get();
+        $userId = Auth::id();
 
-        return view('client.commandes-index', compact('commandes'));
+        $commandes = Commandes::where('user_id', $userId)->latest()->paginate(10);
+        $commandeCount = $commandes->count();
+        $totalSpent = Commandes::where('user_id', $userId)->sum('total');
+
+        return view('commandes.mes-commandes', compact('commandes', 'commandeCount', 'totalSpent'));
     }
-public function Afficher_Tout()
+
+    public function create()
     {
-         if (!Auth::user()->is_admin) {
-        abort(403);
-    }
-        $commandes = Commandes::all();
-
-        return view('admin.commandes-index', compact('commandes'));
-    }
-    /**
-     * Affiche les détails d'une commande spécifique.
-     */
-    public function show($id)
-    {
-        $commande = Commandes::with('lignes.produit')->findOrFail($id);
-
-        if ($commande->user_id !== Auth::id()) {
-            abort(403);
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
         }
 
-        return view('client.commandes-show', compact('commande'));
+        $cart = session()->get('cart', []);
+        return view('commandes.create', compact('cart'));
     }
 
-    /**
-     * Crée une commande à partir du panier de l'utilisateur.
-     */
     public function store(Request $request)
     {
-         $request->validate([
-        'ville' => 'required|string|max:255',
-        'commentaire' => 'nullable|string|max:1000',
-        'methode'=> 'required|string|max:1000',
-        ]);
-        $user = Auth::user();
-        $panier = $user->panier;
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
+        }
 
-        if (!$panier || $panier->elements->isEmpty()) {
+        $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'whatsapp_number' => 'nullable|string|max:20',
+            'city' => 'required|string|max:100',
+            'cart' => 'required|array',
+        ]);
+
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
             return redirect()->back()->with('error', 'Votre panier est vide.');
         }
 
-        $total = $panier->elements->sum(function ($e) {
-            return $e->quantite * $e->prix;
-        });
-        $orderNumber = 'CMD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(5));
+        $total = 0;
 
-        DB::transaction(function () use ($user, $panier, $total, $request, $orderNumber) {
+        foreach ($cart as $productId => $item) {
+            if (!isset($item['price'], $item['quantity'])) {
+                return redirect()->back()->with('error', 'Produit invalide dans le panier.');
+            }
+
+            $total += $item['price'] * $item['quantity'];
+            $item['color'] = $request->input("cart.$productId.color");
+            $item['size'] = $request->input("cart.$productId.size");
+            $cart[$productId] = $item;
+        }
+
+        $now = Carbon::now();
+        $orderNumber = 'GD' . $now->format('Ymd') . str_pad(Commandes::whereDate('created_at', $now->toDateString())->count() + 1, 2, '0', STR_PAD_LEFT);
+
         $commande = Commandes::create([
+            'user_id' => Auth::id(),
             'order_number' => $orderNumber,
-            'user_id' => $user->id,
-            'statut' => 'en attente',
-            'city' => $request->ville,
-            'commentaire' => $request->commentaire,
+            'city' => $request->city,
             'total' => $total,
-            'methode_paiement' => $request->methode,
+            'statut' => 'pending',
         ]);
 
-        foreach ($panier->elements as $element) {
+        foreach ($cart as $productId => $item) {
             Ligne_Commandes::create([
                 'commandes_id' => $commande->id,
-                'produits_id' => $element->produits_id,
-                'couleur'=>$element->couleur,
-                'taille'=>$element->taille,
-                'quantite' => $element->quantite,
-                'prix' => $element->prix,
+                'produits_id' => $productId,
+                'quantite' => $item['quantity'],
+                'prix' => $item['price'],
+                'couleur' => $item['color'] ?? null,
+                'taille' => $item['size'] ?? null,
             ]);
         }
-        Paiement::create([
-        'commandes_id' => $commande->id,
-        'montant' => $commande->total,
-        'methode' => $request->methode,
-        'statut' => 'en attente', // ou 'payé' si déjà validé
-]);
 
+        session()->forget('cart');
 
-        // Vider le panier
-        $panier->elements()->delete();
-          });
-        return redirect()->route('client.profil')->with('success', 'Commande passée avec succès.');
+        return redirect()->route('commandes.confirmation', ['id' => $commande->id]);
     }
-    public function commandesParDate(Request $request)
+
+    public function feedback(Request $request, $id)
     {
+        $commande = Commandes::findOrFail($id);
+
         $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'commentaire' => 'nullable|string|max:1000',
         ]);
 
-        $start = Carbon::parse($request->start_date)->startOfDay();
-        $end = Carbon::parse($request->end_date)->endOfDay();
+        $commande->commentaire = $request->commentaire;
+        $commande->save();
 
-        $commandes = Commandes::whereBetween('created_at', [$start, $end])
-            ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
-
-        // Préparer les données pour le graphique
-        $dates = $commandes->pluck('date');
-        $totals = $commandes->pluck('total');
-
-        return view('admin.commandes-graphique', [
-            'dates' => $dates,
-            'totals' => $totals,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
+        return back()->with('success', 'Merci pour votre avis !');
     }
-    public function suivreParNumero($orderNumber)
+
+    public function terminee(Request $request, $id)
     {
-        $commande = Commandes::where('order_number', $orderNumber)
-            ->with('lignes.produit')
-            ->firstOrFail();
+        $commande = Commandes::findOrFail($id);
 
-        return view('client.commandes-suivi', compact('commande'));
+        $request->validate([
+            'payment_method' => 'required|in:cod,yas,flooz',
+        ]);
+
+        $commande->methode_paiement = $request->payment_method;
+        $commande->statut = 'confirmed';
+        $commande->save();
+
+        return view('commandes.terminee', compact('commande'));
     }
-        public function mesCommandes()
-{
-    $userId = Auth::id();
 
-    $orders = Commandes::where('user_id', $userId)->latest()->paginate(10);
+    public function downloadReceipt($id)
+    {
+        $commande = Commandes::with('lignes.produit')->findOrFail($id);
 
+        $html = View::make('commandes.receipt', compact('commande'))->render();
 
-    return view('client.profil', compact('orders'));
-}
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
 
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="recu_commande_' . $commande->id . '.pdf"');
+    }
+
+    public function confirmation($id)
+    {
+        $commande = Commandes::findOrFail($id);
+        return view('commandes.confirmation', compact('commande'));
+    }
 }

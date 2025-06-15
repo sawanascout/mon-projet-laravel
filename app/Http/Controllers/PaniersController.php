@@ -13,81 +13,101 @@ class PaniersController extends Controller
     /**
      * Affiche le panier de l'utilisateur connecté.
      */
-   public function index()
-{
-    $user = Auth::user();
+    public function index()
+    {
+        $user = Auth::user();
+        $panier = Paniers::where('user_id', $user->id)->first();
 
-    $panier = Paniers::where('user_id', $user->id)->first();
+        $elements = $panier ? $panier->elements()->with('produit')->get() : collect();
 
-    if (!$panier) {
-        // Panier vide
-        $elements = collect();
-    } else {
-        // Avec la relation produit
-        $elements = $panier->elements()->with('produit')->get();
+        $total = $elements->reduce(function ($carry, $element) {
+            return $carry + ($element->prix * $element->quantite);
+        }, 0);
+
+        return view('client.panier-index', compact('elements', 'total'));
     }
-
-    return view('client.panier-index', compact('elements'));
-}
 
     /**
      * Ajoute un produit au panier.
      */
-  public function store(Request $request, $produit_id)
-{
-    $user = Auth::user();
-    $panier = Paniers::firstOrCreate(['user_id' => $user->id]);
+    public function store(Request $request, $produit_id)
+    {
+        $user = Auth::user();
+        $panier = Paniers::firstOrCreate(['user_id' => $user->id]);
 
-    $request->validate([
-        'couleur' => 'required|string',
-        'taille' => 'required|string',
-        'quantite' => 'required|numeric|min:1|max:1000',
-    ]);
-
-    $produit = Produits::findOrFail($produit_id);
-
-    $element = Elements_Paniers::where('paniers_id', $panier->id)
-        ->where('produits_id', $produit->id)
-        ->where('couleur', $request->couleur)
-        ->where('taille', $request->taille)
-        ->first();
-
-    if ($element) {
-        $element->quantite += $request->quantite;
-        $element->save();
-    } else {
-        Elements_Paniers::create([
-            'paniers_id' => $panier->id,
-            'produits_id' => $produit->id,
-            'couleur' => $request->couleur,
-            'taille' => $request->taille,
-            'quantite' => $request->quantite,
-            'prix' => $produit->prix,
+        $request->validate([
+            'couleur' => 'required|string',
+            'taille' => 'required|string',
+            'quantite' => 'required|integer|min:1|max:1000',
         ]);
+
+        $produit = Produits::findOrFail($produit_id);
+
+        $element = Elements_Paniers::where([
+            ['paniers_id', $panier->id],
+            ['produits_id', $produit->id],
+            ['couleur', $request->couleur],
+            ['taille', $request->taille],
+        ])->first();
+
+        if ($element) {
+            $element->quantite += $request->quantite;
+            $element->prix = $produit->prix * $element->quantite;
+            $element->save();
+        } else {
+            Elements_Paniers::create([
+                'paniers_id'   => $panier->id,
+                'produits_id'  => $produit->id,
+                'couleur'      => $request->couleur,
+                'taille'       => $request->taille,
+                'quantite'     => $request->quantite,
+                'prix'         => $produit->prix * $request->quantite,
+            ]);
+        }
+
+        return redirect()->route('client.panier-index')->with('success', 'Produit ajouté au panier.');
     }
-
-    return redirect()->route('client.panier-index')->with('success', 'Produit ajouté au panier.');
-}
-
 
     /**
-     * Supprime un produit du panier.
+     * Met à jour la quantité d’un élément.
      */
-  public function supprimer($id)
-{
-    $element = Elements_Paniers::with('panier')->findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $element = Elements_Paniers::with('panier')->findOrFail($id);
 
-    if ($element->panier && $element->panier->user_id === Auth::id()) {
-        $element->delete();
-        return redirect()->route('client.panier-index')->with('success', 'Produit retiré du panier.');
+        if ($element->panier->user_id !== Auth::id()) {
+            return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
+        }
+
+        $request->validate([
+            'quantite' => 'required|integer|min:1|max:1000',
+        ]);
+
+        $element->quantite = $request->quantite;
+        $element->prix = $element->produit->prix * $request->quantite;
+        $element->save();
+
+        return redirect()->route('client.panier-index')->with('success', 'Quantité mise à jour.');
     }
 
-    return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
-}
-/**
-     * Vide le panier de l'utilisateur.
+    /**
+     * Supprime un élément du panier.
      */
+    public function supprimer($id)
+    {
+        $element = Elements_Paniers::with('panier')->findOrFail($id);
 
+        if ($element->panier->user_id === Auth::id()) {
+            $element->delete();
+            return redirect()->route('client.panier-index')->with('success', 'Produit retiré du panier.');
+        }
+
+        return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
+    }
+
+    /**
+     * Vide tout le panier.
+     */
     public function vider()
     {
         $user = Auth::user();
@@ -99,39 +119,4 @@ class PaniersController extends Controller
 
         return redirect()->route('client.panier-index')->with('success', 'Panier vidé.');
     }
-    
-    public function mettreAJourQuantite(Request $request, $id)
-    {
-        $element = Elements_Paniers::findOrFail($id);
-        $userId = Auth::id();
-
-        if ($element->panier->user_id !== $userId) {
-            return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
-        }
-
-        $quantite = max((int) $request->input('quantite', 1), 1);
-        $element->quantité = $quantite;
-        $element->prix = $element->produit->prix * $quantite; // Met à jour prix total pour cet élément
-        $element->save();
-
-        return redirect()->route('client.panier-index')->with('success', 'Quantité mise à jour.');
-    }
-    public function update(Request $request, $id)
-{
-    $element = Elements_Paniers::findOrFail($id);
-
-    if ($element->panier && $element->panier->user_id === Auth::id()) {
-        $request->validate([
-            'quantite' => 'required|integer|min:1|max:1000',
-        ]);
-
-        $element->quantite = $request->quantite;
-        $element->save();
-
-        return redirect()->route('client.panier-index')->with('success', 'Quantité mise à jour.');
-    }
-
-    return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
-}
-
 }

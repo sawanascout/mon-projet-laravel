@@ -14,6 +14,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('produits.index') }}">Nos Produits</a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('produits.index') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('produits.index') }}">Produits</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Promos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+             
+            </div>
 
                 @auth
                     <li class="nav-item">

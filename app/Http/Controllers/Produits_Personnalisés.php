@@ -5,136 +5,57 @@ namespace App\Http\Controllers;
 use App\Models\ProduitPersonnalise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ProduitPersonnaliseController extends Controller
 {
     /**
-     * Affiche la liste des produits personnalisés de l'utilisateur connecté.
+     * Affiche le formulaire de création d’un produit personnalisé.
      */
     public function index()
-    {
-        $produits = ProduitPersonnalise::where('user_id', Auth::id())->latest()->get();
-        return view('produits_personnalises.index', compact('produits'));
-    }
+{
+    $demandes = ProduitPersonnalise::where('user_id', Auth::id())->latest()->get();
+    return view('custom.index', compact('demandes'));
+}
 
-    /**
-     * Affiche le formulaire de création.
-     */
     public function create()
     {
-        return view('produits_personnalises.create');
+        return view('custom.create');
     }
 
     /**
-     * Enregistre un nouveau produit personnalisé.
+     * Stocke une nouvelle demande de produit personnalisé.
      */
     public function store(Request $request)
     {
         $request->validate([
             'nom_complet' => 'required|string|max:255',
-            'genre' => 'required|string|max:50',
-            'description' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|max:2048',
+            'genre' => 'required|in:homme,femme',
+            'image' => 'required|image',
+            'description' => 'nullable|string',
         ]);
 
-        $imagePath = null;
+        // Stockage de l’image
+        $path = $request->file('image')->store('custom_products', 'public');
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('produits_personnalises', 'public');
-        }
-
-        ProduitPersonnalise::create([
+        // Création de la demande personnalisée
+        $produit = ProduitPersonnalise::create([
             'user_id' => Auth::id(),
             'nom_complet' => $request->nom_complet,
             'genre' => $request->genre,
+            'image' => $path,
             'description' => $request->description,
-            'image' => $imagePath,
-            'statut' => 'en attente', // Par défaut
+            'statut' => 'pending',
         ]);
 
-        return redirect()->route('client.profil')->with('success', 'Produit personnalisé créé avec succès.');
-    }
+        // Lien de l’image
+        $imageUrl = asset('storage/' . $path);
 
-    /**
-     * Affiche un produit personnalisé.
-     */
-    public function show($id)
-    {
-        $produit = ProduitPersonnalise::findOrFail($id);
+        // Message WhatsApp pré-rempli
+        $message = "Bonjour, je souhaite commander un produit personnalisé.\nVoici le lien vers mon image : $imageUrl\nMerci de me contacter.";
+        $whatsappMessage = urlencode($message);
+        $whatsappNumber = '212723455155';
+        $whatsappUrl = "https://wa.me/$whatsappNumber?text=$whatsappMessage";
 
-        if ($produit->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        return view('produits_personnalises.show', compact('produit'));
-    }
-
-    /**
-     * Formulaire de modification.
-     */
-    public function edit($id)
-    {
-        $produit = ProduitPersonnalise::findOrFail($id);
-
-        if ($produit->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        return view('produits_personnalises.edit', compact('produit'));
-    }
-
-    /**
-     * Mise à jour d'un produit personnalisé.
-     */
-    public function update(Request $request, $id)
-    {
-        $produit = ProduitPersonnalise::findOrFail($id);
-
-        if ($produit->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $request->validate([
-            'nom_complet' => 'required|string|max:255',
-            'genre' => 'required|string|max:50',
-            'description' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|max:2048',
-        ]);
-
-        if ($request->hasFile('image')) {
-            if ($produit->image) {
-                Storage::disk('public')->delete($produit->image);
-            }
-            $produit->image = $request->file('image')->store('produits_personnalises', 'public');
-        }
-
-        $produit->update([
-            'nom_complet' => $request->nom_complet,
-            'genre' => $request->genre,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('produits_personnalises.index')->with('success', 'Produit mis à jour avec succès.');
-    }
-
-    /**
-     * Supprimer un produit personnalisé.
-     */
-    public function destroy($id)
-    {
-        $produit = ProduitPersonnalise::findOrFail($id);
-
-        if ($produit->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        if ($produit->image) {
-            Storage::disk('public')->delete($produit->image);
-        }
-
-        $produit->delete();
-
-        return redirect()->route('produits_personnalises.index')->with('success', 'Produit supprimé avec succès.');
+        return view('custom.success', compact('imageUrl', 'whatsappUrl'));
     }
 }
