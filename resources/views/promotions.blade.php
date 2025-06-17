@@ -6,7 +6,7 @@
     <h1 class="text-2xl font-bold text-center mb-10 text-[#ab3fd6]">Promotions</h1>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @forelse ($products as $product)
+        @forelse ($produits as $produit)
             <div class="group relative bg-white rounded-xl border shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 flex flex-col">
                 
                 <!-- Badge promo -->
@@ -14,39 +14,39 @@
                     Promo
                 </div>
 
-                <a href="{{ route('produits.show', $product->id) }}">
+                <a href="{{ route('produits.show', $produit->id) }}">
                     <img 
-                        src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/default.jpg') }}" 
-                        alt="{{ $product->name }}" 
+                        src="{{ $produit->photo ? asset('storage/' . $produit->photo) : asset('images/default.jpg') }}" 
+                        alt="{{ $produit->nom }}" 
                         class="w-full h-48 object-cover rounded-t-xl group-hover:scale-105 transition duration-300"
                     >
                 </a>
 
                 <div class="flex flex-col flex-grow p-4">
-                    <h2 class="text-base font-semibold mb-1 text-gray-800">{{ $product->name }}</h2>
+                    <h2 class="text-base font-semibold mb-1 text-gray-800">{{ $produit->name }}</h2>
 
                     <!-- Notation étoilée -->
                     <div class="flex items-center mb-2">
                         @for ($i = 1; $i <= 5; $i++)
-                            <span class="{{ $i <= round($product->rating) ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
+                            <span class="{{ $i <= round($produit->note) ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
                         @endfor
-                        <span class="text-xs text-gray-500 ml-2">{{ number_format($product->rating, 1) }}/5</span>
+                        <span class="text-xs text-gray-500 ml-2">{{ number_format($produit->note, 1) }}/5</span>
                     </div>
 
                     <!-- Description -->
-                    <p class="text-sm text-gray-600 mb-4">{{ Str::limit($product->description, 60) }}</p>
+                    <p class="text-sm text-gray-600 mb-4">{{ Str::limit($produit->description, 60) }}</p>
 
                     <div class="mt-auto flex justify-between items-end">
                         <div>
                             <span class="text-sm text-gray-400 line-through">
-                                {{ number_format($product->old_price, 0, ',', ' ') }} FCFA
+                                {{ number_format($produit->ancien_prix, 0, ',', ' ') }} FCFA
                             </span><br>
                             <span class="text-[#ab3fd6] font-bold text-lg">
-                                {{ number_format($product->price, 0, ',', ' ') }} FCFA
+                                {{ number_format($produit->prix, 0, ',', ' ') }} FCFA
                             </span>
                         </div>
 
-                        <a href="{{ route('produits.show', $product->id) }}" 
+                        <a href="{{ route('produits.show', $produit->id) }}" 
                         class="bg-[#ab3fd6] hover:bg-purple-700 text-white text-sm px-3 py-1 rounded flex items-center gap-1 transition duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -66,7 +66,7 @@
 
     <!-- Pagination -->
     <div class="mt-10 flex justify-center">
-        {{ $products->appends(request()->query())->links() }}
+        {{ $produits->appends(request()->query())->links() }}
     </div>
 </div>
 @endsection

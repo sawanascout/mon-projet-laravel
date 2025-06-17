@@ -4,7 +4,7 @@
 <div class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded mt-8 text-center">
     <h1 class="text-3xl font-extrabold mb-4 text-purple-600">Merci pour votre commande !</h1>
 
-    <p class="text-lg mb-4">Votre commande <strong>{{ $order->order_number }}</strong> a été enregistrée avec succès.</p>
+    <p class="text-lg mb-4">Votre commande <strong>{{ $commande->order_number }}</strong> a été enregistrée avec succès.</p>
 
     <p class="text-gray-700 mb-6">Nous vous contacterons bientôt pour la livraison. </p>
     <p class="text-gray-700 mb-6">Cliquer sur le watsapp de la page pour envoyer votre capture de payement </p>
@@ -22,7 +22,7 @@
     </div>
     
 
-    <form action="{{ route('commandes.feedback', $order->id) }}" method="POST" class="mt-6">
+    <form action="{{ route('commandes.feedback', $commande->id) }}" method="POST" class="mt-6">
     @csrf
     <label for="commentaire" class="block mb-2 font-semibold text-gray-700">Que pensez-vous de GlobalDrop ?</label>
     <textarea name="commentaire" id="commentaire" rows="3"

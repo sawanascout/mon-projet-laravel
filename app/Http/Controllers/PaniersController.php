@@ -15,16 +15,8 @@ class PaniersController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $panier = Paniers::where('user_id', $user->id)->first();
-
-        $elements = $panier ? $panier->elements()->with('produit')->get() : collect();
-
-        $total = $elements->reduce(function ($carry, $element) {
-            return $carry + ($element->prix * $element->quantite);
-        }, 0);
-
-        return view('client.panier-index', compact('elements', 'total'));
+        $panier = session()->get('panier', []);
+        return view('cart.panier', compact('panier'));
     }
 
     /**
@@ -65,7 +57,7 @@ class PaniersController extends Controller
             ]);
         }
 
-        return redirect()->route('client.panier-index')->with('success', 'Produit ajouté au panier.');
+        return redirect()->route('cart.panier')->with('success', 'Produit ajouté au panier.');
     }
 
     /**
@@ -73,50 +65,62 @@ class PaniersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $element = Elements_Paniers::with('panier')->findOrFail($id);
+         $quantite = max((int) $request->input('quantite', 1), 1);
 
-        if ($element->panier->user_id !== Auth::id()) {
-            return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
+        $panier = session()->get('panier', []);
+
+        if (isset($panier[$id])) {
+            $panier[$id]['quantite'] = $quantite;
+            session(['panier' => $panier]);
         }
 
-        $request->validate([
-            'quantite' => 'required|integer|min:1|max:1000',
-        ]);
-
-        $element->quantite = $request->quantite;
-        $element->prix = $element->produit->prix * $request->quantite;
-        $element->save();
-
-        return redirect()->route('client.panier-index')->with('success', 'Quantité mise à jour.');
+        return redirect()->route('cart.index')->with('success', 'Quantité mise à jour.');
     }
 
     /**
      * Supprime un élément du panier.
      */
-    public function supprimer($id)
+    public function clear()
     {
-        $element = Elements_Paniers::with('panier')->findOrFail($id);
-
-        if ($element->panier->user_id === Auth::id()) {
-            $element->delete();
-            return redirect()->route('client.panier-index')->with('success', 'Produit retiré du panier.');
-        }
-
-        return redirect()->route('client.panier-index')->with('error', 'Accès refusé.');
+        session()->forget('panier');
+        return redirect()->route('cart.index')->with('success', 'Panier vidé.');
     }
 
     /**
      * Vide tout le panier.
      */
-    public function vider()
+    public function remove($id)
     {
-        $user = Auth::user();
-        $panier = Paniers::where('user_id', $user->id)->first();
+        $panier = session()->get('panier', []);
 
-        if ($panier) {
-            $panier->elements()->delete();
+        if (isset($panier[$id])) {
+            unset($panier[$id]);
+            session(['panier' => $panier]);
         }
 
-        return redirect()->route('client.panier-index')->with('success', 'Panier vidé.');
+        return redirect()->route('cart.index')->with('success', 'Produit supprimé du panier.');
     }
+    public function add(Request $request, $id)
+    {
+        $produit = Produits::findOrFail($id);
+        $quantite = max((int) $request->input('quantite', 1), 1);
+
+        $panier = session()->get('panier', []);
+
+        if (isset($panier[$id])) {
+            $panier[$id]['quantite'] += $quantite; // Incrémente
+        } else {
+            $panier[$id] = [
+                'nom' => $produit->nom,
+                'prix' => $produit->prix,
+                'quantite' => $quantite,
+                'photo' => $produit->photo ?? null,
+            ];
+        }
+
+        session(['panier' => $panier]); // Sauvegarde propre
+
+        return redirect()->route('cart.index')->with('success', 'Produit ajouté au panier.');
+    }
+
 }

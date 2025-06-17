@@ -1,23 +1,26 @@
 <?php
+
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
     AuthController,
     ClientController,
     AdminController,
-    ProduitsController,
-    PaniersController,
-    CommandesController,
     LigneCommandesController,
-    AvisController,
     ProfilController,
     CategoriesController,
     ElementsPaniersController,
     HistoriqueCommandesController,
-    ParrainageController,
     PaiementController,
-    ProduitPersonnaliseController
+    
 };
+
+use App\Http\Controllers\ProduitsController;
+use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\PaniersController;
+use App\Http\Controllers\AvisController;
+use App\Http\Controllers\ParrainageController;
 
 // ================= ADMIN ===================
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(function () {
@@ -25,8 +28,6 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
 
     // Paiements
     Route::resource('paiements', PaiementController::class)->except(['create'])->names('paiements');
-Route::get('/personnalisations', [ProduitPersonnaliseController::class, 'indexAdmin'])->name('admin.custom.index');
-Route::put('/personnalisations/{id}/statut', [ProduitPersonnaliseController::class, 'updateStatut'])->name('admin.custom.update-statut');
 
     // Utilisateurs & admins
     Route::post('/ajout-admin', [AdminController::class, 'store'])->name('ajout-admin');
@@ -58,82 +59,77 @@ Route::put('/personnalisations/{id}/statut', [ProduitPersonnaliseController::cla
     Route::get('/avis-graphique/{produitId}', [AdminController::class, 'avisGraphique'])->name('avis.graphique');
 });
 
-// ================= CLIENT ===================
-Route::prefix('client')->middleware(['auth', 'is_client'])->name('client.')->group(function () {
-    // Profil
-    Route::get('/profil', [ClientController::class, 'profil'])->name('profil');
-    Route::get('/profile', [ProfilController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfilController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfilController::class, 'destroy'])->name('profile.destroy');
-
-    // Commandes
-    Route::resource('commandes', CommandesController::class)->only(['index', 'store', 'show']);
-    Route::get('/commandes/create', [CommandesController::class, 'create'])->name('commandes.create');
-    Route::get('/commandes/confirmation/{id}', [CommandesController::class, 'confirmation'])->name('commandes.confirmation');
-    Route::get('/commandes/{id}/receipt', [CommandesController::class, 'downloadReceipt'])->name('commandes.receipt');
-    Route::post('/commandes/{id}/terminee', [CommandesController::class, 'terminee'])->name('commandes.terminee');
-    Route::post('/commandes/{id}/feedback', [CommandesController::class, 'feedback'])->name('commandes.feedback');
-    Route::get('/mes-commandes', [CommandesController::class, 'mesCommandes'])->name('commandes.mes');
-    Route::get('/suivi/{orderNumber}', [CommandesController::class, 'suivreParNumero'])->name('commandes-suivi');
-
-    // Paiements
-    Route::get('paiements/create/{commande_id}', [PaiementController::class, 'create'])->name('paiements.create');
-    Route::post('paiements', [PaiementController::class, 'store'])->name('paiements.store');
-
-    // Personnalisation produit
-    Route::get('/custom/create', [ProduitPersonnaliseController::class, 'create'])->name('custom.create');
-    Route::post('/custom', [ProduitPersonnaliseController::class, 'store'])->name('custom.store');
-
-    // Parrainage
-    Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
-    Route::get('/invite', [ParrainageController::class, 'invite'])->name('invite');
-    Route::get('/parametres', [ClientController::class, 'parametres'])->name('parametres');
-    // Affiche le formulaire de création d’un produit personnalisé
-Route::get('/custom/create', [ProduitPersonnaliseController::class, 'create'])->name('custom.create');
-
-// Traite l’envoi du formulaire de personnalisation
-Route::post('/custom', [ProduitPersonnaliseController::class, 'store'])->name('custom.store');
-Route::get('/custom', [ProduitPersonnaliseController::class, 'index'])->name('custom.index');
+//////////////client///////////////
 
 
-    // Panier
-    Route::get('/panier', [PaniersController::class, 'index'])->name('panier-index');
-    Route::post('/panier/ajouter/{produit_id}', [PaniersController::class, 'store'])->name('panier.ajouter');
-    Route::delete('/panier/supprimer/{id}', [PaniersController::class, 'supprimer'])->name('panier.supprimer');
-    Route::post('/panier/vider', [PaniersController::class, 'vider'])->name('panier.vider');
-    Route::put('/panier/quantite/{id}', [PaniersController::class, 'mettreAJourQuantite'])->name('panier.quantite');
-    Route::resource('panier/elements', ElementsPaniersController::class)->only(['update', 'destroy'])->names('panier-elements');
+
+
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+
+// Page d’accueil (produits)
+Route::get('/', [ProduitsController::class, 'index'])->name('produits.index');
+
+// --------- PRODUITS ---------
+Route::prefix('produits')->group(function () {
+    Route::get('/{id}', [ProduitsController::class, 'show'])->name('produits.show');
+});
+Route::get('/promotions', [ProduitsController::class, 'promotions'])->name('promotions');
+Route::get('/categorie/{slug}', [ProduitsController::class, 'byCategory'])->name('category.products');
+
+
+Route::get('/categorie/{category}', [ProduitsController::class, 'byCategory'])->name('produits.category');
+
+// --------- COMMANDES ---------
+
+
+Route::view('/commande/succes', 'client.orders.success')->name('commandes.success');
+
+// --------- PRODUITS PERSONNALISÉS ---------
+
+
+// --------- PANIER ---------
+Route::prefix('cart')->group(function () {
+    Route::get('/', [PaniersController::class, 'index'])->name('cart.index');
+});
+Route::post('/cart/add/{id}', [PaniersController::class, 'add'])->name('cart.add');
+    Route::post('/update/{id}', [PaniersController::class, 'update'])->name('cart.update');
+    Route::delete('/remove/{id}', [PaniersController::class, 'remove'])->name('cart.remove');
+    Route::get('/clear', [PaniersController::class, 'clear'])->name('cart.clear');
+
+
+// --------- AVIS PRODUITS ---------
+Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name('avis.store');
+// web.php
+
+
+
+Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
+Route::get('/invite', [ParrainageController::class, 'invite'])->name('invite');
+Route::get('/nous-suivre', function () {
+    return view('page'); // page.blade.php
+})->name('page');
+
+
+// --------- ROUTES PROTÉGÉES (si besoin) ---------
+Route::middleware(['auth'])->group(function () {
+Route::get('/create/{product?}', [CommandesController::class, 'create'])->name('commandes.create');
+    Route::post('/', [CommandesController::class, 'store'])->name('commandes.store');
+    Route::get('/confirmation/{id}', [CommandesController::class, 'confirmation'])->name('commandes.confirmation');
+    Route::get('/{id}/recu', [CommandesController::class, 'downloadReceipt'])->name('commandes.receipt');
+    Route::post('/{id}/finaliser', [CommandesController::class, 'finaliser'])->name('commandes.finaliser');
+    Route::get('/terminee/{id}', [CommandesController::class, 'terminee'])->name('commandes.terminee');
+    Route::post('/commandes/feedback/{id}', [CommandesController::class, 'feedback'])->name('commandes.feedback');
+
+Route::get('/mes-commandes', [CommandesController::class, 'mesCommandes'])->name('commandes.mes-commandes');
+Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
+
 });
 
-// ================= PUBLIC ===================
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::resource('produits', ProduitsController::class)->except(['create', 'edit']);
-Route::resource('produits-personnalises', ProduitPersonnaliseController::class);
 
-Route::get('/produits/recherche', [ProduitsController::class, 'find'])->name('produits.find');
-Route::get('/produits/rechercher/{nom}', [ProduitsController::class, 'rechercher'])->name('produits.rechercher');
+Route::get('/dashboard', function () {
+    return redirect()->route('produits.index');
+})->middleware(['auth'])->name('dashboard');
 
-Route::get('/commandes/{commandeId}/lignes', [LigneCommandesController::class, 'index'])->name('commandes.lignes.index');
-Route::get('/lignes-commandes/{id}', [LigneCommandesController::class, 'show'])->name('commandes.lignes.show');
 
-// ================= AVIS ===================
-Route::middleware('auth')->group(function () {
-    Route::get('/produits/{produit_id}/avis/create', [AvisController::class, 'create'])->name('avis.create');
-    Route::post('/produits/{produit_id}/avis', [AvisController::class, 'store'])->name('avis.store');
-    Route::delete('/avis/{id}', [AvisController::class, 'destroy'])->name('avis.destroy');
-});
-
-// ================= AUTH ===================
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login.form');
-Route::post('/login', [AuthController::class, 'login'])->name('auth.client-login');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('auth.register.form');
-Route::post('/register', [AuthController::class, 'register'])->name('auth.client-register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-
-Route::get('/password/reset', [AuthController::class, 'showPasswordResetForm'])->name('auth.password.request');
-Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('auth.password.email');
-
-Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('social.google');
-Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
-Route::get('/auth/apple', [AuthController::class, 'redirectToApple'])->name('social.apple');
-Route::get('/auth/apple/callback', [AuthController::class, 'handleAppleCallback']);
+require __DIR__.'/auth.php';

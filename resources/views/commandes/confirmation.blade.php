@@ -6,26 +6,26 @@
 
     <!-- Détails de la commande -->
     <div class="space-y-3 text-lg bg-purple-50 p-4 rounded-lg border border-purple-200">
-        <p><strong>Numéro de commande :</strong> {{ $order->order_number }}</p>
-        <p><strong>Date :</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
-        <p><strong>🙍 Nom :</strong> {{ $order->customer_name }}</p>
-        <p><strong>WhatsApp :</strong> {{ $order->whatsapp_number ?? 'Non renseigné' }}</p>
-        <p><strong>Ville :</strong> {{ $order->city }}</p>
-        <p><strong>Total à payer :</strong> <span class="font-bold text-purple-900">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span></p>
+        <p><strong>Numéro de commande :</strong> {{ $commande->order_number }}</p>
+        <p><strong>Date :</strong> {{ $commande->created_at->format('d/m/Y H:i') }}</p>
+        <p><strong>🙍 Nom :</strong> {{ $commande->customer_name }}</p>
+        <p><strong>WhatsApp :</strong> {{ $commande->whatsapp_number ?? 'Non renseigné' }}</p>
+        <p><strong>Ville :</strong> {{ $commande->city }}</p>
+        <p><strong>Total à payer :</strong> <span class="font-bold text-purple-900">{{ number_format($commande->total, 0, ',', ' ') }} FCFA</span></p>
     </div>
 
     <!-- Détails des articles -->
     <div class="mt-8">
         <h2 class="text-2xl font-bold mb-4 text-purple-700">Vos articles</h2>
         <ul class="divide-y divide-gray-200 rounded-lg overflow-hidden border border-gray-100">
-            @foreach($order->items as $item)
+            @foreach($commande->lignes as $ligne)
                 <li class="px-4 py-3 bg-gray-50 hover:bg-gray-100 transition">
                     <div class="flex justify-between font-medium">
-                        <span>{{ $item->name }} <span class="text-sm font-normal">x{{ $item->quantity }}</span></span>
+                        <span>{{ $ligne->nom }} <span class="text-sm font-normal">x{{ $ligne->quantite }}</span></span>
                     </div>
                     <div class="text-sm text-gray-600 ml-2 mt-1">
-                        <p>Couleur : {{ $item->color ?? 'Non précisée' }}</p>
-                        <p>Dimension : {{ $item->size ?? 'Non précisée' }}</p>
+                        <p>Couleur : {{ $ligne->couleur ?? 'Non précisée' }}</p>
+                        <p>Dimension : {{ $ligne->taille ?? 'Non précisée' }}</p>
                     </div>
                 </li>
             @endforeach
@@ -52,7 +52,7 @@
 
             <!-- Montant affiché dynamiquement -->
             <div id="partial-info" class="text-sm text-gray-700 mt-3 hidden">
-                <p><strong>Montant total :</strong> {{ number_format($order->total, 0, ',', ' ') }} FCFA</p>
+                <p><strong>Montant total :</strong> {{ number_format($commande->total, 0, ',', ' ') }} FCFA</p>
                 <p><strong>25% à payer maintenant :</strong> <span class="text-purple-900 font-semibold" id="partial-amount"></span></p>
             </div>
         </div>
@@ -98,7 +98,8 @@
     </div>
 
     <!-- Formulaire -->
-    <form action="{{ route('commandes.terminee', $order->id) }}" method="GET">
+    <form action="{{ route('commandes.terminee', $commande->id) }}" method="GET">
+
         @csrf
         <input type="hidden" name="payment_method" id="payment_method_selected" value="">
         <div class="text-center mt-8">
@@ -128,7 +129,7 @@
         const floozInfo = document.getElementById('flooz-info');
         const paymentMethods = document.getElementById('payment-methods');
 
-        const total = {{ $order->total }};
+        const total = {{ $commande->total }};
         const partial = Math.round(total * 0.25);
 
         codAgree.addEventListener('change', function () {

@@ -12,7 +12,7 @@ class Ligne_Commandes extends Model
     protected $table = 'ligne_commandes'; 
 
     protected $fillable = [
-        'commande_id',
+        'commandes_id',
         'produits_id',
         'couleur',
         'taille',

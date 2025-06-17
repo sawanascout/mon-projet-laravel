@@ -1,93 +1,162 @@
-@extends('layouts.client')
-
-@section('content')
-<div class="max-w-4xl mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">🛒 Finalisez votre commande</h1>
-
-    @if(session('error'))
-        <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded mb-6">
-            {{ session('error') }}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Reçu de commande #{{ $commande->id }} - GlobalDrop</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ab3fd6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: #ab3fd6;
+            margin: 0 0 5px 0;
+            font-size: 28px;
+        }
+        .header p {
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+            color: #555;
+        }
+        h2 {
+            color: #ab3fd6;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h4 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+            color: #ab3fd6;
+        }
+        p {
+            margin: 6px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .item-title {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        .item-details {
+            font-size: 13px;
+            color: #555;
+            margin-top: 4px;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 15px;
+            text-align: right;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            font-size: 13px;
+        }
+        .whatsapp-link {
+            color: #25d366;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .whatsapp-link:hover {
+            text-decoration: underline;
+        }
+        .contact-info {
+            font-size: 13px;
+            color: #999;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GlobalDrop</h1>
+            <p>Votre plateforme d’achats internationaux</p>
         </div>
-    @endif
 
-    <form action="{{ route('commandes.store') }}" method="POST" class="space-y-6 bg-white shadow-lg p-6 rounded-lg border">
-        @csrf
-
-        <!-- Infos client -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label for="customer_name" class="block font-semibold text-gray-700 mb-1">👤 Nom complet</label>
-                <input type="text" name="customer_name" id="customer_name" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-            </div>
-
-            <div>
-                <label for="city" class="block font-semibold text-gray-700 mb-1"> Ville</label>
-                <input type="text" name="city" id="city" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-
-                
-            </div>
-
-            <div>
-                <label for="phone_code" class="block font-semibold text-gray-700 mb-1"> Indicatif pays</label>
-                <select name="phone_code" id="phone_code" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-                    <option value="" disabled selected>Choisissez l'indicatif</option>
-                    <option value="+228">+228 (Togo)</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="whatsapp_number" class="block font-semibold text-gray-700 mb-1"> Numéro WhatsApp</label>
-                <input type="text" name="whatsapp_number" id="whatsapp_number" placeholder="Ex: 90000000" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-                <small class="text-gray-500">Entrez le numéro sans indicatif.</small>
-            </div>
+        <div class="section">
+            <h2>Reçu de Commande {{ $commande->order_number }}</h2>
+            <p><strong>Date :</strong> {{ $commande->created_at->format('d/m/Y H:i') }}</p>
         </div>
 
-        <!-- Panier -->
-        <h2 class="text-2xl font-semibold text-gray-800 mt-10 mb-4 border-b pb-2"> Contenu du panier</h2>
+        <div class="section">
+            <h4>Détails du client</h4>
+            <p><strong>Nom :</strong> {{ $commande->customer_name }}</p>
+            <p><strong>WhatsApp :</strong> {{ $commande->whatsapp_number ?? 'Non renseigné' }}</p>
+            <p><strong>Ville :</strong> {{ $commande->city }}</p>
+        </div>
 
-        <ul class="space-y-6">
-            @foreach($cart as $key => $item)
-                <li class="bg-gray-50 border rounded-lg p-4 shadow-sm">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-lg font-medium text-gray-800">{{ $item['name'] }}</h3>
-                        <span class="text-sm text-gray-600">x{{ $item['quantity'] }}</span>
-                    </div>
-
-                    <div class="flex justify-between text-sm text-gray-600 mb-3">
-                        <span>Prix unitaire :</span>
-                        <span>{{ number_format($item['price'], 2, ',', ' ') }} FCFA</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1"> Couleur</label>
-                            <input type="text" name="cart[{{ $key }}][color]" value="{{ $item['color'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+        <div class="section">
+            <h4>Produits commandés</h4>
+            <ul>
+                @foreach($commande->lignes as $ligne)
+                    <li>
+                        <div class="item-title">
+                            <span>{{ $ligne->quantite }} x {{ $ligne->nom }}</span>
+                            <span>{{ number_format($ligne->unit_price * $ligne->quantite, 0, ',', ' ') }} FCFA</span>
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Dimension</label>
-                            <input type="text" name="cart[{{ $key }}][size]" value="{{ $item['size'] ?? '' }}" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+                        <div class="item-details">
+                            Couleur : {{ $ligne->couleur ?? 'Non précisée' }}<br>
+                            Dimension : {{ $ligne->taille ?? 'Non précisée' }}
                         </div>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-
-        <!-- Total -->
-        <div class="text-right text-xl font-bold text-purple-700 mt-6">
-            Total : {{ number_format(collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']), 2, ',', ' ') }} FCFA
+                    </li>
+                @endforeach
+            </ul>
+            <p class="total">Total : {{ number_format($commande->total, 0, ',', ' ') }} FCFA</p>
         </div>
 
-        <!-- Boutons -->
-        <div class="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
-            <a href="{{ route('produits.index') }}" class="text-purple-600 hover:text-purple-800 underline">
-                ← Continuer mes achats
-            </a>
-
-            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow-md transition duration-200">
-                ✅ Confirmer la commande
-            </button>
+        <div class="footer">
+            <p>Merci pour votre commande chez GlobalDrop !</p>
+            <p>Pour envoyer la capture de votre paiement, cliquez ici :
+                <a 
+                   href="https://wa.me/22890171179?text=Bonjour%2C%20je%20vous%20envoie%20la%20capture%20de%20ma%20transaction%20pour%20la%20commande%20%23{{ $commande->id }}." 
+                   target="_blank" 
+                   class="whatsapp-link"
+                >
+                    Envoyer sur WhatsApp
+                </a>
+            </p>
         </div>
-    </form>
-</div>
-@endsection
+
+        <div class="contact-info">
+            <p>GlobalDrop – Tél : +228 90171179 – Email : globaldrop2428@gmail.com</p>
+            <p>© {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function showLoginForm()
     {
-        return view('auth.client-login');
+        return view('auth.login');
     }
 
     /**
@@ -54,7 +54,7 @@ class AuthController extends Controller
      */
     public function showRegisterForm()
     {
-        return view('auth.client-register');
+        return view('auth.register');
     }
 
     /**
@@ -88,7 +88,7 @@ class AuthController extends Controller
         Paniers::create([
             'user_id' => $user->id,
         ]);
-        return redirect()->route('client.profil')->with('success', 'Inscription réussie (client).');
+        return redirect()->route('profil')->with('success', 'Inscription réussie (client).');
         };
     }
 

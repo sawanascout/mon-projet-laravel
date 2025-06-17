@@ -19,11 +19,11 @@ return new class extends Migration
             $table->decimal('prix', 8, 2);
             $table->decimal('ancien_prix',8,2)->nullable();
             $table->text('description')->nullable();
-            $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('category_id');
             $table->string('photo')->nullable(); // chemin vers la photo
-            $table->boolean('disponible')->default(true);
-            $table->json('taille');// chemin vers la photo
-            $table->json('couleur');
+            $table->boolean('disponible')->default(true)->nullable();
+            $table->json('taille')->nullable();// chemin vers la photo
+            $table->json('couleur')->nullable();
             $table->timestamps();
         });
     }

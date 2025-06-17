@@ -42,6 +42,10 @@ class Produits extends Model
     {
         return $this->belongsTo(Categories::class, 'categories_id');
     }
+    public function category() {
+    return $this->belongsTo(Category::class);
+}
+
 
     /**
      * Relation : un produit peut apparaître dans plusieurs lignes de commande.

@@ -30,8 +30,8 @@ class CommandesController extends Controller
             return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
         }
 
-        $cart = session()->get('cart', []);
-        return view('commandes.create', compact('cart'));
+        $panier = session()->get('panier', []);
+        return view('commandes.create', compact('panier'));
     }
 
     public function store(Request $request)
@@ -44,26 +44,26 @@ class CommandesController extends Controller
             'customer_name' => 'required|string|max:255',
             'whatsapp_number' => 'nullable|string|max:20',
             'city' => 'required|string|max:100',
-            'cart' => 'required|array',
+            'panier' => 'required|array',
         ]);
 
-        $cart = session()->get('cart', []);
+        $panier = session()->get('panier', []);
 
-        if (empty($cart)) {
+        if (empty($panier)) {
             return redirect()->back()->with('error', 'Votre panier est vide.');
         }
 
         $total = 0;
 
-        foreach ($cart as $productId => $item) {
-            if (!isset($item['price'], $item['quantity'])) {
+        foreach ($panier as $produitId => $item) {
+            if (!isset($item['prix'], $item['quantite'])) {
                 return redirect()->back()->with('error', 'Produit invalide dans le panier.');
             }
 
-            $total += $item['price'] * $item['quantity'];
-            $item['color'] = $request->input("cart.$productId.color");
-            $item['size'] = $request->input("cart.$productId.size");
-            $cart[$productId] = $item;
+            $total += $item['prix'] * $item['quantite'];
+            $item['couleur'] = $request->input("cart.$produitId.couleur");
+            $item['taille'] = $request->input("cart.$produitId.taille");
+            $cart[$produitId] = $item;
         }
 
         $now = Carbon::now();
@@ -77,18 +77,18 @@ class CommandesController extends Controller
             'statut' => 'pending',
         ]);
 
-        foreach ($cart as $productId => $item) {
+        foreach ($panier as $produitId => $item) {
             Ligne_Commandes::create([
                 'commandes_id' => $commande->id,
-                'produits_id' => $productId,
-                'quantite' => $item['quantity'],
-                'prix' => $item['price'],
-                'couleur' => $item['color'] ?? null,
-                'taille' => $item['size'] ?? null,
+                'produits_id' => $produitId,
+                'quantite' => $item['quantite'],
+                'prix' => $item['prix'],
+                'couleur' => $item['couleur'] ?? null,
+                'taille' => $item['taille'] ?? null,
             ]);
         }
 
-        session()->forget('cart');
+        session()->forget('panier');
 
         return redirect()->route('commandes.confirmation', ['id' => $commande->id]);
     }

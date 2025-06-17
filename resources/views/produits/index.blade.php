@@ -1,190 +1,77 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
 @section('content')
-<div class="container mt-4">
+<div class="container mx-auto px-4 py-10">
 
-  <!-- Menu déroulant -->
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-  <div>
-    <label for="filtreCategorie" class="form-label me-2">Catégorie :</label>
-    <select id="filtreCategorie" class="form-select d-inline-block w-auto">
-      <option value="all">Toutes les catégories</option>
-      @foreach($categories as $categorie)
-      <option value="categorie-{{ $categorie->id }}">{{ $categorie->nom }}</option>
-      @endforeach
-    </select>
-  </div>
+    <!-- Grille des produits -->
+<div class="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @forelse ($produits as $produit)
+        <div class="group relative bg-white rounded-xl border shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 flex flex-col">
+            
+            <!-- Badge promo -->
+            @if ($produit->ancien_prix && $produit->ancien_prix > $produit->prix)
+                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full z-10">
+                    Promo
+                </div>
+            @endif
 
-  <form action="{{ route('produits.rechercher') }}" method="GET" class="d-flex">
-    <input type="text" name="nom" class="form-control me-2" placeholder="Rechercher un produit" value="{{ request('nom') }}">
-    <button type="submit" class="btn btn-primary">Rechercher</button>
-  </form>
-</div>
+            <a href="{{ route('produits.show', $produit->id) }}">
+                <img 
+                    src="{{ $produit->photo ? asset('storage/' . $produit->photo) : asset('images/default.jpg') }}" 
+                    alt="{{ $produit->nom }}" 
+                    class="w-full h-48 object-cover rounded-t-xl group-hover:scale-105 transition duration-300"
+                >
+            </a>
 
-    @if(request('nom'))
-    <h4>Résultats pour "{{ request('nom') }}" :</h4>
-    <div class="row">
-        @forelse($produits as $produit)
-<div class="col-md-4 mb-4">
-  <div class="card h-100 shadow-sm position-relative">
-    @if($produit->ancien_prix)
-    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Promo</span>
-    @endif
-    @if($produit->photo)
-    <img src="{{ asset('storage/' . $produit->photo) }}" class="card-img-top" alt="{{ $produit->nom }}" style="height: 200px; object-fit: cover;">
-    @endif
-    <div class="card-body">
-      <h5 class="card-title">{{ $produit->nom }}</h5>
-      <p>{{ Str::limit($produit->description, 100) }}</p>
-      <p>
-        @if($produit->ancien_prix)
-        <span class="text-muted text-decoration-line-through me-2">{{ $produit->ancien_prix }} CFA</span>
-        @endif
-        <strong>{{ $produit->prix }} CFA</strong>
-      </p>
-    </div>
-    <div class="card-footer d-flex justify-content-between">
-      <button class="btn btn-sm btn-success"
-        onclick="handleAddToCart({{ $produit->id }})">Ajouter au panier</button>
-    </div>
-  </div>
-</div>
+            <div class="flex flex-col flex-grow p-4">
+                <h2 class="text-base font-semibold mb-1 text-gray-800">{{ $produit->nom }}</h2>
 
-<!-- Modal identique à celui déjà en place, à copier si nécessaire -->
+                <!-- Notation étoilée -->
+                <div class="flex items-center mb-2">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <span class="{{ $i <= round($produit->rating) ? 'text-yellow-400' : 'text-gray-300' }}">★</span>
+                    @endfor
+                    <span class="text-xs text-gray-500 ml-2">{{ number_format($produit->rating, 1) }}/5</span>
+                </div>
 
-@empty
-  <p>Aucun produit trouvé.</p>
-@endforelse
+                <!-- Description -->
+                <p class="text-sm text-gray-600 mb-4">{{ Str::limit($produit->description, 60) }}</p>
 
-    </div>
-@else
-    {{-- ton affichage par catégories ici --}}
-@endif
-
-
-  <!-- Affichage des catégories et de leurs produits -->
-  @foreach($categories as $categorie)
-  <div class="categorie-section mb-5" data-categorie="categorie-{{ $categorie->id }}">
-    <h3 class="mt-4">{{ $categorie->nom }}</h3>
-    <div class="row">
-      @forelse($categorie->produits as $produit)
-      <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm position-relative">
-        @if($produit->ancien_prix)
-            <span class="badge bg-danger position-absolute top-0 end-0 m-2">Promo</span>
-        @endif
-          @if($produit->photo)
-          <img src="{{ asset('storage/' . $produit->photo) }}" class="card-img-top" alt="{{ $produit->nom }}" style="height: 200px; object-fit: cover;">
-          @endif
-          <div class="card-body">
-            <h5 class="card-title">{{ $produit->nom }}</h5>
-            <p>{{ Str::limit($produit->description, 100) }}</p>
-            <p>
-              @if($produit->ancien_prix)
-                <span class="text-muted text-decoration-line-through me-2">{{ $produit->ancien_prix }} CFA</span>
-              @endif
-              <strong>{{ $produit->prix }} CFA</strong>
-            </p>
-
-          </div>
-    <div class="card-footer d-flex justify-content-between align-items-center">
-    <button class="btn btn-sm btn-success"
-        onclick="handleAddToCart({{ $produit->id }})"
-        @if(!$produit->disponible) disabled @endif>
-        Ajouter au panier
-    </button>
-
-    <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-sm btn-primary">
-        Voir le produit
-    </a>
-
-    <span class="badge {{ $produit->disponible ? 'bg-success' : 'bg-secondary' }}">
-        {{ $produit->disponible ? 'Disponible' : 'Indisponible' }}
-    </span>
-</div>
-
+                <!-- Prix et bouton bien alignés en bas -->
+                <div class="mt-auto flex justify-between items-end">
+                    <div>
+                        @if ($produit->ancien_prix && $produit->ancien_prix > $produit->prix)
+                            <span class="text-sm text-gray-400 line-through">
+                                {{ number_format($produit->ancien_prix, 0, ',', ' ') }} FCFA
+                            </span><br>
+                        @endif
+                        <span class="text-[#ab3fd6] font-bold text-lg">
+                            {{ number_format($produit->prix, 0, ',', ' ') }} FCFA
+                        </span>
+                    </div>
+                    
+                    <a href="{{ route('produits.show', $produit->id) }}" 
+                       class="bg-[#ab3fd6] hover:bg-purple-700 text-white text-sm px-3 py-1 rounded flex items-center gap-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+                        </svg>
+                        Ajouter
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Modal Ajouter au panier -->
- <div class="modal fade" id="ajouterPanierModal{{ $produit->id }}" tabindex="-1" aria-labelledby="ajouterPanierModalLabel{{ $produit->id }}" aria-hidden="true">
-  <div class="modal-dialog">
-    <form action="{{ route('client.panier.ajouter', $produit->id) }}" method="POST">
-      @csrf
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ajouterPanierModalLabel{{ $produit->id }}">Ajouter au panier : {{ $produit->nom }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+    @empty
+        <div class="col-span-full text-center text-gray-500">
+            Aucun produit trouvé.
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Couleur</label>
-            <select name="couleur" class="form-select" required>
-              <option value="" disabled selected>Choisir une couleur</option>
-              @foreach($produit->couleur ?? [] as $couleur)
-                <option value="{{ $couleur }}">{{ ucfirst($couleur) }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Taille</label>
-            <select name="taille" class="form-select" required>
-              <option value="" disabled selected>Choisir une taille</option>
-              @foreach($produit->taille ?? [] as $taille)
-                <option value="{{ $taille }}">{{ strtoupper($taille) }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Quantité</label>
-            <input type="number" name="quantite" class="form-control" value="1" min="1" max="1000" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Ajouter</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        </div>
-      </div>
-    </form>
-  </div>
+    @endforelse
 </div>
 
 
-      @empty
-      <p class="text-muted">Aucun produit dans cette catégorie.</p>
-      @endforelse
+    <!-- Pagination -->
+    <div class="mt-10 flex justify-center">
+        {{ $produits->appends(request()->query())->links() }}
     </div>
-  </div>
-  @endforeach
-
 </div>
-
-<!-- JS pour filtrer les catégories -->
-<script>
-  document.getElementById('filtreCategorie').addEventListener('change', function () {
-    const selected = this.value;
-    const sections = document.querySelectorAll('.categorie-section');
-
-    sections.forEach(section => {
-      if (selected === 'all' || section.dataset.categorie === selected) {
-        section.style.display = 'block';
-      } else {
-        section.style.display = 'none';
-      }
-    });
-  });
-</script>
-<script>
-function handleAddToCart(produitId) {
-  @if(Auth::check() && Auth::user()->role === 'client')
-    const modalId = '#ajouterPanierModal' + produitId;
-    const modal = new bootstrap.Modal(document.querySelector(modalId));
-    modal.show();
-  @else
-    window.location.href = "{{ route('auth.login.form') }}";
-  @endif
-}
-</script>
-
-
 @endsection
