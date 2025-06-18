@@ -29,31 +29,11 @@
           </div>
 
           <div class="mb-3">
-            <label for="categories_id" class="form-label">Catégorie</label>
-            <select class="form-control" id="categories_id" name="categories_id" required>
+            <label for="category_id" class="form-label">Catégorie</label>
+            <select class="form-control" id="category_id" name="category_id" required>
               @foreach($categories as $categorie)
-                <option value="{{ $categorie->id }}">{{ $categorie->nom }}</option>
+                <option value="{{ $categorie->id }}">{{ $categorie->category_name }}</option>
               @endforeach
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="taille" class="form-label">Tailles disponibles</label>
-            <select class="form-control" name="taille[]" id="taille" multiple>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="couleur" class="form-label">Couleurs disponibles</label>
-            <select class="form-control" name="couleur[]" id="couleur" multiple>
-              <option value="noir">Noir</option>
-              <option value="blanc">Blanc</option>
-              <option value="rouge">Rouge</option>
-              <option value="bleu">Bleu</option>
             </select>
           </div>
 

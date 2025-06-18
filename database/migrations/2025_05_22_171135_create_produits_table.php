@@ -19,11 +19,9 @@ return new class extends Migration
             $table->decimal('prix', 8, 2);
             $table->decimal('ancien_prix',8,2)->nullable();
             $table->text('description')->nullable();
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('photo')->nullable(); // chemin vers la photo
             $table->boolean('disponible')->default(true)->nullable();
-            $table->json('taille')->nullable();// chemin vers la photo
-            $table->json('couleur')->nullable();
             $table->timestamps();
         });
     }

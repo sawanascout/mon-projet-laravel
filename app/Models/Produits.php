@@ -19,11 +19,9 @@ class Produits extends Model
         'prix',
         'ancien_prix',
         'description',
-        'categories_id',
+        'category_id',
         'photo',
         'disponible',
-         'taille',
-    'couleur',
     ];
 
     /**
@@ -40,7 +38,7 @@ class Produits extends Model
 
     public function categorie()
     {
-        return $this->belongsTo(Categories::class, 'categories_id');
+        return $this->belongsTo(Categories::class, 'category_id');
     }
     public function category() {
     return $this->belongsTo(Category::class);

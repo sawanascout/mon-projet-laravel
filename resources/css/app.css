@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.btn-mauve {
+  @apply bg-[#ab3fd6] text-white font-semibold px-4 py-2 rounded shadow-md transition hover:brightness-110 cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white font-semibold px-4 py-2 rounded shadow-md transition hover:brightness-110 cursor-pointer;
+}
+
+.dropdown-item {
+  @apply block px-4 py-2 text-gray-700 hover:bg-[#ab3fd6] hover:text-white cursor-pointer transition;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  @apply bg-[#ab3fd6] text-white;
+}
+
+.dropdown-header {
+  @apply px-4 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wide;
+}
+
+.dropdown-divider {
+  @apply my-2 border-t border-gray-200;
+}
+.btn-mauve:disabled, .btn-primary:disabled {
+  @apply bg-gray-400 cursor-not-allowed brightness-100 hover:brightness-100;
+}

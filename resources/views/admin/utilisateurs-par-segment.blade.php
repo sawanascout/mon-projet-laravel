@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h1>Utilisateurs clients par segment (du {{ $start_date }} au {{ $end_date }})</h1>

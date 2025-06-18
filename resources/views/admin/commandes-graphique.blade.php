@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h1>Commandes entre {{ $start_date }} et {{ $end_date }}</h1>

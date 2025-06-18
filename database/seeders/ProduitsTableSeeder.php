@@ -31,8 +31,7 @@ class ProduitsTableSeeder extends Seeder
             $ancienPrix = $faker->boolean(50) ? $prix + $faker->randomFloat(2, 5, 50) : null;
 
             // Choisir aléatoirement 2 à 4 couleurs et tailles pour chaque produit
-            $couleurs = $faker->randomElements($couleursPossibles, rand(2, 4));
-            $tailles = $faker->randomElements($taillesPossibles, rand(2, 5));
+ 
 
             Produits::create([
                 'nom' => $faker->words(3, true),
@@ -42,8 +41,7 @@ class ProduitsTableSeeder extends Seeder
                 'categories_id' => $faker->randomElement($categoriesIds),
                 'photo' => 'produits/produit' . $i . '.jpg', // adapte si besoin
                 'disponible' => $faker->boolean(90),
-                'couleur' => ($couleurs),  // encode en JSON
-                'taille' =>($tailles),    // encode en JSON
+            
             ]);
         }
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h2>Commandes du segment {{ $segment }} ({{ $start_date }} - {{ $end_date }})</h2>

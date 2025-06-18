@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h1>Avis pour le produit : {{ $produit->nom }}</h1>

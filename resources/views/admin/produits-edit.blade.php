@@ -33,20 +33,20 @@
 
             <div class="mb-3">
                 <label>Ancien prix :</label>
-                <input type="number" step="0.01" name="ancien_prix" class="form-control" value="{{ old('ancien_prix', $produit->ancien_prix) }}" required>
+                <input type="number" step="0.01" name="ancien_prix" class="form-control" value="{{ old('ancien_prix', $produit->ancien_prix) }}">
             </div>
 
             <div class="mb-3">
                 <label>Description :</label>
-                <textarea name="description" class="form-control" required>{{ old('description', $produit->description) }}</textarea>
+                <textarea name="description" class="form-control">{{ old('description', $produit->description) }}</textarea>
             </div>
 
             <div class="mb-3">
                 <label>Catégorie :</label>
-                <select name="categories_id" class="form-select" required>
+                <select name="category_id" class="form-select" required>
                     @foreach($categories as $categorie)
-                        <option value="{{ $categorie->id }}" {{ old('categories_id', $produit->categories_id) == $categorie->id ? 'selected' : '' }}>
-                            {{ $categorie->nom }}
+                        <option value="{{ $categorie->id }}" {{ old('category_id', $produit->category_id) == $categorie->id ? 'selected' : '' }}>
+                            {{ $categorie->category_name }}
                         </option>
                     @endforeach
                 </select>
@@ -69,8 +69,8 @@
             <div class="mb-3">
                 <label>Disponible :</label>
                 <select name="disponible" class="form-select" required>
-                    <option value="oui" {{ old('disponible', $produit->disponible) === 'oui' ? 'selected' : '' }}>Oui</option>
-                    <option value="non" {{ old('disponible', $produit->disponible) === 'non' ? 'selected' : '' }}>Non</option>
+                    <option value="1" {{ old('disponible', $produit->disponible) == 1 ? 'selected' : '' }}>Oui</option>
+                    <option value="0" {{ old('disponible', $produit->disponible) == 0 ? 'selected' : '' }}>Non</option>
                 </select>
             </div>
 

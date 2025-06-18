@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\View;
 
 class CommandesController extends Controller
 {
+    public function index(){
+       $commandes = Commandes::all();
+       return view('admin.commandes-index', compact('commandes'));
+    }
     public function mesCommandes()
     {
         $userId = Auth::id();
@@ -23,6 +27,23 @@ class CommandesController extends Controller
 
         return view('commandes.mes-commandes', compact('commandes', 'commandeCount', 'totalSpent'));
     }
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'statut' => 'required|string|in:en cours,expédiée,livrée,annulée',
+    ]);
+
+    $commande = Commande::findOrFail($id);
+
+    if (auth()->user()->role !== 'admin') {
+        abort(403, "Accès refusé");
+    }
+
+    $commande->statut = $request->statut;
+    $commande->save();
+
+    return redirect()->back()->with('success', "Le statut de la commande {$commande->order_number} a été mis à jour.");
+}
 
     public function create()
     {
@@ -45,6 +66,7 @@ class CommandesController extends Controller
             'whatsapp_number' => 'nullable|string|max:20',
             'city' => 'required|string|max:100',
             'panier' => 'required|array',
+            'commentaire'=> 'nullable|string|max:100',
         ]);
 
         $panier = session()->get('panier', []);
@@ -72,7 +94,9 @@ class CommandesController extends Controller
         $commande = Commandes::create([
             'user_id' => Auth::id(),
             'order_number' => $orderNumber,
+            'statut' => 'En attente',
             'city' => $request->city,
+            'commentaire'=> $request->commentaire,
             'total' => $total,
             'statut' => 'pending',
         ]);

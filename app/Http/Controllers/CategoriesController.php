@@ -30,7 +30,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required|string|max:255',
+            'category_name' => 'required|string|max:255',
         ]);
 
         Categories::create($request->all());
@@ -62,7 +62,7 @@ class CategoriesController extends Controller
 public function update(Request $request, Categories $category)
 {
     $validated = $request->validate([
-        'nom' => 'required|string|max:255',
+        'category_name' => 'required|string|max:255',
     ]);
 
     $category->update($validated);

@@ -30,7 +30,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::resource('paiements', PaiementController::class)->except(['create'])->names('paiements');
 
     // Utilisateurs & admins
-    Route::post('/ajout-admin', [AdminController::class, 'store'])->name('ajout-admin');
+    Route::post('/ajout-admin', [AdminController::class, 'store'])->name('ajout');
     Route::post('/grant', [AdminController::class, 'addPrivileges'])->name('grant');
     Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy');
     Route::post('/admins', [AdminController::class, 'storeAdmin'])->name('admins.storeAdmin');
@@ -41,7 +41,8 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::get('/commandes/json', [AdminController::class, 'getCommandesBetweenDates'])->name('commandes.json');
     Route::post('/commandes/statistiques', [CommandesController::class, 'commandesParDate'])->name('commandes-graphique');
     Route::post('/commandes/segments', [AdminController::class, 'commandesParSegment'])->name('commandes.segments');
-
+    Route::put('/admin/commandes/{id}/statut', [CommandesController::class, 'updateStatus'])
+    ->name('admin.commandes.updateStatus');
     // Statistiques utilisateurs
     Route::post('/utilisateurs/segment', [AdminController::class, 'utilisateursParSegmentEtDate'])->name('utilisateurs.segment');
     Route::get('/clients-par-segment', [AdminController::class, 'clientsAyantCommandeParSegment'])->name('clients.segment');
@@ -49,10 +50,10 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::get('/clients-segment-role', [AdminController::class, 'clientsParSegmentEtRole'])->name('clients.segment.role');
 
     // Produits, catégories, avis, historique
-    Route::get('produits-admin', [ProduitsController::class, 'indexadmin'])->name('produits.admin');
-    Route::resource('produits', ProduitsController::class);
-    Route::resource('categories', CategoriesController::class);
-    Route::resource('historiqueCommandes', HistoriqueCommandesController::class);
+    Route::get('produits-admin', [ProduitsController::class, 'indexadmin'])->name('produits');
+    Route::resource('produits', ProduitsController::class)->names('produits');
+    Route::resource('categories', CategoriesController::class)->names('categories');
+    Route::resource('historiqueCommandes', HistoriqueCommandesController::class)->names('historique');
     Route::resource('produits.avis', AvisController::class)->only(['index'])->names('avis');
 
     // Graphique avis

@@ -11,12 +11,21 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
+      <!-- Navigation Links -->
+<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        {{ __('Dashboard') }}
+    </x-nav-link>
+
+    @auth
+        @if (auth()->user()->role === 'admin')
+            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                {{ __('Admin') }}
+            </x-nav-link>
+        @endif
+    @endauth
+</div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -70,6 +79,20 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @auth
+    <div class="text-red-500">
+        Rôle : {{ auth()->user()->role }}
+    </div>
+@endauth
+
+                @auth
+        @if (auth()->user()->role === 'admin')
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                {{ __('Admin') }}
+            </x-responsive-nav-link>
+        @endif
+    @endauth
+
         </div>
 
         <!-- Responsive Settings Options -->
@@ -94,6 +117,8 @@
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
+
+
             </div>
         </div>
     </div>

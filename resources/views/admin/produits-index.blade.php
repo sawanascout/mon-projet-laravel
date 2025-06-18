@@ -5,9 +5,10 @@
     <h1>Liste des produits</h1>
 
     @foreach($categories as $categorie)
-    <h3>{{ $categorie->nom }}</h3>
+    <h2>{{ $categorie->category_name}}</h2>
 
-    <table class="table table-bordered mb-5">
+    <table class="table table-striped table-hover shadow">
+
         <thead>
             <tr>
                 <th>Nom</th>
@@ -20,14 +21,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($produits->where('categories_id', $categorie->id) as $produit)
+            @foreach($produits->where('category_id', $categorie->id) as $produit)
+
+                @include('admin.produits-edit', ['produit' => $produit])
+
                 <tr>
                     <td>{{ $produit->nom }}</td>
                     <td>{{ $produit->prix }} CFA</td>
                     <td>{{ $produit->ancien_prix }} CFA</td>
                     <td>{{ $produit->description }}</td>
                     <td>
-                        <img src="{{ asset('storage/' . $produit->photo) }}" alt="photo" width="60">
+                        <img src="{{ asset('storage/' . $produit->photo) }}" onerror="this.src='{{ asset('images/default.png') }}'" alt="photo" width="60">
+
                     </td>
                     <td>{{ $produit->disponible ? 'Oui' : 'Non' }}</td>
                     <td>

@@ -60,28 +60,35 @@ class AdminController extends Controller
 
 
         // Traite la création du nouvel admin
-        public function storeAdmin(Request $request)
-        {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'segment' => 'required|string',
-                'password' => 'required|string|min:8|confirmed',
-                'telephone' => 'required|string|unique:users,telephone',
-            ]);
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'segment'=> $request->segment,
-                'password' => bcrypt($request->password),
-                'telephone'=> $request->telephone,
-                'role' => 'admin',  // forcer le rôle admin
-                // Ajoute d'autres champs si besoin
-            ]);
-          
+ public function storeAdmin(Request $request)
+{
+    // Vérifier le rôle de l’utilisateur authentifié (avant validation)
+    if (auth()->user()->role !== 'admin') {
+        abort(403, 'Accès refusé');
+    }
 
-            return redirect()->route('admin.dashboard')->with('success', 'Admin créé avec succès.');
-        }
+    // Validation des données
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'segment' => 'required|string',
+        'password' => 'required|string|min:8|confirmed',
+        'telephone' => 'required|string|unique:users,telephone',
+    ]);
+
+    // Création de l'admin
+    $user=User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'segment' => $validated['segment'],
+        'password' => bcrypt($validated['password']),
+        'telephone' => $validated['telephone'],
+        'role' => 'admin',  // forcer le rôle admin
+    ]);
+
+    return redirect()->route('admin.dashboard')->with('success', 'Admin créé avec succès.');
+}
+
 
         public function commandesParSegment(Request $request)
         {

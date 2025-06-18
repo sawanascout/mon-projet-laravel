@@ -9,8 +9,8 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="nom" class="form-label">Nom de la catégorie</label>
-            <input type="text" class="form-control" id="nom" name="nom" required>
+            <label for="category_name" class="form-label">Nom de la catégorie</label>
+            <input type="text" class="form-control" id="category_name" name="category_name" required>
           </div>
         </div>
         <div class="modal-footer">

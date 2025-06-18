@@ -40,13 +40,19 @@
         </form>
 
         <!-- Icônes -->
-        <div class="flex items-center space-x-4">
-            @auth
-                <div class="flex items-center space-x-4 bg-violet-50 px-4 py-2 rounded-lg max-w-sm mx-auto">
+         @auth()
+  <div class="flex items-center space-x-4 bg-violet-50 px-4 py-2 rounded-lg max-w-sm mx-auto">
     <span class="text-sm text-gray-700 font-semibold">
         👋 Bienvenue, <span class="text-violet-700 hover:text-violet-900 cursor-pointer transition">{{ auth()->user()->name }}</span>
     </span>
-    
+
+    @if (auth()->user()->role === 'admin')
+        <a href="{{ route('admin.dashboard') }}"
+           class="text-sm text-green-700 bg-green-100 hover:bg-green-200 font-semibold px-3 py-1 rounded transition">
+            Dashboard
+        </a>
+    @endif
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
         @csrf
     </form>
@@ -57,6 +63,7 @@
          Déconnexion
     </a>
 </div>
+
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                     @csrf
@@ -186,7 +193,7 @@
 
 
 <!-- Footer -->
-<footer class="bg-gray-100 mt-12">
+<footer class="bg-gray-100 mt-12 fixed bottom-0 left-0 w-full text-center py-4 text-xs>
     <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm text-gray-600">
 
 
@@ -234,10 +241,10 @@
 
         
     </div>
-    <div class="bg-gray-200 text-center py-4 text-xs text-gray-500">
-        &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
-    </div>
+
+    &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
 </footer>
+
 
 <!-- Scripts -->
 <script>

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h1>Liste des Catégories</h1>
@@ -17,7 +17,7 @@
     <tbody>
     @foreach($categories as $category)
         <tr>
-            <td>{{ $category->nom }}</td>
+            <td>{{ $category->category_name }}</td>
             <td>{{ $category->produits->count() }}</td>
             <td>
                 <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#editCategorieModal{{ $category->id }}">
@@ -41,7 +41,7 @@
                 @method('PUT')
 
                 <div class="modal-header">
-                  <h5 class="modal-title" id="editCategorieModalLabel{{ $category->id }}">Modifier la Catégorie</h5>
+                  <h5 class="modal-title" id="editCategorieModalLabel{{ $category->id }}">Modifier la Catégorie </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
 
@@ -57,8 +57,8 @@
                   @endif
 
                   <div class="form-group">
-                    <label for="nom">Nom de la catégorie</label>
-                    <input type="text" name="nom" class="form-control" value="{{ old('nom', $category->nom) }}" required>
+                    <label for="category_name">Nom de la catégorie</label>
+                    <input type="text" name="category_name" class="form-control" value="{{ old('category_name', $category->category_name )}}" required>
                   </div>
                 </div>
 
