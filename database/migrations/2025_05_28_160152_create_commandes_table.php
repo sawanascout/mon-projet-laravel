@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('customer_name');
+            $table->string('whatsapp_number')->nullable();
             $table->string('statut')->default('pending');
             $table->string('city');
             $table->text('commentaire')->nullable();
             $table->decimal('total', 10, 2)->default(0);
-            $table->string('methode_paiement')->nullable();
+            $table->string('payment_method')->nullable();
             $table->timestamps();
         });
     }

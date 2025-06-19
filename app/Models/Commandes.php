@@ -16,7 +16,9 @@ class Commandes extends Model
         'city',
         'commentaire',
         'total',
-        'methode_paiement',
+        'payment_method',
+        'customer_name',
+        'whatsapp_number',
     ];
 
     /**

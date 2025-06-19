@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('couleur')->nullable();
             $table->string('taille')->nullable();
             $table->unsignedInteger('quantite');
-            $table->decimal('prix',10,2);
+            $table->decimal('unit_price', 10, 2);
             $table->timestamps();
         });
     }

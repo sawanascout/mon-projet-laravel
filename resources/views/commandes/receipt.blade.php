@@ -120,6 +120,12 @@
             <p><strong>WhatsApp :</strong> {{ $commande->whatsapp_number ?? 'Non renseigné' }}</p>
             <p><strong>Ville :</strong> {{ $commande->city }}</p>
         </div>
+        <div class="section" style="background-color: #fff3cd; border-left: 5px solid #ffecb5; padding: 15px; margin-bottom: 20px;">
+    <strong style="color: #856404;">⚠️ Paiement en attente :</strong>
+    <p style="margin: 8px 0 0;">Ce reçu ne constitue pas une preuve de paiement complet.</p>
+    <p style="margin: 4px 0 0;">Un acompte est requis pour valider la commande. Le solde sera à régler à la livraison.</p>
+</div>
+
 
         <div class="section">
             <h4>Produits commandés</h4>

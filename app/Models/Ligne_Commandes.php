@@ -17,7 +17,7 @@ class Ligne_Commandes extends Model
         'couleur',
         'taille',
         'quantite',
-        'prix',
+        'unit_price',
     ];
 
     /**

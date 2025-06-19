@@ -33,7 +33,7 @@ public function updateStatus(Request $request, $id)
         'statut' => 'required|string|in:en cours,expédiée,livrée,annulée',
     ]);
 
-    $commande = Commande::findOrFail($id);
+    $commande = Commandes::findOrFail($id);
 
     if (auth()->user()->role !== 'admin') {
         abort(403, "Accès refusé");
@@ -45,77 +45,86 @@ public function updateStatus(Request $request, $id)
     return redirect()->back()->with('success', "Le statut de la commande {$commande->order_number} a été mis à jour.");
 }
 
-    public function create()
+    public function create(Request $request)
     {
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
-        }
+        return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
+    }
 
-        $panier = session()->get('panier', []);
-        return view('commandes.create', compact('panier'));
+    $panier = session()->get('panier', []);
+    return view('commandes.create', compact('panier'));
     }
 
     public function store(Request $request)
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
-        }
+{
+    if (!Auth::check()) {
+    return redirect()->route('login')->with('error', 'Vous devez vous connecter pour finaliser votre commande.');
+}
+    $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'whatsapp_number' => 'nullable|string|max:20',
+        'city' => 'required|string|max:100',
+        'panier' => 'required|array',
+    ]);
 
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'whatsapp_number' => 'nullable|string|max:20',
-            'city' => 'required|string|max:100',
-            'panier' => 'required|array',
-            'commentaire'=> 'nullable|string|max:100',
-        ]);
+    $panier = session()->get('panier', []);
 
-        $panier = session()->get('panier', []);
-
-        if (empty($panier)) {
-            return redirect()->back()->with('error', 'Votre panier est vide.');
-        }
-
-        $total = 0;
-
-        foreach ($panier as $produitId => $item) {
-            if (!isset($item['prix'], $item['quantite'])) {
-                return redirect()->back()->with('error', 'Produit invalide dans le panier.');
-            }
-
-            $total += $item['prix'] * $item['quantite'];
-            $item['couleur'] = $request->input("cart.$produitId.couleur");
-            $item['taille'] = $request->input("cart.$produitId.taille");
-            $cart[$produitId] = $item;
-        }
-
-        $now = Carbon::now();
-        $orderNumber = 'GD' . $now->format('Ymd') . str_pad(Commandes::whereDate('created_at', $now->toDateString())->count() + 1, 2, '0', STR_PAD_LEFT);
-
-        $commande = Commandes::create([
-            'user_id' => Auth::id(),
-            'order_number' => $orderNumber,
-            'statut' => 'En attente',
-            'city' => $request->city,
-            'commentaire'=> $request->commentaire,
-            'total' => $total,
-            'statut' => 'pending',
-        ]);
-
-        foreach ($panier as $produitId => $item) {
-            Ligne_Commandes::create([
-                'commandes_id' => $commande->id,
-                'produits_id' => $produitId,
-                'quantite' => $item['quantite'],
-                'prix' => $item['prix'],
-                'couleur' => $item['couleur'] ?? null,
-                'taille' => $item['taille'] ?? null,
-            ]);
-        }
-
-        session()->forget('panier');
-
-        return redirect()->route('commandes.confirmation', ['id' => $commande->id]);
+    if (empty($panier)) {
+        return redirect()->back()->with('error', 'Votre panier est vide.');
     }
+
+    $total = 0;
+
+    foreach ($panier as $productId => $item) {
+        if (!isset($item['prix']) || !isset($item['quantite'])) {
+            return redirect()->back()->with('error', 'Produit invalide dans le panier.');
+        }
+
+        $total += $item['prix'] * $item['quantite'];
+
+        // Mettre à jour les infos du panier avec color et size envoyés par le formulaire
+        $item['couleur'] = $request->input("panier.$productId.couleur");
+        $item['taille'] = $request->input("panier.$productId.taille");
+
+        $panier[$productId] = $item;
+    }
+
+    $now = Carbon::now();
+$year = $now->format('Y');      
+$month = $now->format('m');
+$day = $now->format('d');
+
+// Compter combien de commandes ont été passées ce jour-là
+$countToday = Commandes::whereDate('created_at', $now->toDateString())->count();
+
+$increment = str_pad($countToday + 1, 2, '0', STR_PAD_LEFT); 
+$orderNumber = 'GD' . $year . $month . $day . $increment;
+
+$commande = Commandes::create([
+    'user_id' => Auth::id(),
+    'customer_name' => $request->customer_name,
+    'whatsapp_number' => $request->whatsapp_number,
+    'city' => $request->city,
+    'total' => $total,
+    'statut' => 'pending',
+    'order_number' => $orderNumber,
+]);
+
+    foreach ($panier as $productId => $item) {
+        Ligne_Commandes::create([
+            'commandes_id' => $commande->id,
+            'produits_id' => $productId,
+            'quantite' => $item['quantite'],
+            'unit_price' => $item['prix'],
+            'couleur' => $item['couleur'] ?? null,
+            'taille' => $item['taille'] ?? null,
+        ]);
+    }
+
+    session()->forget('panier');
+
+    return redirect()->route('commandes.confirmation', ['id' => $commande->id]);
+}
 
     public function feedback(Request $request, $id)
     {
@@ -139,7 +148,7 @@ public function updateStatus(Request $request, $id)
             'payment_method' => 'required|in:cod,yas,flooz',
         ]);
 
-        $commande->methode_paiement = $request->payment_method;
+        $commande->payment_method = $request->payment_method;
         $commande->statut = 'confirmed';
         $commande->save();
 
