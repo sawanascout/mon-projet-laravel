@@ -144,7 +144,7 @@ public function store(Request $request)
        
         ]);
 
-        return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès.');
+        return redirect()->route('admin.produits')->with('success', 'Produit mis à jour avec succès.');
     }
 public function show($id)
 {
@@ -189,7 +189,7 @@ public function rechercher(Request $request)
 
         $produit->delete();
 
-        return redirect()->route('produits.index')->with('success', 'Produit supprimé avec succès.');
+        return redirect()->route('admin.produits')->with('success', 'Produit supprimé avec succès.');
     }
     public function promotions()
 {

@@ -44,7 +44,7 @@ Route::get('/admin/parrainage/clics', [AdminParrainageController::class, 'index'
     Route::post('/commandes/statistiques', [CommandesController::class, 'commandesParDate'])->name('commandes-graphique');
     Route::post('/commandes/segments', [AdminController::class, 'commandesParSegment'])->name('commandes.segments');
     Route::put('/admin/commandes/{id}/statut', [CommandesController::class, 'updateStatus'])
-    ->name('admin.commandes.updateStatus');
+    ->name('commandes.updateStatus');
     // Statistiques utilisateurs
     Route::post('/utilisateurs/segment', [AdminController::class, 'utilisateursParSegmentEtDate'])->name('utilisateurs.segment');
     Route::get('/clients-par-segment', [AdminController::class, 'clientsAyantCommandeParSegment'])->name('clients.segment');
