@@ -12,13 +12,14 @@ class Commandes extends Model
     protected $fillable = [
         'order_number',
         'user_id',
+          'customer_name',
+        'whatsapp_number',
         'statut',
         'city',
         'commentaire',
         'total',
         'payment_method',
-        'customer_name',
-        'whatsapp_number',
+      
     ];
 
     /**

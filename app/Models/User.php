@@ -86,6 +86,10 @@ public function commandes()
 {
     return $this->hasMany(Commandes::class, 'user_id');
 }
+public function referralClicks()
+{
+    return $this->hasMany(Referral_click::class);
+}
 
 
 }

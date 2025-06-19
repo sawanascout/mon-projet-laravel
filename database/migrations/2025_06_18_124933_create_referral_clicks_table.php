@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('referral_clicks', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+          $table->id();
+    $table->foreignId('user_id')->constrained()->onDelete('cascade'); // le parrain
+    $table->string('ip_address')->nullable();
+    $table->string('user_agent')->nullable();
+    $table->timestamps();
         });
     }
 

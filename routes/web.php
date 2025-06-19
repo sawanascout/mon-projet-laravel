@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     ElementsPaniersController,
     HistoriqueCommandesController,
     PaiementController,
+    AdminParrainageController
     
 };
 
@@ -34,6 +35,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::post('/grant', [AdminController::class, 'addPrivileges'])->name('grant');
     Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy');
     Route::post('/admins', [AdminController::class, 'storeAdmin'])->name('admins.storeAdmin');
+Route::get('/admin/parrainage/clics', [AdminParrainageController::class, 'index'])->name('parrainages.index');
 
     // Commandes
     Route::resource('commandes', CommandesController::class)->only(['index','update']);

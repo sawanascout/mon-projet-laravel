@@ -18,18 +18,28 @@ return view('parrainage.index', compact('lien'));
 
 }
 // ParrainageController.php
+
 public function invite(Request $request)
-{
-    $refCode = $request->query('ref');
+    {
+        $refCode = $request->query('ref');
 
-    if ($refCode && $parrain = User::where('referral_code', $refCode)->first()) {
-        // Sauvegarder dans session (ou cookie) le parrain pour la prochaine inscription
-        session(['referral' => $parrain->id]);
+        // Vérifier si le code de parrain existe
+        if ($refCode && $parrain = User::where('referral_code', $refCode)->first()) {
+
+            // 1. Sauvegarde en session (utile si tu veux lier l’inscription au parrain)
+            session(['referral' => $parrain->id]);
+
+            // 2. Enregistrement du clic dans la base
+            Referral_click::create([
+                'user_id' => $parrain->id,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
+        }
+
+        // 3. Redirection vers le groupe WhatsApp
+        return redirect('https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q');
     }
-
-    // Rediriger vers le groupe WhatsApp
-    return redirect('https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q');
-}
 
 
 }
