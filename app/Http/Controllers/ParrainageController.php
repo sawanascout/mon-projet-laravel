@@ -15,7 +15,7 @@ class ParrainageController extends Controller
 $user = Auth::user();
 $lien = route('invite', ['ref' => $user->referral_code]);
 
-return view('parrainage.index', compact('lien'));
+return view('Parrainage.index', compact('lien'));
 
 }
 // ParrainageController.php

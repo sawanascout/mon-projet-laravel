@@ -110,7 +110,7 @@ Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name(
 
 
 
-Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
+Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('Parrainage.index');
 Route::get('/invite', [ParrainageController::class, 'invite'])->name('invite');
 Route::get('/nous-suivre', function () {
     return view('page'); // page.blade.php
@@ -128,7 +128,7 @@ Route::get('/create/{product?}', [CommandesController::class, 'create'])->name('
     Route::post('/commandes/feedback/{id}', [CommandesController::class, 'feedback'])->name('commandes.feedback');
 
 Route::get('/mes-commandes', [CommandesController::class, 'mesCommandes'])->name('commandes.mes-commandes');
-Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('parrainage.index');
+Route::get('/mon-parrainage', [ParrainageController::class, 'index'])->name('Parrainage.index');
 
 });
 
