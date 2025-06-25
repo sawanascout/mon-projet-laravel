@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="{{ asset('build/assets/app-xxxx.css') }}">
+<script src="{{ asset('build/assets/app-yyyy.js') }}" defer></script>
     <style>
         :root {
             --main-color: #ab3fd6; 
@@ -15,8 +17,6 @@
             font-family: 'Roboto', sans-serif;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 <body class="flex flex-col min-h-screen text-gray-900 bg-white">
 <!-- Barre d'annonces -->
