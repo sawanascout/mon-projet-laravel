@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
-        .btn-purple {
-    background-color: #6f42c1;
-    border-color: #6f42c1;
-}
-.btn-purple:hover {
-    background-color:rgb(29, 155, 153);
-    border-color:rgb(53, 156, 105);
-}
+        :root {
+            --main-color: #ab3fd6; 
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
-</head>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body class="flex flex-col min-h-screen text-gray-900 bg-white">
 <!-- Barre d'annonces -->
