@@ -2,43 +2,6 @@
 
 @section('content')
 <div class="container-fluid py-5">
-    <!-- Filtres et Tri -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-md-6">
-                            <h5 class="card-title mb-3 mb-md-0">
-                                <i class="fas fa-filter me-2"></i>Filtres
-                            </h5>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row g-2">
-                                <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" name="categorie" onchange="this.form.submit()">
-                                        <option value="">Toutes les catégories</option>
-                                        <option value="electronique">Électronique</option>
-                                        <option value="vetements">Vêtements</option>
-                                        <option value="maison">Maison</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" name="tri" onchange="this.form.submit()">
-                                        <option value="">Trier par</option>
-                                        <option value="prix_croissant">Prix croissant</option>
-                                        <option value="prix_decroissant">Prix décroissant</option>
-                                        <option value="nouveautes">Nouveautés</option>
-                                        <option value="popularite">Popularité</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Grille des produits -->
     <div class="row">
@@ -122,9 +85,7 @@
                     </div>
                     <h4 class="text-muted">Aucun produit trouvé</h4>
                     <p class="text-muted">Essayez de modifier vos critères de recherche</p>
-                    <a href="{{ route('home') }}" class="btn btn-primary">
-                        <i class="fas fa-home me-2"></i>Retour à l'accueil
-                    </a>
+                    
                 </div>
             </div>
         @endforelse
