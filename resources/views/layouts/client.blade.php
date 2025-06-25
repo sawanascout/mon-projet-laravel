@@ -262,7 +262,7 @@
                             📋 Mes commandes
                         </a>
                         
-                        <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
+                        <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
                             🎁 Mon lien de parrainage
                         </a>
                         
@@ -279,7 +279,7 @@
                                 Se connecter
                             </a>
                             
-                            <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
+                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
                                 🎁 Mon lien de parrainage
                             </a>
                             
