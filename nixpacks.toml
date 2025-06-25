@@ -5,7 +5,7 @@ nixPkgs = ["php81", "nginx", "nodejs"]
 cmds = [
   "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"",
   "php composer-setup.php --install-dir=/usr/local/bin --filename=composer",
-  "composer install ",
+  "composer install --no-interaction --prefer-dist --optimize-autoloader",
   "cp .env.example .env",
   "php artisan key:generate"
 ]
