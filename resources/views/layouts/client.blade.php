@@ -236,6 +236,7 @@
 
 <!-- Header -->
 <header class="bg-white sticky-top header-shadow">
+     <nav class="bg-light border-top">
     <div class="py-3 container-fluid">
         <div class="row align-items-center">
             <!-- Logo -->
@@ -323,7 +324,7 @@
     </div>
 
     <!-- Navigation principale -->
-    <nav class="bg-light border-top">
+   
     <div class="container-fluid">
         <div class="gap-3 py-2 overflow-auto d-flex">
             @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
