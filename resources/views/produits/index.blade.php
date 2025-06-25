@@ -68,11 +68,11 @@
                             </div>
 
                             <div class="d-grid">
-    <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-purple btn-sm">
-        <i class="fas fa-shopping-cart me-1"></i>
-        <span class="d-none d-sm-inline">Ajouter</span>
-    </a>
-</div>
+                                <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-purple btn-sm" title="Voir les détails">
+                                    <i class="fas fa-shopping-cart me-1"></i>
+                                    <span class="d-inline">Ajouter</span>
+                                </a>
+                            </div>
 
                         </div>
                     </div>
@@ -86,7 +86,6 @@
                     </div>
                     <h4 class="text-muted">Aucun produit trouvé</h4>
                     <p class="text-muted">Essayez de modifier vos critères de recherche</p>
-                    
                 </div>
             </div>
         @endforelse
@@ -134,8 +133,9 @@
 .badge {
     font-size: 0.7rem;
 }
+
 .btn-purple {
-    background-color: #6f42c1; /* Violet Bootstrap */
+    background-color: #6f42c1;
     border-color: #6f42c1;
     color: white;
 }
@@ -143,14 +143,7 @@
 .btn-purple:hover {
     background-color: #5a32a3;
     border-color: #512d94;
-}
-
-
-@media (max-width: 375px) {
-    .col-6 {
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-    }
+    color: white;
 }
 
 @keyframes fadeInUp {
