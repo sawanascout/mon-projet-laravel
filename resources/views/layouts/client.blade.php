@@ -1,144 +1,185 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobalDrop - @yield('title', 'Accueil')</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlobalDrop - @yield('title', 'Accueil')</title>
 
-    <!-- ✅ Tailwind via CDN proprement -->
-    <link href="{{ asset('build/app.css') }}" rel="stylesheet">
-    
-    <!-- ✅ Favicon -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- ✅ Lucide icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- ✅ Custom styles -->
-    <style>
-        :root {
-            --main-color: #ab3fd6;
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-    </style>
+  <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <style>
+    :root {
+      --main-color: #ab3fd6;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    .main-color {
+      color: var(--main-color);
+    }
+    .bg-main-color {
+      background-color: var(--main-color);
+    }
+  </style>
 </head>
+<body class="d-flex flex-column min-vh-100 text-dark bg-white">
 
-<body class="flex flex-col min-h-screen text-gray-900 bg-white">
-    
-    <!-- ✅ Barre d'annonces -->
-    <div class="bg-[color:var(--main-color)] text-white text-sm py-2">
-        <div class="flex items-center justify-center px-4 mx-auto max-w-7xl">
-            <span id="carousel-text">Livraison gratuite sur toutes les commandes</span>
-        </div>
+<!-- Barre d'annonces -->
+<div class="bg-main-color text-white text-small py-2">
+  <div class="container d-flex justify-content-center">
+    <span id="carousel-text">Livraison gratuite sur toutes les commandes</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="sticky-top bg-white shadow-sm">
+  <div class="container d-flex align-items-center justify-content-between py-3">
+
+    <!-- Logo -->
+    <a href="{{ route('produits.index') }}" class="text-decoration-none fw-bold main-color fs-3 d-flex align-items-center">
+      <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" style="height: 40px; width: auto;" />
+    </a>
+
+    <!-- Barre de recherche -->
+    <form action="{{ route('produits.index') }}" method="GET" class="flex-grow-1 mx-3 d-none d-md-flex">
+      <input type="text" name="search" placeholder="Rechercher un produit..." class="form-control rounded-pill border-secondary" />
+    </form>
+
+    <!-- Icônes et liens -->
+    @auth()
+      <div class="d-flex align-items-center gap-3 bg-violet-50 rounded px-3 py-2 max-w-sm">
+        <span class="text-secondary fw-semibold small">
+          👋 Bienvenue, 
+          <span class="text-violet-700 fw-semibold cursor-pointer hover-text-violet-900">{{ auth()->user()->name }}</span>
+        </span>
+
+        @if (auth()->user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm fw-semibold">
+            Dashboard
+          </a>
+        @endif
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+        <a href="{{ route('logout') }}"
+          onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+          class="small text-decoration-underline text-violet-600 hover-text-violet-800">
+          Déconnexion
+        </a>
+      </div>
+
+      <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-outline-main-color rounded-pill ms-3 shadow-sm">
+        📋 Mes commandes
+      </a>
+      <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success rounded-pill ms-2 shadow-sm">
+        🎁 Mon lien de parrainage
+      </a>
+      <a href="{{ route('page') }}" class="btn btn-outline-purple rounded-pill ms-2 shadow-sm" style="--bs-btn-border-color: #ab3fd6; --bs-btn-color: #ab3fd6;">
+        🌐 Nous suivre
+      </a>
+
+    @else
+      <div class="d-flex gap-2">
+        <a href="{{ route('login') }}" class="btn btn-main-color text-white rounded-pill shadow-sm d-flex align-items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-box-arrow-in-right" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M6 3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 6 3z"/>
+            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708L9.707 5.5a.5.5 0 1 0-.708.708L10.293 8 8.999 9.293a.5.5 0 0 0 .708.708l2.147-2.147z"/>
+          </svg>
+          Se connecter
+        </a>
+        <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success rounded-pill shadow-sm">
+          🎁 Mon lien de parrainage
+        </a>
+        <a href="{{ route('page') }}" class="btn btn-outline-purple rounded-pill shadow-sm" style="--bs-btn-border-color: #ab3fd6; --bs-btn-color: #ab3fd6;">
+          🌐 Nous suivre
+        </a>
+      </div>
+    @endauth
+
+    <a href="{{ route('cart.index') }}" class="position-relative ms-3">
+      <svg class="bi bi-cart3 text-secondary fs-4 hover-main-color" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+      </svg>
+      @if(session('panier') && count(session('panier')) > 0)
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ count(session('panier')) }}
+        </span>
+      @endif
+    </a>
+  </div>
+
+  <!-- Navigation principale -->
+  <nav class="bg-light">
+    <div class="container d-flex overflow-auto py-2 text-secondary small">
+      @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+        <a href="{{ route('produits.index', ['category' => $cat === 'Toutes' ? null : $cat]) }}" class="fw-bold text-nowrap me-3 text-decoration-none text-secondary-hover-main-color">
+          {{ $cat }}
+        </a>
+      @endforeach
     </div>
+  </nav>
+</header>
 
-    <!-- ✅ Header -->
-    <header class="sticky top-0 z-50 bg-white shadow">
-        <div class="flex items-center justify-between px-4 py-3 mx-auto max-w-7xl">
-            <!-- Logo -->
-            <a href="{{ route('produits.index') }}" class="text-2xl font-bold text-[color:var(--main-color)]">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" class="w-auto h-10">
-            </a>
+<!-- Pourquoi choisir GlobalDrop - Style TEMU -->
+<section class="py-5 mt-4 border-top border-bottom bg-white">
+  <div class="container">
+    <h2 class="mb-4 text-center fw-bold fs-3 text-dark">
+      Pourquoi <span class="main-color">choisir GlobalDrop</span> ?
+    </h2>
 
-            <!-- Recherche -->
-            <form action="{{ route('produits.index') }}" method="GET" class="flex-1 hidden mx-4 md:flex">
-                <input type="text" name="search" placeholder="Rechercher un produit..." class="w-full border border-gray-300 py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[color:var(--main-color)]">
-            </form>
-
-            <!-- Icônes utilisateur / Connexion / Liens -->
-            @auth
-                <div class="flex items-center space-x-4">
-                    <span class="text-sm font-semibold text-gray-700">👋 Bienvenue, <span class="text-violet-700">{{ auth()->user()->name }}</span></span>
-
-                    @if (auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.dashboard') }}" class="px-3 py-1 text-sm font-semibold text-green-700 bg-green-100 rounded hover:bg-green-200">Dashboard</a>
-                    @endif
-
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-sm font-medium underline text-violet-600 hover:text-violet-800">Déconnexion</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">@csrf</form>
-
-                    <a href="{{ route('commandes.mes-commandes') }}" class="inline-flex items-center gap-2 text-[color:var(--main-color)] border border-[color:var(--main-color)] px-4 py-2 rounded-full hover:bg-[color:var(--main-color)] hover:text-white">📋 Mes commandes</a>
-                    <a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 border border-green-600 rounded-full hover:bg-green-600 hover:text-white">🎁 Mon lien de parrainage</a>
-                    <a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white">🌐 Nous suivre</a>
-                </div>
-            @else
-                <div class="flex space-x-2">
-                    <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-white bg-[color:var(--main-color)] px-4 py-2 rounded-full shadow-md hover:brightness-110">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9"/></svg>
-                        Se connecter
-                    </a>
-                    <a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 border border-green-600 rounded-full hover:bg-green-600 hover:text-white">🎁 Mon lien de parrainage</a>
-                    <a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white">🌐 Nous suivre</a>
-                </div>
-            @endauth
-
-            <!-- Panier -->
-            <a href="{{ route('cart.index') }}" class="relative ml-4">
-                <svg class="w-6 h-6 text-gray-700 hover:text-[color:var(--main-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
-                </svg>
-                @if(session('panier') && count(session('panier')) > 0)
-                    <span class="absolute px-1 text-xs font-bold text-white bg-red-500 rounded-full -top-1 -right-1">
-                        {{ count(session('panier')) }}
-                    </span>
-                @endif
-            </a>
+    <div class="row g-4 justify-content-between">
+      <!-- Item 1 -->
+      <div class="col-md d-flex bg-light rounded-3 shadow-sm p-3 align-items-start gap-3 border-hover-main-color">
+        <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex justify-content-center align-items-center" style="width: 48px; height: 48px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:24px; height:24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+          </svg>
         </div>
-
-        <!-- Navigation principale -->
-        <nav class="bg-gray-100">
-            <div class="flex px-4 py-2 mx-auto space-x-4 overflow-x-auto text-sm text-gray-700 max-w-7xl">
-                @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}" class="font-bold hover:text-[color:var(--main-color)] whitespace-nowrap">{{ $cat }}</a>
-                @endforeach
-            </div>
-        </nav>
-    </header>
-
-    <!-- Section Pourquoi choisir -->
-    @yield('banner')
-
-    <!-- Contenu principal -->
-    <main class="flex-grow">
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full mt-12 text-xs bg-gray-100">
-        <div class="grid grid-cols-1 gap-8 px-4 py-8 mx-auto text-sm text-gray-600 max-w-7xl md:grid-cols-4">
-            <div>
-                <h3 class="mb-2 font-semibold text-gray-800">Suivez-nous</h3>
-                <div class="flex space-x-4 text-[color:var(--main-color)]">
-                    <!-- WhatsApp -->
-                    <a href="https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q" target="_blank" class="hover:text-green-600" aria-label="WhatsApp">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="..." /></svg>
-                    </a>
-                    <!-- Instagram -->
-                    <a href="https://www.instagram.com/globaldrop2025" target="_blank" class="hover:text-pink-500" aria-label="Instagram">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="..." /></svg>
-                    </a>
-                    <!-- Facebook -->
-                    <a href="https://www.facebook.com/share/19BrbhLzb2/" target="_blank" class="hover:text-blue-600" aria-label="Facebook">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="..." /></svg>
-                    </a>
-                    <!-- TikTok -->
-                    <a href="http://www.tiktok.com/@globaldrop41" target="_blank" class="hover:text-black" aria-label="TikTok">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="..." /></svg>
-                    </a>
-                </div>
-            </div>
+        <div>
+          <h3 class="fw-semibold fs-6 text-dark mb-1">Livraison rapide</h3>
+          <p class="text-muted small mb-0">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
         </div>
+      </div>
 
-        <div class="py-4 text-center text-gray-500 bg-gray-200">
-            &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
+      <!-- Item 2 -->
+      <div class="col-md d-flex bg-light rounded-3 shadow-sm p-3 align-items-start gap-3 border-hover-main-color">
+        <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex justify-content-center align-items-center" style="width: 48px; height: 48px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:24px; height:24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v4h4V7m1 5a1 1 0 10-2 0v2h2v-2zm-6 4h8a2 2 0 002-2v-2H6v2a2 2 0 002 2z" />
+          </svg>
         </div>
-    </footer>
+        <div>
+          <h3 class="fw-semibold fs-6 text-dark mb-1">Paiement sécurisé</h3>
+          <p class="text-muted small mb-0">Vos transactions sont protégées grâce à nos systèmes de paiement fiables et sécurisés.</p>
+        </div>
+      </div>
 
-    <!-- Scripts supplémentaires -->
-    <script>
-        // Placeholder pour animations/carousel si besoin
-    </script>
+      <!-- Item 3 -->
+      <div class="col-md d-flex bg-light rounded-3 shadow-sm p-3 align-items-start gap-3 border-hover-main-color">
+        <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex justify-content-center align-items-center" style="width: 48px; height: 48px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:24px; height:24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="fw-semibold fs-6 text-dark mb-1">Satisfaction garantie</h3>
+          <p class="text-muted small mb-0">Notre priorité est votre satisfaction avec un service client disponible et réactif.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="mt-auto bg-light py-4">
+  <div class="container text-center text-muted small">
+    &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
