@@ -2,26 +2,6 @@
 
 @section('content')
 <div class="container-fluid py-5">
-    <!-- Hero Section -->
-    <div class="row mb-5">
-        <div class="col-12">
-            <div class="bg-gradient-primary text-white p-5 rounded-4 shadow-lg text-center">
-                <h1 class="display-4 fw-bold mb-3">Bienvenue dans notre boutique</h1>
-                <p class="lead mb-4">Découvrez nos produits de qualité avec les meilleures offres</p>
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Rechercher un produit..." aria-label="Recherche">
-                            <button class="btn btn-light" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Filtres et Tri -->
     <div class="row mb-4">
         <div class="col-12">
