@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <script src="https://unpkg.com/lucide@latest"></script>
-<link rel="stylesheet" href="{{ asset('build/assets/app-xxxx.css') }}">
-<script src="{{ asset('build/assets/app-yyyy.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        :root {
-            --main-color: #ab3fd6; 
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+        .btn-purple {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+.btn-purple:hover {
+    background-color:rgb(29, 155, 153);
+    border-color:rgb(53, 156, 105);
+}
     </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="flex flex-col min-h-screen text-gray-900 bg-white">
 <!-- Barre d'annonces -->
