@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
 
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- Favicon -->
+    
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
-
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Custom Styles -->
     <style>
         :root {
             --main-color: #ab3fd6;
@@ -22,192 +19,225 @@
         body {
             font-family: 'Roboto', sans-serif;
         }
-        .btn-main {
+        /* Custom Bootstrap overrides or additions */
+        .bg-main-color {
+            background-color: var(--main-color) !important;
+        }
+        .text-main-color {
+            color: var(--main-color) !important;
+        }
+        .border-main-color {
+            border-color: var(--main-color) !important;
+        }
+        .btn-main-color {
             background-color: var(--main-color);
             color: white;
+            border: none;
         }
-        .btn-main:hover,
-        .btn-main:focus {
-            background-color: #8a31b3;
+        .btn-main-color:hover {
+            background-color: #8a319e;
             color: white;
         }
-        a.text-main {
-            color: var(--main-color);
+        .rounded-full {
+            border-radius: 50rem !important;
         }
-        a.text-main:hover {
-            color: #8a31b3;
-            text-decoration: none;
-        }
-        nav.nav-category a {
-            color: #6c757d;
-            font-weight: 600;
-            white-space: nowrap;
-            margin-right: 1rem;
-        }
-        nav.nav-category a:hover {
-            color: var(--main-color);
-            text-decoration: none;
-        }
-        .announcement-bar {
-            background-color: var(--main-color);
-            color: white;
-            font-size: 0.875rem;
-            padding: 0.375rem 0;
-        }
-        footer a:hover {
-            text-decoration: none;
+        .carousel-text {
+            font-size: 0.875rem; /* text-sm */
         }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100 bg-white text-dark">
+<body class="d-flex flex-column min-vh-100 text-dark bg-white">
 
-    <!-- Barre d'annonces -->
-    <div class="announcement-bar text-center">
-        Livraison gratuite sur toutes les commandes
+<!-- Barre d'annonces -->
+<div class="bg-main-color text-white py-2 small">
+    <div class="container d-flex justify-content-center">
+        <span id="carousel-text" class="carousel-text">Livraison gratuite sur toutes les commandes</span>
+    </div>
+</div>
+
+<!-- Header -->
+<header class="sticky-top bg-white shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between py-3">
+
+        <!-- Logo -->
+        <a href="{{ route('produits.index') }}" class="text-main-color fs-3 fw-bold d-flex align-items-center">
+            <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" />
+        </a>
+
+        <!-- Barre de recherche -->
+        <form action="{{ route('produits.index') }}" method="GET" class="flex-grow-1 mx-3 d-none d-md-flex">
+            <input type="text" name="search" placeholder="Rechercher un produit..." 
+                   class="form-control rounded-pill border-secondary" />
+        </form>
+
+        <!-- Icônes & Auth -->
+        @auth
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+
+            <div class="px-3 py-2 bg-light rounded shadow-sm d-flex align-items-center gap-2">
+                <span class="small fw-semibold text-secondary">
+                    👋 Bienvenue, 
+                    <span class="text-main-color fw-bold cursor-pointer">
+                        {{ auth()->user()->name }}
+                    </span>
+                </span>
+            </div>
+
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">
+                    Dashboard
+                </a>
+            @endif
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+               class="text-decoration-underline text-main-color small fw-medium cursor-pointer">
+                Déconnexion
+            </a>
+
+            <a href="{{ route('commandes.mes-commandes') }}" 
+               class="btn btn-outline-main-color btn-sm rounded-pill shadow-sm">
+               📋 Mes commandes
+            </a>
+
+            <a href="{{ route('parrainage.index') }}" 
+               class="btn btn-outline-success btn-sm rounded-pill shadow-sm">
+               🎁 Mon lien de parrainage
+            </a>
+
+            <a href="{{ route('page') }}" 
+               class="btn btn-outline-main-color btn-sm rounded-pill shadow-sm">
+               🌐 Nous suivre
+            </a>
+        </div>
+        @else
+        <div class="d-flex gap-2 align-items-center">
+            <a href="{{ route('login') }}" class="btn btn-main-color btn-sm rounded-pill shadow-sm d-flex align-items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9" />
+                </svg>
+                Se connecter
+            </a>
+            <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill shadow-sm">
+                🎁 Mon lien de parrainage
+            </a>
+            <a href="{{ route('page') }}" class="btn btn-outline-main-color btn-sm rounded-pill shadow-sm">
+                🌐 Nous suivre
+            </a>
+        </div>
+        @endauth
+
+        <a href="{{ route('cart.index') }}" class="position-relative ms-3">
+            <svg class="text-secondary" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 0 0 .9 1.3h10.9a1 1 0 0 0 .9-1.3L17 13M7 13V6h10v7" />
+            </svg>
+            @if(session('panier') && count(session('panier')) > 0)
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ count(session('panier')) }}
+                <span class="visually-hidden">articles dans le panier</span>
+            </span>
+            @endif
+        </a>
+
     </div>
 
-    <!-- Header -->
-    <header class="sticky-top bg-white shadow-sm">
-        <div class="container d-flex align-items-center justify-content-between py-3">
-            <!-- Logo -->
-            <a href="{{ route('produits.index') }}" class="d-flex align-items-center text-main text-decoration-none fs-3 fw-bold">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" style="height: 40px; width: auto;" />
-            </a>
-
-            <!-- Recherche -->
-            <form action="{{ route('produits.index') }}" method="GET" class="flex-grow-1 mx-3 d-none d-md-flex">
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Rechercher un produit..."
-                    class="form-control rounded-pill"
-                    aria-label="Recherche produit"
-                    style="border-color: var(--main-color);"
-                />
-            </form>
-
-            <!-- Utilisateur / Connexion / Liens -->
-            @auth
-                <div class="d-flex align-items-center gap-3 flex-wrap">
-                    <span class="small fw-semibold text-secondary">
-                        👋 Bienvenue, <span class="text-main">{{ auth()->user()->name }}</span>
-                    </span>
-
-                    @if (auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
-                    @endif
-
-                    <a
-                        href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        class="small text-decoration-underline text-main"
-                    >
-                        Déconnexion
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-
-                    <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-outline-main btn-sm rounded-pill">
-                        📋 Mes commandes
-                    </a>
-                    <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                        🎁 Mon lien de parrainage
-                    </a>
-                    <a href="{{ route('page') }}" class="btn btn-outline-main btn-sm rounded-pill">
-                        🌐 Nous suivre
-                    </a>
-                </div>
-            @else
-                <div class="d-flex gap-2 flex-wrap">
-                    <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill d-flex align-items-center gap-1 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                          <path fill-rule="evenodd" d="M6 3a.5.5 0 0 1 .5.5v2.793l3.146-3.147a.5.5 0 0 1 .708.708L7.707 7H10.5a.5.5 0 0 1 0 1H7.707l2.647 2.646a.5.5 0 0 1-.708.708L6.5 7.707V10.5a.5.5 0 0 1-1 0v-7z"/>
-                          <path fill-rule="evenodd" d="M13.5 3.5A1.5 1.5 0 0 1 15 5v6a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 11V9a.5.5 0 0 1 1 0v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5h-7A.5.5 0 0 0 6 5v2a.5.5 0 0 1-1 0V5A1.5 1.5 0 0 1 6.5 3.5h7z"/>
-                        </svg>
-                        Se connecter
-                    </a>
-                    <a href="{{ route('parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                        🎁 Mon lien de parrainage
-                    </a>
-                    <a href="{{ route('page') }}" class="btn btn-outline-main btn-sm rounded-pill">
-                        🌐 Nous suivre
-                    </a>
-                </div>
-            @endauth
-
-            <!-- Panier -->
-            <a href="{{ route('cart.index') }}" class="position-relative ms-3 text-secondary" aria-label="Panier">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
-                    <circle cx="9" cy="21" r="1"></circle>
-                    <circle cx="20" cy="21" r="1"></circle>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                </svg>
-                @if(session('panier') && count(session('panier')) > 0)
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        {{ count(session('panier')) }}
-                    </span>
-                @endif
-            </a>
+    <!-- Navigation principale -->
+    <nav class="bg-light border-top border-bottom">
+        <div class="container d-flex overflow-auto gap-3 py-2 small text-secondary fw-bold">
+            @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+                <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
+                   class="text-decoration-none text-secondary text-nowrap hover:text-main-color">
+                   {{ $cat }}
+                </a>
+            @endforeach
         </div>
+    </nav>
+</header>
 
-        <!-- Navigation principale -->
-        <nav class="bg-light">
-            <div class="container d-flex overflow-auto py-2 nav-category">
-                @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}">
-                        {{ $cat }}
-                    </a>
-                @endforeach
-            </div>
-        </nav>
-    </header>
+<!-- Pourquoi choisir GlobalDrop - Style TEMU -->
+<section class="py-5 mt-4 bg-white border-top border-bottom">
+    <div class="container">
+        <h2 class="mb-4 text-center fw-bold fs-3 text-dark">
+            Pourquoi <span class="text-main-color">choisir GlobalDrop</span> ?
+        </h2>
 
-    <!-- Section Pourquoi choisir -->
-    @yield('banner')
+        <div class="row g-3 justify-content-center">
 
-    <!-- Contenu principal -->
-    <main class="flex-grow-1 container my-4">
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-auto bg-light text-secondary small">
-        <div class="container py-5">
-            <div class="row gy-4">
-                <div class="col-12 col-md-3">
-                    <h5 class="fw-semibold text-dark mb-3">Suivez-nous</h5>
-                    <div class="d-flex gap-3 text-main fs-5">
-                        <a href="https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q" target="_blank" aria-label="WhatsApp" class="text-success">
-                            <!-- WhatsApp icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M..."/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/globaldrop2025" target="_blank" aria-label="Instagram" class="text-danger">
-                            <!-- Instagram icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="..."/></svg>
-                        </a>
-                        <a href="https://www.facebook.com/share/19BrbhLzb2/" target="_blank" aria-label="Facebook" class="text-primary">
-                            <!-- Facebook icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg>
-                        </a>
-                        <a href="http://www.tiktok.com/@globaldrop41" target="_blank" aria-label="TikTok" class="text-dark">
-                            <!-- TikTok icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="..."/></svg>
-                        </a>
+            <!-- Item 1 -->
+            <div class="col-12 col-md-4">
+                <div class="d-flex gap-3 p-3 bg-light border rounded shadow-sm hover-shadow">
+                    <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width:48px; height:48px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="mb-1 fs-6 fw-semibold text-dark">Livraison rapide</h3>
+                        <p class="small text-secondary">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
                     </div>
                 </div>
-                <!-- Tu peux ajouter d’autres colonnes ici -->
             </div>
-        </div>
-        <div class="bg-secondary bg-opacity-10 text-center py-3">
-            &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
-        </div>
-    </footer>
 
-    <!-- Bootstrap 5 JS bundle (Popper + Bootstrap) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Item 2 -->
+            <div class="col-12 col-md-4">
+                <div class="d-flex gap-3 p-3 bg-light border rounded shadow-sm hover-shadow">
+                    <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width:48px; height:48px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="mb-1 fs-6 fw-semibold text-dark">Service client 24/7</h3>
+                        <p class="small text-secondary">Notre support est disponible jour et nuit pour vous aider.</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Placeholder scripts si besoin -->
-    <script>
-        // Ici tu peux ajouter des scripts JS pour animations/carousel
-    </script>
+            <!-- Item 3 -->
+            <div class="col-12 col-md-4">
+                <div class="d-flex gap-3 p-3 bg-light border rounded shadow-sm hover-shadow">
+                    <div class="flex-shrink-0 bg-main-color bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width:48px; height:48px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="text-main-color" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M12 2a10 10 0 1 1-9.95 12.5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="mb-1 fs-6 fw-semibold text-dark">Qualité garantie</h3>
+                        <p class="small text-secondary">Nous garantissons des produits authentiques et vérifiés.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Pied de page -->
+<footer class="bg-dark text-light py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <span>© 2024 GlobalDrop, Tous droits réservés.</span>
+        <a href="{{ route('cgv') }}" class="text-light text-decoration-underline small">Conditions générales de vente</a>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle (Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Carousel text animation example (simple version)
+    const messages = [
+        'Livraison gratuite sur toutes les commandes',
+        'Service client disponible 24/7',
+        'Qualité garantie sur tous nos produits',
+    ];
+    let i = 0;
+    const carouselText = document.getElementById('carousel-text');
+
+    setInterval(() => {
+        i = (i + 1) % messages.length;
+        carouselText.textContent = messages[i];
+    }, 5000);
+</script>
+
 </body>
 </html>
