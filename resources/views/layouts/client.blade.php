@@ -6,7 +6,7 @@
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
 
     <!-- ✅ Tailwind via CDN proprement -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{{ asset('build/app.css') }}" rel="stylesheet">
     
     <!-- ✅ Favicon -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
@@ -24,6 +24,7 @@
         }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen text-gray-900 bg-white">
     
     <!-- ✅ Barre d'annonces -->
