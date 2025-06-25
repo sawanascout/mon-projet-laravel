@@ -327,7 +327,7 @@
         <div class="container-fluid">
             <div class="gap-3 py-2 overflow-auto d-flex">
                 @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}" class="text-decoration-none fw-bold text-nowrap main-color">
+                    <a href="{{ route('produits.index', ['category_name' => $cat == 'Toutes' ? null : $cat]) }}" class="text-decoration-none fw-bold text-nowrap main-color">
                         {{ $cat }}
                     </a>
                 @endforeach
