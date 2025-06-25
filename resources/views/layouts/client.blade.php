@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobalDrop - @yield('title', 'Accueil')</title>
+    <title>GlobalDrop - La Qualité au Bout du Clic</title>
+    <meta name="description" content="Découvrez GlobalDrop : livraison rapide, paiement sécurisé et produits tendance au meilleur prix au Togo.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
-            --main-color: #ab3fd6; 
+            --main-color: #ab3fd6;
         }
         body {
             font-family: 'Roboto', sans-serif;
@@ -18,15 +20,9 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        .main-color {
-            color: var(--main-color) !important;
-        }
-        .bg-main-color {
-            background-color: var(--main-color) !important;
-        }
-        .border-main-color {
-            border-color: var(--main-color) !important;
-        }
+        .main-color { color: var(--main-color) !important; }
+        .bg-main-color { background-color: var(--main-color) !important; }
+        .border-main-color { border-color: var(--main-color) !important; }
         .btn-main-outline {
             color: var(--main-color);
             border-color: var(--main-color);
@@ -42,19 +38,10 @@
             color: white;
         }
         .btn-main:hover {
-            background-color: var(--main-color);
-            border-color: var(--main-color);
-            color: white;
             filter: brightness(1.1);
         }
-        .sticky-top {
-            position: sticky;
-            top: 0;
-            z-index: 1020;
-        }
-        .header-shadow {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+        .sticky-top { position: sticky; top: 0; z-index: 1020; }
+        .header-shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -72,9 +59,7 @@
             color: var(--main-color);
             transition: color 0.3s;
         }
-        .social-icon:hover {
-            text-decoration: none;
-        }
+        .social-icon:hover { text-decoration: none; }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -95,142 +80,14 @@
             color: white;
             text-decoration: none;
         }
-        .video-ad-banner {
-            position: fixed;
-            top: 50px;
-            left: 0;
-            width: 100%;
-            z-index: 1040;
-        }
-        .video-container {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-        .video-close-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 20;
-            background-color: rgba(0,0,0,0.7);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .video-close-btn:hover {
-            background-color: rgba(0,0,0,0.9);
-        }
-        .video-sound-btn {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            z-index: 20;
-            background-color: rgba(0,0,0,0.6);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 4px 8px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .video-sound-btn:hover {
-            background-color: rgba(0,0,0,0.9);
-        }
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 20px;
-        }
-        .video-overlay h2 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        }
-        .video-overlay p {
-            font-size: 18px;
-            font-weight: 500;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        .feature-card {
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            transition: box-shadow 0.3s;
-        }
-        .feature-card:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background-color: rgba(171, 63, 214, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            color: var(--main-color);
-        }
-        .welcome-box {
-            background-color: rgba(139, 69, 19, 0.05);
-            border-radius: 8px;
-            padding: 12px 16px;
-        }
-        main {
-            flex: 1;
-        }
-        @media (min-width: 768px) {
-    header .row.align-items-center {
-        align-items: stretch;
-    }
-
-    header .col-md-4,
-    header .col-md-5 {
-        display: flex;
-        align-items: center;
-    }
-
-    .header .input-group {
-        width: 100%;
-    }
-
-    .welcome-box {
-        white-space: nowrap;
-    }
-}
-
+        main { flex: 1; }
     </style>
 </head>
 <body class="bg-white text-dark">
 <!-- Barre d'annonces -->
 <div class="py-2 text-white bg-main-color">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="text-center col-12">
-                <small id="carousel-text">Livraison gratuite sur toutes les commandes</small>
-            </div>
-        </div>
+    <div class="text-center container-fluid">
+        <small id="carousel-text">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</small>
     </div>
 </div>
 
@@ -238,79 +95,31 @@
 <header class="bg-white sticky-top header-shadow">
     <div class="py-3 container-fluid">
         <div class="row align-items-center">
-            <!-- Logo -->
             <div class="col-md-3 col-6">
-                <a href="{{ route('produits.index') }}" class="text-decoration-none">
-                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" class="img-fluid" style="height: 40px; width: auto;">       
+                <a href="{{ route('produits.index') }}">
+                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" class="img-fluid" style="height: 40px;">
                 </a>
             </div>
-
-            <!-- Barre de recherche -->
             <div class="col-md-4 d-none d-md-block">
                 <form action="{{ route('produits.index') }}" method="GET">
-                    <div class="input-group">
-                        <input type="text" name="search" class="form-control rounded-pill" placeholder="Rechercher un produit..." style="border-color: var(--main-color);">
-                    </div>
+                    <input type="text" name="search" class="form-control rounded-pill border-main-color" placeholder="Rechercher un produit...">
                 </form>
             </div>
-
-            <!-- Icônes et actions -->
             <div class="col-md-5 col-6">
-                <div class="flex-wrap gap-2 d-flex align-items-center justify-content-end">
+                <div class="flex-wrap gap-2 d-flex justify-content-end align-items-center">
                     @auth
-                        <div class="flex-wrap gap-2 d-flex align-items-center">
-                            <span class="mb-0 small fw-semibold text-muted">
-                                👋 Bienvenue, <span class="main-color">{{ auth()->user()->name }}</span>
-                            </span>
-
-                            @if (auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
-                            @endif
-
-                            <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                📋 Mes commandes
-                            </a>
-
-                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                                🎁 Mon lien de parrainage
-                            </a>
-
-                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                🌐 Nous suivre
-                            </a>
-
-                            <a href="{{ route('logout') }}" 
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-                               class="small text-decoration-underline main-color">
-                                Déconnexion
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
+                        <span class="small fw-semibold text-muted">👋 Bonjour, <span class="main-color">{{ auth()->user()->name }}</span></span>
+                        @if (auth()->user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
+                        @endif
+                        <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">📦 Mes commandes</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="small text-decoration-underline main-color">Déconnexion</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                     @else
-                        <div class="position-relative">
-                            <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9" />
-                                </svg>
-                                Se connecter
-                            </a>
-
-                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                                🎁 Mon lien de parrainage
-                            </a>
-
-                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                🌐 Nous suivre
-                            </a>
-                        </div>
+                        <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">Se connecter</a>
                     @endauth
-
-                    <!-- Panier -->
                     <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
-                        <svg class="text-muted" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
                         </svg>
                         @if(session('panier') && count(session('panier')) > 0)
@@ -321,22 +130,15 @@
             </div>
         </div>
     </div>
-
-    <!-- Navigation principale -->
     <nav class="bg-light border-top">
-
-    <div class="container-fluid">
-        <div class="gap-3 py-2 overflow-auto d-flex">
-            @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                <a href="{{ route('produits.index', $cat == 'Toutes' ? ['all' => true] : ['category' => $cat]) }}"
-                   class="text-decoration-none fw-bold text-nowrap main-color">
-                    {{ $cat }}
-                </a>
-            @endforeach
+        <div class="container-fluid">
+            <div class="gap-3 py-2 overflow-auto d-flex">
+                @foreach (['Toutes', 'Mode & Accessoires', 'Hommes', 'Femmes'] as $cat)
+                    <a href="{{ route('produits.index', $cat == 'Toutes' ? ['all' => true] : ['category' => $cat]) }}" class="fw-bold main-color text-nowrap text-decoration-none">{{ $cat }}</a>
+                @endforeach
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 </header>
 
 
