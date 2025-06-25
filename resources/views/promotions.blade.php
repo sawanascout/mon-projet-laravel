@@ -269,31 +269,7 @@
         </div>
     @endif
 
-    <!-- Section d'urgence -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <div class="card bg-gradient-purple text-white border-0 shadow-lg">
-                <div class="card-body text-center py-5">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h3 class="card-title mb-3">
-                                <i class="fas fa-bolt me-2"></i>Vente Flash - Dernières heures !
-                            </h3>
-                            <p class="card-text lead mb-0">
-                                Les meilleures offres de la semaine expirent bientôt. Ne ratez pas votre chance !
-                            </p>
-                        </div>
-                        <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                            <a href="{{ route('promotions.flash') }}" class="btn btn-light btn-lg text-purple fw-bold">
-                                Je fonce <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
 </div>
 
 <!-- Styles spécifiques violet clair -->
