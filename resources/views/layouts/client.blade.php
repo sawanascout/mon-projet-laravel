@@ -257,66 +257,64 @@
             <!-- Icônes et actions -->
             <div class="col-md-5 col-6">
                 <div class="flex-wrap gap-2 d-flex align-items-center justify-content-end">
-                    @auth()
-                        <div class="gap-2 mb-2 welcome-box d-flex align-items-center mb-md-0">
-                            <span class="small fw-semibold text-muted">
+                    @auth
+                        <div class="flex-wrap gap-2 d-flex align-items-center">
+                            <span class="mb-0 small fw-semibold text-muted">
                                 👋 Bienvenue, <span class="main-color">{{ auth()->user()->name }}</span>
                             </span>
 
                             @if (auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">
-                                    Dashboard
-                                </a>
+                                <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
                             @endif
+
+                            <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">
+                                📋 Mes commandes
+                            </a>
+
+                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
+                                🎁 Mon lien de parrainage
+                            </a>
+
+                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
+                                🌐 Nous suivre
+                            </a>
+
+                            <a href="{{ route('logout') }}" 
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+                               class="small text-decoration-underline main-color">
+                                Déconnexion
+                            </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-decoration-underline small main-color">
-                                Déconnexion
-                            </a>
                         </div>
-
-                        <a href="{{ route('commandes.mes-commandes') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
-                            📋 Mes commandes
-                        </a>
-                        
-                        <a href="{{ route('Parrainage.index') }}" class="mb-2 btn btn-outline-success btn-sm rounded-pill mb-md-0">
-                            🎁 Mon lien de parrainage
-                        </a>
-                        
-                        <a href="{{ route('page') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
-                            🌐 Nous suivre
-                        </a>
-
                     @else
-                        <div class="flex-wrap gap-2 d-flex">
-                            <a href="{{ route('login') }}" class="mb-2 btn btn-main btn-sm rounded-pill mb-md-0">
+                        <div class="flex-wrap gap-2 d-flex align-items-center">
+                            <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9" />
                                 </svg>
                                 Se connecter
                             </a>
-                            
-                            <a href="{{ route('Parrainage.index') }}" class="mb-2 btn btn-outline-success btn-sm rounded-pill mb-md-0">
+
+                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
                                 🎁 Mon lien de parrainage
                             </a>
-                            
-                            <a href="{{ route('page') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
+
+                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
                                 🌐 Nous suivre
                             </a>
                         </div>
                     @endauth
 
+                    <!-- Panier -->
                     <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
                         <svg class="text-muted" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
                         </svg>
                         @if(session('panier') && count(session('panier')) > 0)
-                            <span class="cart-badge">
-                                {{ count(session('panier')) }}
-                            </span>
+                            <span class="cart-badge">{{ count(session('panier')) }}</span>
                         @endif
                     </a>
                 </div>
@@ -337,6 +335,7 @@
         </div>
     </nav>
 </header>
+
 
 <!-- Pourquoi choisir GlobalDrop -->
 <section class="py-4 mt-4 bg-white border-top border-bottom">
