@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobalDrop - La Qualité au Bout du Clic</title>
-    <meta name="description" content="Découvrez GlobalDrop : livraison rapide, paiement sécurisé et produits tendance au meilleur prix au Togo.">
+    <title>GlobalDrop - @yield('title', 'Accueil')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])    
     <style>
         :root {
-            --main-color: #ab3fd6;
+            --main-color: #ab3fd6; 
         }
         body {
             font-family: 'Roboto', sans-serif;
@@ -20,9 +18,15 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        .main-color { color: var(--main-color) !important; }
-        .bg-main-color { background-color: var(--main-color) !important; }
-        .border-main-color { border-color: var(--main-color) !important; }
+        .main-color {
+            color: var(--main-color) !important;
+        }
+        .bg-main-color {
+            background-color: var(--main-color) !important;
+        }
+        .border-main-color {
+            border-color: var(--main-color) !important;
+        }
         .btn-main-outline {
             color: var(--main-color);
             border-color: var(--main-color);
@@ -38,10 +42,19 @@
             color: white;
         }
         .btn-main:hover {
+            background-color: var(--main-color);
+            border-color: var(--main-color);
+            color: white;
             filter: brightness(1.1);
         }
-        .sticky-top { position: sticky; top: 0; z-index: 1020; }
-        .header-shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+        .header-shadow {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -59,7 +72,9 @@
             color: var(--main-color);
             transition: color 0.3s;
         }
-        .social-icon:hover { text-decoration: none; }
+        .social-icon:hover {
+            text-decoration: none;
+        }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -80,7 +95,131 @@
             color: white;
             text-decoration: none;
         }
-        main { flex: 1; }
+        .video-ad-banner {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            z-index: 1040;
+        }
+        .video-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .video-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 20;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .video-close-btn:hover {
+            background-color: rgba(0,0,0,0.9);
+        }
+        .video-sound-btn {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 20;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .video-sound-btn:hover {
+            background-color: rgba(0,0,0,0.9);
+        }
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        .video-overlay h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .video-overlay p {
+            font-size: 18px;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .feature-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: box-shadow 0.3s;
+        }
+        .feature-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(171, 63, 214, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--main-color);
+        }
+        .welcome-box {
+            background-color: rgba(139, 69, 19, 0.05);
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        main {
+            flex: 1;
+        }
+        @media (min-width: 768px) {
+    header .row.align-items-center {
+        align-items: stretch;
+    }
+
+    header .col-md-4,
+    header .col-md-5 {
+        display: flex;
+        align-items: center;
+    }
+
+    .header .input-group {
+        width: 100%;
+    }
+
+    .welcome-box {
+        white-space: nowrap;
+    }
+}
+
     </style>
 </head>
 <body class="bg-white text-dark">
