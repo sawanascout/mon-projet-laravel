@@ -4,29 +4,27 @@
 <div class="container-fluid py-5">
     <!-- Header Section -->
     <div class="row mb-5">
-        <div class="col-12">
-            <div class="text-center">
-                <div class="mb-4">
-                    <i class="fas fa-percent fa-3x text-danger"></i>
-                </div>
-                <h1 class="display-4 fw-bold text-primary mb-3">
-                    <span class="text-danger">🔥</span> Promotions Exceptionnelles
-                </h1>
-                <p class="lead text-muted mb-4">
-                    Profitez de nos offres limitées avec des réductions jusqu'à 70%
-                </p>
-                <div class="alert alert-warning d-inline-block" role="alert">
-                    <i class="fas fa-clock me-2"></i>
-                    <strong>Offres limitées !</strong> Dépêchez-vous avant qu'il ne soit trop tard
-                </div>
+        <div class="col-12 text-center">
+            <div class="mb-4">
+                <i class="fas fa-percent fa-3x text-purple"></i>
+            </div>
+            <h1 class="display-4 fw-bold text-purple mb-3">
+                <span class="text-primary">🔥</span> Promotions Exceptionnelles
+            </h1>
+            <p class="lead text-muted mb-4">
+                Profitez de nos offres limitées avec des réductions jusqu'à 70%
+            </p>
+            <div class="alert alert-purple d-inline-block" role="alert">
+                <i class="fas fa-clock me-2"></i>
+                <strong>Offres limitées !</strong> Dépêchez-vous avant qu'il ne soit trop tard
             </div>
         </div>
     </div>
 
     <!-- Statistiques des promotions -->
-    <div class="row mb-5">
+    <div class="row mb-5 text-white">
         <div class="col-md-3 col-6 mb-3">
-            <div class="card text-center border-0 bg-danger text-white h-100">
+            <div class="card text-center border-0 bg-purple-light h-100">
                 <div class="card-body">
                     <i class="fas fa-fire fa-2x mb-2"></i>
                     <h5 class="card-title">{{ $produits->count() }}</h5>
@@ -35,7 +33,7 @@
             </div>
         </div>
         <div class="col-md-3 col-6 mb-3">
-            <div class="card text-center border-0 bg-success text-white h-100">
+            <div class="card text-center border-0 bg-purple-dark h-100">
                 <div class="card-body">
                     <i class="fas fa-percentage fa-2x mb-2"></i>
                     <h5 class="card-title">70%</h5>
@@ -44,7 +42,7 @@
             </div>
         </div>
         <div class="col-md-3 col-6 mb-3">
-            <div class="card text-center border-0 bg-warning text-white h-100">
+            <div class="card text-center border-0 bg-purple-medium h-100">
                 <div class="card-body">
                     <i class="fas fa-clock fa-2x mb-2"></i>
                     <h5 class="card-title">7J</h5>
@@ -53,7 +51,7 @@
             </div>
         </div>
         <div class="col-md-3 col-6 mb-3">
-            <div class="card text-center border-0 bg-info text-white h-100">
+            <div class="card text-center border-0 bg-purple-soft h-100">
                 <div class="card-body">
                     <i class="fas fa-shipping-fast fa-2x mb-2"></i>
                     <h5 class="card-title">Gratuite</h5>
@@ -71,7 +69,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-4 mb-3 mb-md-0">
                             <h5 class="mb-0">
-                                <i class="fas fa-filter me-2 text-primary"></i>
+                                <i class="fas fa-filter me-2 text-purple"></i>
                                 Filtrer les promotions
                             </h5>
                         </div>
@@ -121,7 +119,7 @@
                                 $reduction = $produit->ancien_prix > 0 ? 
                                     round((($produit->ancien_prix - $produit->prix) / $produit->ancien_prix) * 100) : 0;
                             @endphp
-                            <span class="badge bg-danger fs-6 p-2 rounded-start-0">
+                            <span class="badge bg-purple text-white fs-6 p-2 rounded-start-0">
                                 <i class="fas fa-fire me-1"></i>-{{ $reduction }}%
                             </span>
                         </div>
@@ -130,7 +128,7 @@
                     <!-- Badge "Hot Deal" -->
                     @if($reduction >= 50)
                         <div class="position-absolute top-0 start-0 z-3 m-2">
-                            <span class="badge bg-warning text-dark pulse-animation">
+                            <span class="badge bg-purple-light text-dark pulse-animation">
                                 <i class="fas fa-star me-1"></i>HOT
                             </span>
                         </div>
@@ -144,17 +142,17 @@
                     </div>
 
                     <!-- Image du produit -->
-                    <div class="position-relative overflow-hidden">
+                    <div class="position-relative overflow-hidden rounded-top">
                         <a href="{{ route('produits.show', $produit->id) }}" class="text-decoration-none">
                             <img
                                 src="{{ $produit->photo ? asset('storage/' . $produit->photo) : asset('images/default.jpg') }}"
                                 alt="{{ $produit->name ?? $produit->nom }}"
-                                class="card-img-top promo-image"
+                                class="card-img-top promo-image rounded-top"
                                 style="height: 200px; object-fit: cover; transition: all 0.3s ease;"
                             >
                         </a>
                         <!-- Overlay promo -->
-                        <div class="promo-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                        <div class="promo-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center rounded-top">
                             <div class="text-center">
                                 <h4 class="text-white fw-bold mb-2">-{{ $reduction }}%</h4>
                                 <p class="text-white small mb-0">Économisez {{ number_format($produit->ancien_prix - $produit->prix, 0, ',', ' ') }} FCFA</p>
@@ -163,7 +161,7 @@
                     </div>
 
                     <!-- Corps de la carte -->
-                    <div class="card-body d-flex flex-col p-3">
+                    <div class="card-body d-flex flex-column p-3">
                         <!-- Nom du produit -->
                         <h6 class="card-title text-truncate mb-2" title="{{ $produit->name ?? $produit->nom }}">
                             {{ $produit->name ?? $produit->nom }}
@@ -194,12 +192,12 @@
                                     <small class="text-decoration-line-through text-muted me-2">
                                         {{ number_format($produit->ancien_prix, 0, ',', ' ') }} FCFA
                                     </small>
-                                    <small class="badge bg-success">
+                                    <small class="badge bg-purple-light text-purple">
                                         -{{ number_format($produit->ancien_prix - $produit->prix, 0, ',', ' ') }}
                                     </small>
                                 </div>
                                 <!-- Nouveau prix -->
-                                <div class="fw-bold text-danger fs-6">
+                                <div class="fw-bold text-purple fs-6">
                                     {{ number_format($produit->prix, 0, ',', ' ') }} FCFA
                                 </div>
                             </div>
@@ -207,7 +205,7 @@
                             <!-- Boutons d'action -->
                             <div class="d-grid gap-2">
                                 <a href="{{ route('produits.show', $produit->id) }}" 
-                                   class="btn btn-danger btn-sm">
+                                   class="btn btn-purple btn-sm">
                                     <i class="fas fa-shopping-cart me-1"></i>
                                     <span class="d-none d-sm-inline">Profiter</span>
                                     <span class="d-sm-none">+</span>
@@ -236,8 +234,8 @@
                                         <i class="fas fa-bell me-2"></i>Être notifié des prochaines promos
                                     </h6>
                                     <div class="input-group">
-                                        <input type="email" class="form-control" placeholder="Votre email">
-                                        <button class="btn btn-primary" type="button">
+                                        <input id="promo-email" type="email" class="form-control" placeholder="Votre email">
+                                        <button onclick="subscribeToPromos(document.getElementById('promo-email').value)" class="btn btn-purple" type="button">
                                             <i class="fas fa-paper-plane"></i>
                                         </button>
                                     </div>
@@ -246,10 +244,10 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <a href="{{ route('home') }}" class="btn btn-primary me-2">
+                        <a href="{{ route('home') }}" class="btn btn-purple me-2">
                             <i class="fas fa-home me-1"></i>Accueil
                         </a>
-                        <a href="{{ route('produits.index') }}" class="btn btn-outline-primary">
+                        <a href="{{ route('produits.index') }}" class="btn btn-outline-purple">
                             <i class="fas fa-shopping-bag me-1"></i>Tous les produits
                         </a>
                     </div>
@@ -274,7 +272,7 @@
     <!-- Section d'urgence -->
     <div class="row mt-5">
         <div class="col-12">
-            <div class="card bg-gradient-danger text-white border-0 shadow-lg">
+            <div class="card bg-gradient-purple text-white border-0 shadow-lg">
                 <div class="card-body text-center py-5">
                     <div class="row align-items-center">
                         <div class="col-md-8">
@@ -282,211 +280,114 @@
                                 <i class="fas fa-bolt me-2"></i>Vente Flash - Dernières heures !
                             </h3>
                             <p class="card-text lead mb-0">
-                                Les plus gros rabais de l'année se terminent bientôt
+                                Les meilleures offres de la semaine expirent bientôt. Ne ratez pas votre chance !
                             </p>
                         </div>
-                        <div class="col-md-4 mt-3 mt-md-0">
-                            <div class="countdown-timer bg-white text-dark rounded p-3">
-                                <div class="row text-center">
-                                    <div class="col-3">
-                                        <div class="fw-bold fs-4">06</div>
-                                        <small>Jours</small>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="fw-bold fs-4">23</div>
-                                        <small>Heures</small>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="fw-bold fs-4">45</div>
-                                        <small>Min</small>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="fw-bold fs-4">12</div>
-                                        <small>Sec</small>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-4 text-md-end mt-4 mt-md-0">
+                            <a href="{{ route('promotions.flash') }}" class="btn btn-light btn-lg text-purple fw-bold">
+                                Je fonce <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
-<!-- Styles CSS personnalisés -->
+<!-- Styles spécifiques violet clair -->
 <style>
-.bg-gradient-danger {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-}
-
-.promo-card {
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.promo-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(220, 53, 69, 0.3) !important;
-    border-color: #dc3545;
-}
-
-.promo-card:hover .promo-image {
-    transform: scale(1.1);
-}
-
-.promo-overlay {
-    background: linear-gradient(45deg, rgba(220, 53, 69, 0.9), rgba(200, 35, 51, 0.9));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.promo-card:hover .promo-overlay {
-    opacity: 1;
-}
-
-.promo-badge {
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+    :root {
+        --purple: #8a2be2;
+        --purple-light: #dcd6f7;
+        --purple-medium: #b39ddb;
+        --purple-dark: #5e35b1;
+        --purple-soft: #ede7f6;
     }
-    40% {
-        transform: translateY(-5px);
-    }
-    60% {
-        transform: translateY(-3px);
-    }
-}
 
-.pulse-animation {
-    animation: pulse 1.5s infinite;
-}
+    .text-purple {
+        color: var(--purple) !important;
+    }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    .bg-purple {
+        background-color: var(--purple) !important;
     }
-    70% {
-        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
-    }
-}
 
-.countdown-timer {
-    border: 2px solid rgba(255,255,255,0.3);
-}
+    .bg-purple-light {
+        background-color: var(--purple-light) !important;
+    }
 
-/* Responsive */
-@media (max-width: 576px) {
-    .promo-card .card-body {
-        padding: 0.75rem;
+    .bg-purple-medium {
+        background-color: var(--purple-medium) !important;
     }
-    
-    .display-4 {
-        font-size: 2rem !important;
-    }
-    
-    .promo-badge .badge {
-        font-size: 0.7rem !important;
-        padding: 0.4rem !important;
-    }
-}
 
-@media (max-width: 375px) {
-    .col-6 {
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
+    .bg-purple-dark {
+        background-color: var(--purple-dark) !important;
     }
-    
-    .promo-card .card-title {
-        font-size: 0.85rem;
+
+    .bg-purple-soft {
+        background-color: var(--purple-soft) !important;
     }
-}
 
-/* Animation d'entrée */
-.promo-card {
-    animation: slideInUp 0.6s ease-out;
-}
+    .btn-purple {
+        background-color: var(--purple);
+        color: white;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-purple:hover, .btn-purple:focus {
+        background-color: var(--purple-dark);
+        color: white;
+    }
 
-@keyframes slideInUp {
-    from {
+    .alert-purple {
+        background-color: var(--purple-light);
+        color: var(--purple-dark);
+        border: none;
+        font-weight: 600;
+    }
+
+    .promo-badge {
+        border-radius: 0 0 0 0.375rem;
+    }
+
+    .promo-overlay {
+        background: rgba(138, 43, 226, 0.75);
         opacity: 0;
-        transform: translateY(30px);
+        transition: opacity 0.3s ease;
     }
-    to {
+    .promo-card:hover .promo-overlay {
         opacity: 1;
-        transform: translateY(0);
     }
-}
 
-/* Style pour les statistiques */
-.card:hover {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease;
-}
-</style>
-
-<!-- JavaScript pour les interactions -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Animation des cartes au scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
-            }
-        });
-    });
-
-    document.querySelectorAll('.promo-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-    });
-
-    // Compteur de temps (exemple)
-    function updateCountdown() {
-        // Cette fonction peut être connectée à une vraie logique de countdown
-        const timeElements = document.querySelectorAll('.countdown-timer .fw-bold');
-        if (timeElements.length > 0) {
-            // Simulation d'un décompte
-            setInterval(() => {
-                // Logique de décompte ici
-            }, 1000);
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.15);
+            opacity: 0.7;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
         }
     }
+</style>
 
-    updateCountdown();
-});
-
-// Fonction pour notification des promotions
-function subscribeToPromos(email) {
-    // Logique AJAX pour s'abonner aux notifications
-    console.log('Abonnement aux promos pour:', email);
-    
-    const toast = `
-        <div class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" role="alert" style="z-index: 9999;">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-check me-2"></i>Vous serez notifié des prochaines promotions !
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', toast);
-    const toastElement = new bootstrap.Toast(document.querySelector('.toast:last-child'));
-    toastElement.show();
-}
+<script>
+    function subscribeToPromos(email) {
+        if (!email || !email.includes('@')) {
+            alert('Veuillez entrer un email valide.');
+            return;
+        }
+        alert('Merci pour votre inscription ! Vous serez notifié des prochaines promotions.');
+        // Ici, un appel AJAX peut être réalisé pour enregistrer l'email.
+    }
 </script>
 @endsection

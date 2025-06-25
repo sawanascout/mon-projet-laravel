@@ -152,7 +152,7 @@ public function show($id)
 
     $averageRating = $produit->avis->avg('note') ?? 0; // note est le champ dans la table `avis`
 
-    return view('Produits.show', compact('produit', 'averageRating'));
+    return view('produits.show', compact('produit', 'averageRating'));
 }
 
 

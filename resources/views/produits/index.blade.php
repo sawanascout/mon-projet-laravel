@@ -54,14 +54,7 @@
                         </div>
                     @endif
 
-                    <!-- Badge nouveau -->
-                    @if ($produit->created_at && $produit->created_at->diffInDays(now()) <= 7)
-                        <div class="position-absolute top-0 start-0 m-2 z-3">
-                            <span class="badge bg-success">
-                                <i class="fas fa-star me-1"></i>Nouveau
-                            </span>
-                        </div>
-                    @endif
+                    
 
                     <!-- Image du produit -->
                     <div class="position-relative overflow-hidden">
@@ -166,31 +159,7 @@
         </div>
     @endif
 
-    <!-- Section promotionnelle -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <div class="card bg-light border-0 shadow-sm">
-                <div class="card-body text-center py-5">
-                    <h3 class="card-title text-primary mb-3">
-                        <i class="fas fa-gift me-2"></i>Offres spéciales
-                    </h3>
-                    <p class="card-text lead text-muted mb-4">
-                        Inscrivez-vous à notre newsletter pour recevoir nos meilleures offres
-                    </p>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="Votre adresse email">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-paper-plane me-1"></i>S'inscrire
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <!-- Styles CSS personnalisés -->
