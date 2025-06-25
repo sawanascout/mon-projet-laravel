@@ -8,6 +8,7 @@ use App\Models\Produits;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 
@@ -158,19 +159,10 @@ $commande = Commandes::create([
     public function downloadReceipt($id)
 {
     $commande = Commandes::with('lignes.produit')->findOrFail($id);
-    $html = View::make('commandes.receipt', compact('commande'))->render();
 
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'portrait');
-    $dompdf->render();
+    $pdf = Pdf::loadView('commandes.receipt', compact('commande'))->setPaper('A4', 'portrait');
 
-    return response($dompdf->output(), 200, [
-        'Content-Type' => 'application/pdf',
-        'Content-Disposition' => 'attachment; filename="recu_commande_' . $commande->id . '.pdf"',
-        'Content-Transfer-Encoding' => 'binary',
-        'Accept-Ranges' => 'bytes',
-    ]);
+    return $pdf->download('recu_commande_' . $commande->id . '.pdf');
 }
 
     public function confirmation($id)
