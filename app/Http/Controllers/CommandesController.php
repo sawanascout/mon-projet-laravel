@@ -156,20 +156,22 @@ $commande = Commandes::create([
     }
 
     public function downloadReceipt($id)
-    {
-        $commande = Commandes::with('lignes.produit')->findOrFail($id);
+{
+    $commande = Commandes::with('lignes.produit')->findOrFail($id);
+    $html = View::make('commandes.receipt', compact('commande'))->render();
 
-        $html = View::make('commandes.receipt', compact('commande'))->render();
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
 
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        return response($dompdf->output(), 200)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="recu_commande_' . $commande->id . '.pdf"');
-    }
+    return response($dompdf->output(), 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'attachment; filename="recu_commande_' . $commande->id . '.pdf"',
+        'Content-Transfer-Encoding' => 'binary',
+        'Accept-Ranges' => 'bytes',
+    ]);
+}
 
     public function confirmation($id)
     {

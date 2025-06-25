@@ -1,22 +1,22 @@
 @extends('layouts.client')
 
 @section('content')
-<div class="container-fluid py-5">
+<div class="py-5 container-fluid">
 
     <!-- Grille des produits -->
     <div class="row">
         @forelse ($produits as $produit)
-            <div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
-                <div class="card h-100 shadow-sm product-card position-relative overflow-hidden">
+            <div class="mb-4 col-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="overflow-hidden shadow-sm card h-100 product-card position-relative">
                     @if ($produit->ancien_prix && $produit->ancien_prix > $produit->prix)
-                        <div class="position-absolute top-0 end-0 m-2 z-3">
+                        <div class="top-0 m-2 position-absolute end-0 z-3">
                             <span class="badge bg-danger">
                                 <i class="fas fa-percent me-1"></i>Promo
                             </span>
                         </div>
                     @endif
 
-                    <div class="position-relative overflow-hidden">
+                    <div class="overflow-hidden position-relative">
                         <a href="{{ route('produits.show', $produit->id) }}" class="text-decoration-none">
                             <img
                                 src="{{ $produit->photo ? asset('storage/' . $produit->photo) : asset('images/default.jpg') }}"
@@ -25,7 +25,7 @@
                                 style="height: 200px; object-fit: cover; transition: transform 0.3s ease;"
                             >
                         </a>
-                        <div class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0">
+                        <div class="top-0 opacity-0 product-overlay position-absolute start-0 w-100 h-100 d-flex align-items-center justify-content-center">
                             <div class="btn-group" role="group">
                                 <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-primary btn-sm" title="Voir le produit">
                                     <i class="fas fa-eye"></i>
@@ -37,12 +37,12 @@
                         </div>
                     </div>
 
-                    <div class="card-body d-flex flex-column p-3">
-                        <h6 class="card-title text-truncate mb-2" title="{{ $produit->nom }}">
+                    <div class="p-3 card-body d-flex flex-column">
+                        <h6 class="mb-2 card-title text-truncate" title="{{ $produit->nom }}">
                             {{ $produit->nom }}
                         </h6>
 
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="mb-2 d-flex align-items-center">
                             <div class="text-warning me-2">
                                 @for ($i = 1; $i <= 5; $i++)
                                     <i class="fas fa-star{{ $i <= round($produit->rating ?? 0) ? '' : '-o' }}"></i>
@@ -51,7 +51,7 @@
                             <small class="text-muted">({{ number_format($produit->rating ?? 0, 1) }})</small>
                         </div>
 
-                        <p class="card-text small text-muted mb-3" style="font-size: 0.875rem;">
+                        <p class="mb-3 card-text small text-muted" style="font-size: 0.875rem;">
                             {{ Str::limit($produit->description ?? '', 50) }}
                         </p>
 
@@ -68,18 +68,19 @@
                             </div>
 
                             <div class="d-grid">
-                                <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-shopping-cart me-1"></i>
-                                    <span class="d-none d-sm-inline">Ajouter</span>
-                                </a>
-                            </div>
+    <a href="{{ route('produits.show', $produit->id) }}" class="btn btn-purple btn-sm">
+        <i class="fas fa-shopping-cart me-1"></i>
+        <span class="d-none d-sm-inline">Ajouter</span>
+    </a>
+</div>
+
                         </div>
                     </div>
                 </div>
             </div>
         @empty
             <div class="col-12">
-                <div class="text-center py-5">
+                <div class="py-5 text-center">
                     <div class="mb-4">
                         <i class="fas fa-box-open fa-3x text-muted"></i>
                     </div>
@@ -93,7 +94,7 @@
 
     <!-- Pagination -->
     @if($produits->hasPages())
-        <div class="row mt-5">
+        <div class="mt-5 row">
             <div class="col-12">
                 <nav aria-label="Navigation des produits">
                     <div class="d-flex justify-content-center">
@@ -133,6 +134,17 @@
 .badge {
     font-size: 0.7rem;
 }
+.btn-purple {
+    background-color: #6f42c1; /* Violet Bootstrap */
+    border-color: #6f42c1;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #5a32a3;
+    border-color: #512d94;
+}
+
 
 @media (max-width: 375px) {
     .col-6 {
@@ -166,7 +178,7 @@ function addToWishlist(productId) {
             <div class="toast-body">
                 <i class="fas fa-heart me-2"></i>Produit ajouté aux favoris !
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            <button type="button" class="m-auto btn-close btn-close-white me-2" data-bs-dismiss="toast"></button>
         </div>
     `;
 

@@ -200,14 +200,34 @@
         main {
             flex: 1;
         }
+        @media (min-width: 768px) {
+    header .row.align-items-center {
+        align-items: stretch;
+    }
+
+    header .col-md-4,
+    header .col-md-5 {
+        display: flex;
+        align-items: center;
+    }
+
+    .header .input-group {
+        width: 100%;
+    }
+
+    .welcome-box {
+        white-space: nowrap;
+    }
+}
+
     </style>
 </head>
-<body class="text-dark bg-white">
+<body class="bg-white text-dark">
 <!-- Barre d'annonces -->
-<div class="bg-main-color text-white py-2">
+<div class="py-2 text-white bg-main-color">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="text-center col-12">
                 <small id="carousel-text">Livraison gratuite sur toutes les commandes</small>
             </div>
         </div>
@@ -215,8 +235,8 @@
 </div>
 
 <!-- Header -->
-<header class="sticky-top bg-white header-shadow">
-    <div class="container-fluid py-3">
+<header class="bg-white sticky-top header-shadow">
+    <div class="py-3 container-fluid">
         <div class="row align-items-center">
             <!-- Logo -->
             <div class="col-md-3 col-6">
@@ -236,9 +256,9 @@
 
             <!-- Icônes et actions -->
             <div class="col-md-5 col-6">
-                <div class="d-flex align-items-center justify-content-end gap-2 flex-wrap">
+                <div class="flex-wrap gap-2 d-flex align-items-center justify-content-end">
                     @auth()
-                        <div class="welcome-box d-flex align-items-center gap-2 mb-2 mb-md-0">
+                        <div class="gap-2 mb-2 welcome-box d-flex align-items-center mb-md-0">
                             <span class="small fw-semibold text-muted">
                                 👋 Bienvenue, <span class="main-color">{{ auth()->user()->name }}</span>
                             </span>
@@ -258,32 +278,32 @@
                             </a>
                         </div>
 
-                        <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill mb-2 mb-md-0">
+                        <a href="{{ route('commandes.mes-commandes') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
                             📋 Mes commandes
                         </a>
                         
-                        <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
+                        <a href="{{ route('Parrainage.index') }}" class="mb-2 btn btn-outline-success btn-sm rounded-pill mb-md-0">
                             🎁 Mon lien de parrainage
                         </a>
                         
-                        <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill mb-2 mb-md-0">
+                        <a href="{{ route('page') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
                             🌐 Nous suivre
                         </a>
 
                     @else
-                        <div class="d-flex gap-2 flex-wrap">
-                            <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill mb-2 mb-md-0">
+                        <div class="flex-wrap gap-2 d-flex">
+                            <a href="{{ route('login') }}" class="mb-2 btn btn-main btn-sm rounded-pill mb-md-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9" />
                                 </svg>
                                 Se connecter
                             </a>
                             
-                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill mb-2 mb-md-0">
+                            <a href="{{ route('Parrainage.index') }}" class="mb-2 btn btn-outline-success btn-sm rounded-pill mb-md-0">
                                 🎁 Mon lien de parrainage
                             </a>
                             
-                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill mb-2 mb-md-0">
+                            <a href="{{ route('page') }}" class="mb-2 btn btn-main-outline btn-sm rounded-pill mb-md-0">
                                 🌐 Nous suivre
                             </a>
                         </div>
@@ -307,7 +327,7 @@
     <!-- Navigation principale -->
     <nav class="bg-light border-top">
         <div class="container-fluid">
-            <div class="d-flex gap-3 py-2 overflow-auto">
+            <div class="gap-3 py-2 overflow-auto d-flex">
                 @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
                     <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}" class="text-decoration-none fw-bold text-nowrap main-color">
                         {{ $cat }}
@@ -321,7 +341,7 @@
 <!-- Pourquoi choisir GlobalDrop -->
 <section class="py-4 mt-4 bg-white border-top border-bottom">
     <div class="container">
-        <h2 class="text-center mb-4 fw-bold">
+        <h2 class="mb-4 text-center fw-bold">
             Pourquoi <span class="main-color">choisir GlobalDrop</span> ?
         </h2>
 
@@ -329,15 +349,15 @@
             <!-- Item 1 -->
             <div class="col-md-4">
                 <div class="feature-card h-100">
-                    <div class="d-flex gap-3">
+                    <div class="gap-3 d-flex">
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
                             </svg>
                         </div>
                         <div>
-                            <h5 class="fw-semibold text-dark mb-1">Livraison rapide</h5>
-                            <p class="small text-muted mb-0">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
+                            <h5 class="mb-1 fw-semibold text-dark">Livraison rapide</h5>
+                            <p class="mb-0 small text-muted">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
                         </div>
                     </div>
                 </div>
@@ -346,7 +366,7 @@
             <!-- Item 2 -->
             <div class="col-md-4">
                 <div class="feature-card h-100">
-                    <div class="d-flex gap-3">
+                    <div class="gap-3 d-flex">
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
@@ -354,8 +374,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h5 class="fw-semibold text-dark mb-1">Prix compétitifs</h5>
-                            <p class="small text-muted mb-0">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
+                            <h5 class="mb-1 fw-semibold text-dark">Prix compétitifs</h5>
+                            <p class="mb-0 small text-muted">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
                         </div>
                     </div>
                 </div>
@@ -364,7 +384,7 @@
             <!-- Item 3 -->
             <div class="col-md-4">
                 <div class="feature-card h-100">
-                    <div class="d-flex gap-3">
+                    <div class="gap-3 d-flex">
                         <div class="feature-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
@@ -372,8 +392,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h5 class="fw-semibold text-dark mb-1">Paiement sécurisé</h5>
-                            <p class="small text-muted mb-0">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
+                            <h5 class="mb-1 fw-semibold text-dark">Paiement sécurisé</h5>
+                            <p class="mb-0 small text-muted">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
                         </div>
                     </div>
                 </div>
@@ -393,13 +413,13 @@
 </main>
 
 <!-- Footer -->
-<footer class="bg-light py-4 mt-5">
+<footer class="py-4 mt-5 bg-light">
     <div class="container">
         <div class="row g-4">
             <!-- Réseaux sociaux -->
             <div class="col-md-3">
-                <h5 class="fw-semibold text-dark mb-3">Suivez-nous</h5>
-                <div class="d-flex gap-3">
+                <h5 class="mb-3 fw-semibold text-dark">Suivez-nous</h5>
+                <div class="gap-3 d-flex">
                     <!-- WhatsApp -->
                     <a href="https://whatsapp.com/channel/0029VbAh2wrGZNCxxKYwbN3Q" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social-icon text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -434,7 +454,7 @@
         </div>
     </div>
 
-    <div class="text-center pt-3 border-top mt-4">
+    <div class="pt-3 mt-4 text-center border-top">
         <small class="text-muted">
             &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
         </small>
@@ -443,8 +463,8 @@
 
 <!-- Banner vidéo publicitaire -->
 <div id="videoAdBanner" class="video-ad-banner d-none">
-    <div class="container-fluid px-4">
-        <div class="video-container border border-primary">
+    <div class="px-4 container-fluid">
+        <div class="border video-container border-primary">
             <!-- Bouton de fermeture -->
             <button id="closeVideoAd" class="video-close-btn">&times;</button>
             
