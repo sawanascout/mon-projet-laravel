@@ -2,10 +2,17 @@
 nixPkgs = ["php81", "composer", "nginx", "nodejs"]
 
 [phases.install]
-cmds = ["composer install --no-interaction --prefer-dist --optimize-autoloader"]
+cmds = [
+  "composer install --no-interaction --prefer-dist --optimize-autoloader",
+  "cp .env.example .env",
+  "php artisan key:generate"
+]
 
 [phases.build]
-cmds = ["npm install", "npm run build"]
+cmds = [
+  "npm install",
+  "npm run build"
+]
 
 [phases.start]
 cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
