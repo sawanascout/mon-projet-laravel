@@ -64,6 +64,7 @@ Route::get('/admin/parrainage/clics', [AdminParrainageController::class, 'index'
 Route::middleware('auth')->group(function () {
     Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name('avis.store');
 });
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //////////////client///////////////
 
