@@ -1,54 +1,66 @@
 <x-guest-layout>
-    <div class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-4">
-        <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8">
-            <div class="mb-6 text-center">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop Logo" class="mx-auto w-24 h-24 mb-2">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Connectez-vous</h1>
-                <p class="text-gray-600 dark:text-gray-300 mt-1">Bienvenue chez GlobalDrop !</p>
-            </div>
+    <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-gradient" style="background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 50%, #ec4899 100%); padding: 1rem;">
+        <div class="w-100" style="max-width: 400px;">
+            <div class="card shadow rounded">
+                <div class="card-body p-4 text-center">
+                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop Logo" class="mx-auto mb-3" style="width: 96px; height: 96px;">
+                    <h1 class="h3 mb-2 text-primary fw-bold">Connectez-vous</h1>
+                    <p class="text-secondary mb-4">Bienvenue chez GlobalDrop !</p>
 
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                <!-- Email Address -->
-                <div class="mb-4">
-                    <x-input-label for="email" :value="__('Email')" class="font-semibold" />
-                    <x-text-input id="email" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-1 text-red-600" />
-                </div>
+                        <!-- Email Address -->
+                        <div class="mb-3 text-start">
+                            <label for="email" class="form-label fw-semibold">{{ __('Email') }}</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="form-control @error('email') is-invalid @enderror">
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
-                <!-- Password -->
-                <div class="mb-4">
-                    <x-input-label for="password" :value="__('Mot de passe')" class="font-semibold" />
-                    <x-text-input id="password" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" type="password" name="password" required autocomplete="current-password" />
-                    <x-input-error :messages="$errors->get('password')" class="mt-1 text-red-600" />
-                </div>
+                        <!-- Password -->
+                        <div class="mb-3 text-start">
+                            <label for="password" class="form-label fw-semibold">{{ __('Mot de passe') }}</label>
+                            <input id="password" type="password" name="password" required autocomplete="current-password" class="form-control @error('password') is-invalid @enderror">
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
-                <!-- Remember Me -->
-                <div class="flex items-center mb-6">
-                    <input id="remember_me" type="checkbox" name="remember" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700">
-                    <label for="remember_me" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
-                        {{ __('Se souvenir de moi') }}
-                    </label>
-                </div>
+                        <!-- Remember Me -->
+                        <div class="form-check mb-4 text-start">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
+                            <label class="form-check-label" for="remember_me">
+                                {{ __('Se souvenir de moi') }}
+                            </label>
+                        </div>
 
-                <div class="flex items-center justify-between">
-                    @if (Route::has('password.request'))
-                        <a class="underline text-sm text-indigo-600 hover:text-indigo-800 font-medium" href="{{ route('password.request') }}">
-                            {{ __('Mot de passe oublié ?') }}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}" class="link-primary small">
+                                    {{ __('Mot de passe oublié ?') }}
+                                </a>
+                            @endif
+
+                            <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold">
+                                {{ __('Se connecter') }}
+                            </button>
+                        </div>
+                    </form>
+
+                    <p class="mt-4 mb-0 text-secondary small">
+                        Pas encore de compte ? 
+                        <a href="{{ route('register') }}" class="link-primary fw-semibold text-decoration-underline">
+                            Inscrivez-vous
                         </a>
-                    @endif
-
-                    <x-primary-button class="ml-4 px-6 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-md font-semibold">
-                        {{ __('Se connecter') }}
-                    </x-primary-button>
+                    </p>
                 </div>
-            </form>
-
-            <p class="mt-6 text-center text-gray-600 dark:text-gray-300">
-                Pas encore de compte ? 
-                <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-800 font-medium underline">Inscrivez-vous</a>
-            </p>
+            </div>
         </div>
     </div>
 </x-guest-layout>

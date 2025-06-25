@@ -100,6 +100,19 @@
             margin-top: 15px;
             text-align: center;
         }
+        .payment-warning {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffecb5;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #856404;
+            font-weight: 600;
+        }
+        .payment-warning p {
+            font-weight: normal;
+            color: #856404;
+            margin: 4px 0 0 0;
+        }
     </style>
 </head>
 <body>
@@ -120,12 +133,12 @@
             <p><strong>WhatsApp :</strong> {{ $commande->whatsapp_number ?? 'Non renseigné' }}</p>
             <p><strong>Ville :</strong> {{ $commande->city }}</p>
         </div>
-        <div class="section" style="background-color: #fff3cd; border-left: 5px solid #ffecb5; padding: 15px; margin-bottom: 20px;">
-    <strong style="color: #856404;">⚠️ Paiement en attente :</strong>
-    <p style="margin: 8px 0 0;">Ce reçu ne constitue pas une preuve de paiement complet.</p>
-    <p style="margin: 4px 0 0;">Un acompte est requis pour valider la commande. Le solde sera à régler à la livraison.</p>
-</div>
 
+        <div class="payment-warning">
+            ⚠️ Paiement en attente :
+            <p>Ce reçu ne constitue pas une preuve de paiement complet.</p>
+            <p>Un acompte est requis pour valider la commande. Le solde sera à régler à la livraison.</p>
+        </div>
 
         <div class="section">
             <h4>Produits commandés</h4>
@@ -148,12 +161,11 @@
 
         <div class="footer">
             <p>Merci pour votre commande chez GlobalDrop !</p>
-            <p>Pour envoyer la capture de votre paiement, cliquez ici :
-                <a 
-                   href="https://wa.me/22890171179?text=Bonjour%2C%20je%20vous%20envoie%20la%20capture%20de%20ma%20transaction%20pour%20la%20commande%20%23{{ $commande->id }}." 
+            <p>
+                Pour envoyer la capture de votre paiement, cliquez ici : 
+                <a href="https://wa.me/22890171179?text=Bonjour%2C%20je%20vous%20envoie%20la%20capture%20de%20ma%20transaction%20pour%20la%20commande%20%23{{ $commande->id }}."
                    target="_blank" 
-                   class="whatsapp-link"
-                >
+                   class="whatsapp-link">
                     Envoyer sur WhatsApp
                 </a>
             </p>

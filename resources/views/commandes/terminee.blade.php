@@ -1,52 +1,79 @@
 @extends('layouts.client')
 
 @section('content')
-<div class="max-w-2xl p-6 mx-auto mt-10 text-center bg-white rounded-lg shadow-lg">
-    <h1 class="mb-4 text-4xl font-bold text-green-600"> Merci pour votre commande !</h1>
+<div class="container my-5" style="max-width: 600px;">
+    <div class="bg-white rounded-3 shadow-lg p-4 p-md-5 text-center">
+        <h1 class="mb-4 fs-1 fw-bold text-success">Merci pour votre commande !</h1>
 
-    <p class="mb-2 text-lg text-gray-800">
-        Votre commande <span class="font-semibold text-purple-600">#{{ $commande->order_number }}</span> a bien été enregistrée.
-    </p>
-    
-    <p class="mb-6 text-gray-700">
-        Un membre de notre équipe vous contactera prochainement pour organiser la livraison.
-    </p>
-
-    <div class="p-4 mb-6 text-yellow-700 bg-yellow-100 border-l-4 border-yellow-500 rounded">
-        <p class="font-semibold">⚠️ Important :</p>
-        <p>
-            Veuillez <strong>envoyer une capture d'écran de votre reçu de paiement</strong> via le bouton WhatsApp présent sur cette page.
-            Cela permet de valider votre commande plus rapidement.
+        <p class="mb-2 fs-5 text-secondary">
+            Votre commande <span class="fw-semibold text-purple-600">#{{ $commande->order_number }}</span> a bien été enregistrée.
         </p>
+        
+        <p class="mb-5 text-muted fs-6">
+            Un membre de notre équipe vous contactera prochainement pour organiser la livraison.
+        </p>
+
+        <div class="alert alert-warning text-warning border-warning rounded-3 mb-5" role="alert" style="text-align: left;">
+            <p class="fw-semibold mb-2">⚠️ Important :</p>
+            <p>
+                Veuillez <strong>envoyer une capture d'écran de votre reçu de paiement</strong> via le bouton WhatsApp présent sur cette page.
+                Cela permet de valider votre commande plus rapidement.
+            </p>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mb-5">
+            <a href="{{ route('produits.index') }}" class="btn btn-purple px-4 py-2">
+                🏠 Retour à la boutique
+            </a>
+
+            <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-outline-purple px-4 py-2">
+                Suivre mes commandes
+            </a>
+        </div>
+
+        <hr class="my-4">
+
+        <form action="{{ route('commandes.feedback', $commande->id) }}" method="POST" class="text-start">
+            @csrf
+            <label for="commentaire" class="form-label fw-semibold text-secondary fs-6">
+                💬 Que pensez-vous de votre expérience sur GlobalDrop ?
+            </label>
+            <textarea
+                name="commentaire"
+                id="commentaire"
+                rows="4"
+                class="form-control mb-3"
+                placeholder="Votre avis nous aide à nous améliorer... (facultatif)"
+            ></textarea>
+
+            <button type="submit" class="btn btn-purple fw-semibold px-4 py-2">
+                Envoyer mon avis
+            </button>
+        </form>
     </div>
-
-    <div class="flex flex-col justify-center gap-4 mb-6 sm:flex-row">
-        <a href="{{ route('produits.index') }}"
-            class="px-6 py-3 text-white transition bg-purple-700 rounded-md hover:bg-purple-800">
-            🏠 Retour à la boutique
-        </a>
-
-        <a href="{{ route('commandes.mes-commandes') }}"
-            class="px-6 py-3 text-purple-700 transition bg-gray-100 border border-purple-300 rounded-md hover:bg-purple-200">
-             Suivre mes commandes
-        </a>
-    </div>
-
-    <hr class="my-8">
-
-    <form action="{{ route('commandes.feedback', $commande->id) }}" method="POST" class="text-left">
-        @csrf
-        <label for="commentaire" class="block mb-2 font-medium text-gray-800">
-            💬 Que pensez-vous de votre expérience sur GlobalDrop ?
-        </label>
-        <textarea name="commentaire" id="commentaire" rows="4"
-            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-            placeholder="Votre avis nous aide à nous améliorer... (facultatif)"></textarea>
-
-        <button type="submit"
-            class="px-5 py-2 mt-4 font-semibold text-white transition bg-purple-600 rounded-md hover:bg-purple-700">
-            Envoyer mon avis
-        </button>
-    </form>
 </div>
+
+<style>
+    .btn-purple {
+        background: #6b21a8;
+        color: white;
+        border-radius: 0.375rem;
+        transition: background-color 0.3s ease;
+        border: none;
+    }
+    .btn-purple:hover {
+        background: #581c87;
+        color: white;
+    }
+    .btn-outline-purple {
+        color: #6b21a8;
+        border: 2px solid #6b21a8;
+        border-radius: 0.375rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-outline-purple:hover {
+        background: #6b21a8;
+        color: white;
+    }
+</style>
 @endsection
