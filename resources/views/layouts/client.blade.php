@@ -324,16 +324,18 @@
 
     <!-- Navigation principale -->
     <nav class="bg-light border-top">
-        <div class="container-fluid">
-            <div class="gap-3 py-2 overflow-auto d-flex">
-                @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <a href="{{ route('produits.index', ['categorie' => $cat == 'Toutes' ? null : $cat]) }}" class="text-decoration-none fw-bold text-nowrap main-color">
-                        {{ $cat }}
-                    </a>
-                @endforeach
-            </div>
+    <div class="container-fluid">
+        <div class="gap-3 py-2 overflow-auto d-flex">
+            @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+                <a href="{{ route('produits.index', $cat == 'Toutes' ? ['all' => true] : ['category' => $cat]) }}"
+                   class="text-decoration-none fw-bold text-nowrap main-color">
+                    {{ $cat }}
+                </a>
+            @endforeach
         </div>
-    </nav>
+    </div>
+</nav>
+
 </header>
 
 
