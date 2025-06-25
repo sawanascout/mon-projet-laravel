@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <script src="https://unpkg.com/lucide@latest"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])    
+<link rel="stylesheet" href="{{ asset('build/assets/app-xxxx.css') }}">
+<script src="{{ asset('build/assets/app-yyyy.js') }}" defer></script>
     <style>
         :root {
             --main-color: #ab3fd6; 
