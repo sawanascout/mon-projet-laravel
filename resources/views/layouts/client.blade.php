@@ -236,7 +236,6 @@
 
 <!-- Header -->
 <header class="bg-white sticky-top header-shadow">
-     <nav class="bg-light border-top">
     <div class="py-3 container-fluid">
         <div class="row align-items-center">
             <!-- Logo -->
@@ -291,7 +290,7 @@
                             </form>
                         </div>
                     @else
-                        <div class="flex-wrap gap-2 d-flex align-items-center">
+                        <div class="position-relative">
                             <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path d="M15 3h4a2 2 0 0 1 2 2v4m-5 10H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 7l5 5m0 0l-5 5m5-5H9" />
@@ -324,7 +323,8 @@
     </div>
 
     <!-- Navigation principale -->
-   
+    <nav class="bg-light border-top">
+
     <div class="container-fluid">
         <div class="gap-3 py-2 overflow-auto d-flex">
             @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
