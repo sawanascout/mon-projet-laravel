@@ -113,10 +113,29 @@
                             <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
                         @endif
                         <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">📦 Mes commandes</a>
+                        <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">
+                                📋 Mes commandes
+                            </a>
+
+                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
+                                🎁 Mon lien de parrainage
+                            </a>
+
+                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
+                                🌐 Nous suivre
+                            </a>
+
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="small text-decoration-underline main-color">Déconnexion</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">Se connecter</a>
+                        <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
+                                🎁 Mon lien de parrainage
+                            </a>
+
+                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
+                                🌐 Nous suivre
+                            </a>
                     @endauth
                     <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
