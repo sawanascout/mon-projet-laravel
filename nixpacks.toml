@@ -1,9 +1,11 @@
 [phases.setup]
-nixPkgs = ["php81", "php81Packages.composer", "nginx", "nodejs"]
+nixPkgs = ["php81", "nginx", "nodejs"]
 
 [phases.install]
 cmds = [
-  "composer install --no-interaction --prefer-dist --optimize-autoloader",
+  "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"",
+  "php composer-setup.php --install-dir=/usr/local/bin --filename=composer",
+  "composer install ",
   "cp .env.example .env",
   "php artisan key:generate"
 ]
