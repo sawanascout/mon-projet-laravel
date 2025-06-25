@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\ReferralClick; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ public function invite(Request $request)
             session(['referral' => $parrain->id]);
 
             // 2. Enregistrement du clic dans la base
-            Referral_click::create([
+            ReferralClick::create([
                 'user_id' => $parrain->id,
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),

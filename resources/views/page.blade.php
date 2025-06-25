@@ -205,7 +205,7 @@
     </div>
 
     <div class="footer">
-        <p>&copy; 2024 GlobalDrop. Tous droits réservés.</p>
+        <p>&copy; 2024 Global Drop - La qualité au bout du clic, la sécurité en plus.</p>
         <p>Rejoignez notre communauté et restez connectés !</p>
     </div>
 </div>

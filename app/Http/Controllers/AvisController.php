@@ -34,6 +34,9 @@ class AvisController extends Controller
      */
     public function store(Request $request, $produit_id)
     {
+        if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'Vous devez être connecté pour laisser un avis.');
+    }
         $request->validate([
             'note' => 'required|integer|min:1|max:5',
             'commentaire' => 'nullable|string',

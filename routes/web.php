@@ -61,6 +61,9 @@ Route::get('/admin/parrainage/clics', [AdminParrainageController::class, 'index'
     // Graphique avis
     Route::get('/avis-graphique/{produitId}', [AdminController::class, 'avisGraphique'])->name('avis.graphique');
 });
+Route::middleware('auth')->group(function () {
+    Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name('avis.store');
+});
 
 //////////////client///////////////
 

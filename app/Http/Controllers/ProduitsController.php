@@ -23,7 +23,7 @@ class ProduitsController extends Controller
     }
 }
 elseif ($request->filled('search')) {
-    $query->where('name', 'like', '%' . $request->search . '%');
+    $query->where('nom', 'like', '%' . $request->search . '%');
 }
 // 🔥 Ce bloc ne s'exécute que si aucun filtre ET pas de "all" explicitement demandé
 elseif (Auth::check() && Auth::user()->segment && !$request->boolean('all')) {

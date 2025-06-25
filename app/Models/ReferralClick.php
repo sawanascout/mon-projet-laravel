@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Referral_click extends Model
+class ReferralClick extends Model
 {
     use HasFactory;
       protected $fillable = ['user_id', 'ip_address', 'user_agent'];

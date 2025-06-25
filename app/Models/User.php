@@ -88,7 +88,7 @@ public function commandes()
 }
 public function referralClicks()
 {
-    return $this->hasMany(Referral_click::class);
+    return $this->hasMany(ReferralClick::class);
 }
 
 

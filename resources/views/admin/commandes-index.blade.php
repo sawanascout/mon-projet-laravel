@@ -23,7 +23,7 @@
                 <td>{{ $commande->order_number }}</td>
                 <td>{{ $commande->user->name ?? 'N/A' }}</td> {{-- attention à la relation user --}}
                 <td>{{ $commande->statut }}</td>
-                <td>{{ $commande->ville }}</td>
+                <td>{{ $commande->city }}</td>
                 <td>{{ $commande->commentaire }}</td>
                 <td>{{ $commande->total }}</td>
                 <td>{{ $commande->created_at->format('d/m/Y') }}</td>
