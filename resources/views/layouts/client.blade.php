@@ -288,22 +288,14 @@
             </div>
         </div>
     </div>
-    <nav class="bg-light border-top">
-        <div class="container-fluid">
-            <div class="gap-3 py-2 overflow-auto d-flex">
-                @foreach (['Toutes', 'Mode & Accessoires', 'Hommes', 'Femmes'] as $cat)
-    @php
-        $isActive = request('category') === $cat || ($cat == 'Toutes' && !request()->has('category'));
-    @endphp
-    <a href="{{ route('produits.index') }}{{ $cat == 'Toutes' ? '' : '?category=' . urlencode($cat) }}"
-       class="fw-bold text-nowrap text-decoration-none {{ $isActive ? 'text-primary' : 'main-color' }}">
-        {{ $cat }}
-    </a>
-@endforeach
-
-            </div>
-        </div>
-    </nav>
+    <nav class="bg-gray-100">
+    <div class="flex px-4 py-2 mx-auto space-x-4 overflow-x-auto text-sm text-gray-700 max-w-7xl">
+        @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+            <a href="{{ route('produits.index', ['category' => $cat = 'Toutes' ? $cat : null]) }}"
+                class="font-bold hover:text-[color:var(--main-color)] whitespace-nowrap">{{ $cat }}</a>
+        @endforeach
+    </div>
+</nav>
 </header>
 
 
