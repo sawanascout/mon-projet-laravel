@@ -292,12 +292,13 @@
     <div class="flex px-4 py-2 mx-auto space-x-6 overflow-x-auto text-sm text-gray-700 max-w-7xl">
         @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
             <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
-               class="font-bold text-gray-700 hover:text-[#9F7AEA] whitespace-nowrap no-underline transition-colors duration-200">
+               class="fw-bold text-gray-700 text-decoration-none hover:text-[#9F7AEA] whitespace-nowrap transition-colors duration-200">
                 {{ $cat }}
             </a>
         @endforeach
     </div>
 </nav>
+
 
 
 </header>
