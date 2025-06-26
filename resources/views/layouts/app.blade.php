@@ -130,8 +130,8 @@
 
 <body>
   {{-- Navbar secondaire Dashboard --}}
-<nav class="nav nav-pills dashboard-navbar px-4 py-2 mb-4 rounded shadow">
-  <a class="navbar-brand fw-bold me-4 text-white" href="{{ route('produits.index') }}">
+<nav class="px-4 py-2 mb-4 rounded shadow nav nav-pills dashboard-navbar">
+  <a class="text-white navbar-brand fw-bold me-4" href="{{ route('produits.index') }}">
     <img src="{{ asset('images/logo.png') }}" alt="GlobalDrop" height="30" class="me-2">
     GlobalDrop
   </a>
@@ -180,7 +180,7 @@
   @yield('content')
 
   {{-- WHATSAPP FLOATING BUTTON --}}
-  <a href="https://wa.me/22890171179" target="_blank"
+  <a href="https://wa.me/22890171119" target="_blank"
      class="btn position-fixed d-flex align-items-center justify-content-center"
      style="bottom: 90px; right: 20px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; border-radius: 50%; width: 55px; height: 55px; box-shadow: 0 4px 10px rgba(18, 140, 126, 0.6); z-index: 1050;"
      aria-label="Contact WhatsApp">

@@ -2,31 +2,31 @@
 
 @section('content')
 <div class="container my-5" style="max-width: 700px;">
-    <div class="bg-white border border-purple-100 rounded-3 shadow-lg p-4 p-md-5">
-        <h1 class="text-center text-purple-700 fw-extrabold mb-4 fs-2">Commande confirmée !</h1>
+    <div class="p-4 bg-white border border-purple-100 shadow-lg rounded-3 p-md-5">
+        <h1 class="mb-4 text-center text-purple-700 fw-extrabold fs-2">Commande confirmée !</h1>
 
         <!-- Détails de la commande -->
-        <div class="bg-purple-50 border border-purple-200 rounded-3 p-3 mb-4 fs-5">
+        <div class="p-3 mb-4 border border-purple-200 bg-purple-50 rounded-3 fs-5">
             <p><strong>Numéro de commande :</strong> {{ $commande->order_number }}</p>
             <p><strong>Date :</strong> {{ $commande->created_at->format('d/m/Y H:i') }}</p>
             <p><strong>🙍 Nom :</strong> {{ $commande->customer_name }}</p>
             <p><strong>WhatsApp :</strong> {{ $commande->whatsapp_number ?? 'Non renseigné' }}</p>
             <p><strong>Ville :</strong> {{ $commande->city }}</p>
             <p><strong>Total à payer :</strong>
-                <span class="fw-bold text-purple-900">{{ number_format($commande->total, 0, ',', ' ') }} FCFA</span>
+                <span class="text-purple-900 fw-bold">{{ number_format($commande->total, 0, ',', ' ') }} FCFA</span>
             </p>
         </div>
 
         <!-- Détails des articles -->
         <div class="mb-4">
-            <h2 class="text-purple-700 fw-bold fs-4 mb-3">Vos articles</h2>
-            <ul class="list-group rounded-3 border border-gray-100">
+            <h2 class="mb-3 text-purple-700 fw-bold fs-4">Vos articles</h2>
+            <ul class="border border-gray-100 list-group rounded-3">
                 @foreach($commande->lignes as $ligne)
                     <li class="list-group-item d-flex flex-column bg-light hover-shadow">
                         <div class="d-flex justify-content-between fw-medium">
                             <span>{{ $ligne->nom }} <small class="fw-normal">x{{ $ligne->quantite }}</small></span>
                         </div>
-                        <div class="text-muted ms-2 mt-1 small">
+                        <div class="mt-1 text-muted ms-2 small">
                             <p class="mb-1">Couleur : {{ $ligne->couleur ?? 'Non précisée' }}</p>
                             <p class="mb-0">Dimension : {{ $ligne->taille ?? 'Non précisée' }}</p>
                         </div>
@@ -36,18 +36,18 @@
         </div>
 
         <!-- Paiement requis -->
-        <div class="bg-success bg-opacity-10 border border-warning rounded-3 p-3 mb-4">
-            <p class="text-success fw-semibold fs-5 mb-1">Paiement requis :</p>
+        <div class="p-3 mb-4 border bg-success bg-opacity-10 border-warning rounded-3">
+            <p class="mb-1 text-success fw-semibold fs-5">Paiement requis :</p>
             <p>Un acompte de <strong>25% du montant total</strong> est nécessaire pour valider votre commande.</p>
-            <p class="text-muted small mb-0">Le reste sera à régler à la livraison.</p>
+            <p class="mb-0 text-muted small">Le reste sera à régler à la livraison.</p>
         </div>
 
         <!-- Choix de paiement -->
         <div>
-            <h3 class="text-purple-700 fw-bold fs-5 mb-3">💰 Choisissez un mode de paiement :</h3>
+            <h3 class="mb-3 text-purple-700 fw-bold fs-5">💰 Choisissez un mode de paiement :</h3>
 
             <!-- Paiement partiel obligatoire -->
-            <div class="bg-purple-50 border border-purple-200 rounded-3 p-3 mb-3">
+            <div class="p-3 mb-3 border border-purple-200 bg-purple-50 rounded-3">
                 <div class="form-check">
                     <input class="form-check-input text-purple" type="checkbox" id="cod-agree">
                     <label class="form-check-label" for="cod-agree">
@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- Montant affiché dynamiquement -->
-                <div id="partial-info" class="text-muted mt-3 d-none">
+                <div id="partial-info" class="mt-3 text-muted d-none">
                     <p><strong>Montant total :</strong> {{ number_format($commande->total, 0, ',', ' ') }} FCFA</p>
                     <p><strong>25% à payer maintenant :</strong>
                         <span class="text-purple-900 fw-semibold" id="partial-amount"></span>
@@ -72,13 +72,13 @@
                         <input class="form-check-input text-purple" type="radio" name="payment_method" id="yas" value="yas">
                         <label class="form-check-label" for="yas">Mix By Yas</label>
                     </div>
-                    <div class="ms-4 mt-2 d-none" id="yas-info">
+                    <div class="mt-2 ms-4 d-none" id="yas-info">
                         <ul class="text-muted small list-unstyled ps-3">
                             <li>Tapez *145# et suivez les procédures de transfert.</li>
-                            <li><strong>Numéro :</strong> +228 90 17 11 79</li>
+                            <li><strong>Numéro :</strong> +228 90 17 11 19</li>
                             <li><strong>Bénéficiaire :</strong></li>
                         </ul>
-                        <div class="alert alert-warning small mt-3 mb-0" role="alert">
+                        <div class="mt-3 mb-0 alert alert-warning small" role="alert">
                             ⚠️ <strong>Important :</strong> Après votre paiement, <u>il est obligatoire</u> d’envoyer une capture d’écran sur WhatsApp pour que votre transaction soit validée.
                         </div>
                     </div>
@@ -90,13 +90,13 @@
                         <input class="form-check-input text-purple" type="radio" name="payment_method" id="flooz" value="flooz">
                         <label class="form-check-label" for="flooz">Flooz</label>
                     </div>
-                    <div class="ms-4 mt-2 d-none" id="flooz-info">
+                    <div class="mt-2 ms-4 d-none" id="flooz-info">
                         <ul class="text-muted small list-unstyled ps-3">
                             <li>Tapez *155# et suivez les procédures de transfert.</li>
                             <li><strong>Numéro :</strong> +228 98 30 47 69</li>
                             <li><strong>Bénéficiaire :</strong></li>
                         </ul>
-                        <div class="alert alert-warning small mt-3 mb-0" role="alert">
+                        <div class="mt-3 mb-0 alert alert-warning small" role="alert">
                             ⚠️ <strong>Important :</strong> Après votre paiement, <u>il est obligatoire</u> d’envoyer une capture d’écran sur WhatsApp pour que votre transaction soit validée.
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                 <button
                     type="submit"
                     id="confirm-button"
-                    class="btn btn-gradient-purple px-5 py-2 fw-semibold shadow"
+                    class="px-5 py-2 shadow btn btn-gradient-purple fw-semibold"
                 >
                     ✅ Confirmer la commande
                 </button>

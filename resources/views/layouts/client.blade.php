@@ -395,7 +395,7 @@
                     </a>
 
                     <!-- Instagram -->
-                    <a href="https://www.instagram.com/globaldrop2025?igsh=bDNkMnVsc3R3YW9m&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon text-decoration-none">
+                    <a href="https://www.instagram.com/globaldroptg?igsh=bDNkMnVsc3R3YW9m&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
@@ -411,7 +411,7 @@
                     </a>
 
                     <!-- TikTok -->
-                    <a href="http://www.tiktok.com/@globaldrop41" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="social-icon text-decoration-none">
+                    <a href="https://www.tiktok.com/@globaldrop2428?_t=ZM-8xXTCmw7WuD&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="social-icon text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9.5 3C8.119 3 7 4.119 7 5.5v13C7 19.881 8.119 21 9.5 21s2.5-1.119 2.5-2.5v-5.671c.416.112.855.171 1.309.171 2.485 0 4.5-2.015 4.5-4.5V4h-2v4.5c0 1.378-1.122 2.5-2.5 2.5S11 9.878 11 8.5V5.5C11 4.119 9.881 3 8.5 3h-1z"/>
                         </svg>
@@ -439,7 +439,7 @@
             <button id="toggleSound" class="video-sound-btn">🔇 Son</button>
 
             <!-- Bloc cliquable -->
-            <a href="http://www.tiktok.com/@globaldrop41" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+            <a href="https://www.tiktok.com/@globaldrop2428?_t=ZM-8xXTCmw7WuD&_r=1" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
                 <video id="adVideo" autoplay muted loop class="w-100" style="max-height: 400px; object-fit: cover;">
                     <source src="{{ asset('videos/ma-video.mp4') }}" type="video/mp4">
                     Votre navigateur ne prend pas en charge la lecture vidéo.
@@ -456,7 +456,7 @@
 </div>
 
 <!-- Bouton WhatsApp flottant -->
-<a href="https://wa.me/22890171179" target="_blank" class="whatsapp-float">
+<a href="https://wa.me/22890171119" target="_blank" class="whatsapp-float">
     <!-- Icône WhatsApp -->
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
         <path d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29zM12 19a7 7 0 0 1-3.68-1.03l-.26-.15-2.21.58.59-2.15-.17-.28A7 7 0 1 1 12 19zm3.44-4.33c-.2-.1-1.18-.58-1.36-.65s-.31-.1-.44.1-.51.65-.62.78-.23.15-.43.05a5.7 5.7 0 0 1-1.68-1.04 6.37 6.37 0 0 1-1.18-1.46c-.12-.2 0-.31.08-.41s.19-.23.29-.34a.5.5 0 0 0 .07-.46c-.07-.15-.44-1.06-.6-1.46s-.32-.34-.44-.34-.26-.02-.4-.02a.83.83 0 0 0-.6.29 2.55 2.55 0 0 0-.77 1.83 4.42 4.42 0 0 0 .84 2.11 9.14 9.14 0 0 0 4.32 3.71 5.09 5.09 0 0 0 2.26.39 3.54 3.54 0 0 0 2.26-1.44 3.68 3.68 0 0 0 .25-1.42c0-.24-.18-.34-.38-.44z"/>
