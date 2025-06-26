@@ -69,7 +69,7 @@
                     @csrf
                 </form>
                         <a href="{{ route('commandes.mes-commandes') }}" class="inline-flex items-center gap-2 text-[color:var(--main-color)] border border-[color:var(--main-color)] px-4 py-2 rounded-full hover:bg-[color:var(--main-color)] hover:text-white transition shadow-md">📋 Mes commandes</a>
-<a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 transition border border-green-600 rounded-full shadow-md hover:bg-green-600 hover:text-white">
+<a href="{{ route('Parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 transition border border-green-600 rounded-full shadow-md hover:bg-green-600 hover:text-white">
     🎁 Mon lien de parrainage
 </a>
 <a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white transition shadow-md">
@@ -84,7 +84,7 @@
             Se connecter
         </a>
         
-        <a href="{{ route('parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 transition border border-green-600 rounded-full shadow-md hover:bg-green-600 hover:text-white">
+        <a href="{{ route('Parrainage.index') }}" class="inline-flex items-center gap-2 px-4 py-2 text-green-600 transition border border-green-600 rounded-full shadow-md hover:bg-green-600 hover:text-white">
     🎁 Mon lien de parrainage
 </a>
         <a href="{{ route('page') }}" class="inline-flex items-center gap-2 text-[#ab3fd6] border border-[#ab3fd6] px-4 py-2 rounded-full hover:bg-[#ab3fd6] hover:text-white transition shadow-md">
@@ -210,7 +210,7 @@
         </a>
 
         <!-- Instagram -->
-        <a href="https://www.instagram.com/globaldrop2025?igsh=bDNkMnVsc3R3YW9m&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-pink-500">
+        <a href="https://www.instagram.com/globaldroptg?igsh=bDNkMnVsc3R3YW9m&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-pink-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
@@ -226,7 +226,7 @@
     </svg>
 </a>
 <!-- TikTok -->
-<a href="http://www.tiktok.com/@globaldrop41" 
+<a href="https://www.tiktok.com/@globaldrop2428?_t=ZM-8xXTCmw7WuD&_r=1" 
    target="_blank" rel="noopener noreferrer" aria-label="TikTok" 
    class="ml-4 hover:text-black">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -282,7 +282,7 @@
     </button>
 
     <!-- Bloc cliquable -->
-    <a href="http://www.tiktok.com/@globaldrop41" target="_blank" rel="noopener noreferrer" class="relative z-10 block cursor-pointer">
+    <a href="https://www.tiktok.com/@globaldrop2428?_t=ZM-8xXTCmw7WuD&_r=1" target="_blank" rel="noopener noreferrer" class="relative z-10 block cursor-pointer">
       <video id="adVideo" autoplay muted loop class="w-full max-h-[400px] rounded-xl object-cover">
   <source src="{{ asset('videos/ma-video.mp4') }}" type="video/mp4">
   Votre navigateur ne prend pas en charge la lecture vidéo.
@@ -337,7 +337,7 @@
 
 
 <!-- Bouton WhatsApp flottant -->
-<a href="https://wa.me/22890171179" target="_blank" class="fixed z-50 flex items-center justify-center p-3 text-white bg-green-500 rounded-full shadow-lg bottom-4 right-4 hover:bg-green-600">
+<a href="https://wa.me/22890171119" target="_blank" class="fixed z-50 flex items-center justify-center p-3 text-white bg-green-500 rounded-full shadow-lg bottom-4 right-4 hover:bg-green-600">
     <!-- Icône WhatsApp -->
     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
         <path d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29zM12 19a7 7 0 0 1-3.68-1.03l-.26-.15-2.21.58.59-2.15-.17-.28A7 7 0 1 1 12 19zm3.44-4.33c-.2-.1-1.18-.58-1.36-.65s-.31-.1-.44.1-.51.65-.62.78-.23.15-.43.05a5.7 5.7 0 0 1-1.68-1.04 6.37 6.37 0 0 1-1.18-1.46c-.12-.2 0-.31.08-.41s.19-.23.29-.34a.5.5 0 0 0 .07-.46c-.07-.15-.44-1.06-.6-1.46s-.32-.34-.44-.34-.26-.02-.4-.02a.83.83 0 0 0-.6.29 2.55 2.55 0 0 0-.77 1.83 4.42 4.42 0 0 0 .84 2.11 9.14 9.14 0 0 0 4.32 3.71 5.09 5.09 0 0 0 2.26.39 3.54 3.54 0 0 0 2.26-1.44 3.68 3.68 0 0 0 .25-1.42c0-.24-.18-.34-.38-.44z"/>
