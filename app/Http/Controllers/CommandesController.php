@@ -7,7 +7,7 @@ use App\Models\Ligne_Commandes;
 use App\Models\Produits;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Dompdf\Dompdf;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
@@ -156,14 +156,15 @@ $commande = Commandes::create([
         return view('commandes.terminee', compact('commande'));
     }
 
-    public function downloadReceipt($id)
+
+public function downloadReceipt($id)
 {
     $commande = Commandes::with('lignes.produit')->findOrFail($id);
 
-    $pdf = Pdf::loadView('commandes.receipt', compact('commande'))->setPaper('A4', 'portrait');
-
+    $pdf = SnappyPdf::loadView('commandes.receipt', compact('commande'))->setPaper('a4');
     return $pdf->download('recu_commande_' . $commande->id . '.pdf');
 }
+
 
     public function confirmation($id)
     {
