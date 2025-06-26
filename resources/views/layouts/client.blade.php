@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>GlobalDrop - @yield('title', 'Accueil')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+
+    <!-- Icônes Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])    
+
+    <!-- Vite CSS/JS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <style>
         :root {
-            --main-color: #ab3fd6; 
+            --main-color: #ab3fd6;
         }
         body {
             font-family: 'Roboto', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        main {
+            flex: 1;
         }
         .main-color {
             color: var(--main-color) !important;
@@ -42,9 +56,6 @@
             color: white;
         }
         .btn-main:hover {
-            background-color: var(--main-color);
-            border-color: var(--main-color);
-            color: white;
             filter: brightness(1.1);
         }
         .sticky-top {
@@ -73,6 +84,7 @@
             transition: color 0.3s;
         }
         .social-icon:hover {
+            color: #7a27a8;
             text-decoration: none;
         }
         .whatsapp-float {
@@ -89,6 +101,9 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
         .whatsapp-float:hover {
             background-color: #128c7e;
@@ -197,28 +212,118 @@
             border-radius: 8px;
             padding: 12px 16px;
         }
-        main {
-            flex: 1;
+
+        /* Responsive fixes */
+
+        /* Header */
+        header .row.align-items-center {
+            align-items: stretch;
         }
+
+        /* Small screens */
+        @media (max-width: 767.98px) {
+            /* Logo container to take less width */
+            header .col-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            /* Remove double buttons "Mes commandes" on mobile */
+            .btn-main-outline.btn-sm.rounded-pill {
+                white-space: nowrap;
+                font-size: 12px;
+                padding: 0.3rem 0.8rem;
+            }
+            /* Form search hidden on small screens */
+            header .col-md-4 {
+                display: none !important;
+            }
+            /* Wrap right section */
+            header .col-md-5 {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 0.3rem;
+            }
+            header .col-md-5 > div.flex-wrap {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 0.3rem;
+            }
+            /* Smaller font for greeting */
+            .fw-semibold.text-muted {
+                font-size: 0.85rem;
+            }
+            /* Cart icon spacing */
+            .position-relative.text-decoration-none.text-dark {
+                margin-left: 0.5rem;
+            }
+            /* Navbar categories: better scrolling */
+            nav > div {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            nav a {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.8rem;
+            }
+            /* Feature cards: full width */
+            .feature-card {
+                padding: 15px;
+                font-size: 0.95rem;
+            }
+            .feature-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .feature-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            /* Footer social icons spacing */
+            footer .gap-3.d-flex {
+                gap: 1rem !important;
+                flex-wrap: wrap;
+            }
+            footer h5 {
+                font-size: 1.1rem;
+            }
+            /* WhatsApp float smaller on mobile */
+            .whatsapp-float {
+                padding: 10px 16px;
+                font-size: 13px;
+                bottom: 15px;
+                right: 15px;
+            }
+            /* Video container max width 90% */
+            .video-container {
+                max-width: 90vw !important;
+                max-height: 250px;
+            }
+            /* Video overlay text smaller */
+            .video-overlay h2 {
+                font-size: 18px;
+            }
+            .video-overlay p {
+                font-size: 14px;
+            }
+        }
+
+        /* Medium and up */
         @media (min-width: 768px) {
-    header .row.align-items-center {
-        align-items: stretch;
-    }
-
-    header .col-md-4,
-    header .col-md-5 {
-        display: flex;
-        align-items: center;
-    }
-
-    .header .input-group {
-        width: 100%;
-    }
-
-    .welcome-box {
-        white-space: nowrap;
-    }
-}
+            header .col-md-4,
+            header .col-md-5 {
+                display: flex;
+                align-items: center;
+            }
+            .header .input-group {
+                width: 100%;
+            }
+            .welcome-box {
+                white-space: nowrap;
+            }
+        }
 
     </style>
 </head>
@@ -234,76 +339,63 @@
 <header class="bg-white sticky-top header-shadow">
     <div class="py-3 container-fluid">
         <div class="row align-items-center">
-            <div class="col-md-3 col-6">
+            <!-- Logo -->
+            <div class="col-md-3 col-6 d-flex align-items-center">
                 <a href="{{ route('produits.index') }}">
-                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" class="img-fluid" style="height: 40px;">
+                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" class="img-fluid" style="height: 40px;" />
                 </a>
             </div>
+
+            <!-- Barre de recherche (visible desktop) -->
             <div class="col-md-4 d-none d-md-block">
                 <form action="{{ route('produits.index') }}" method="GET">
-                    <input type="text" name="search" class="form-control rounded-pill border-main-color" placeholder="Rechercher un produit...">
+                    <input type="text" name="search" class="form-control rounded-pill border-main-color" placeholder="Rechercher un produit..." />
                 </form>
             </div>
-            <div class="col-md-5 col-6">
-                <div class="flex-wrap gap-2 d-flex justify-content-end align-items-center">
-                    @auth
-                        <span class="small fw-semibold text-muted">👋 Bonjour, <span class="main-color">{{ auth()->user()->name }}</span></span>
-                        @if (auth()->user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
-                        @endif
-                        <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">📦 Mes commandes</a>
-                        <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                📋 Mes commandes
-                            </a>
 
-                            <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                                🎁 Mon lien de parrainage
-                            </a>
+            <!-- Boutons & liens utilisateurs -->
+            <div class="flex-wrap gap-2 col-md-5 col-6 d-flex justify-content-end align-items-center">
+                @auth
+                <span class="small fw-semibold text-muted d-none d-md-inline">👋 Bonjour, <span class="main-color">{{ auth()->user()->name }}</span></span>
+                @if (auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-success btn-sm">Dashboard</a>
+                @endif
+                <a href="{{ route('commandes.mes-commandes') }}" class="btn btn-main-outline btn-sm rounded-pill">📦 Mes commandes</a>
+                <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">🎁 Mon lien de parrainage</a>
+                <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">🌐 Nous suivre</a>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="small text-decoration-underline main-color">Déconnexion</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                @else
+                <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">Se connecter</a>
+                <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">🎁 Mon lien de parrainage</a>
+                <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">🌐 Nous suivre</a>
+                @endauth
 
-                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                🌐 Nous suivre
-                            </a>
-
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="small text-decoration-underline main-color">Déconnexion</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-main btn-sm rounded-pill">Se connecter</a>
-                        <a href="{{ route('Parrainage.index') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                                🎁 Mon lien de parrainage
-                            </a>
-
-                            <a href="{{ route('page') }}" class="btn btn-main-outline btn-sm rounded-pill">
-                                🌐 Nous suivre
-                            </a>
-                    @endauth
-                    <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
-                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
-                        </svg>
-                        @if(session('panier') && count(session('panier')) > 0)
-                            <span class="cart-badge">{{ count(session('panier')) }}</span>
-                        @endif
-                    </a>
-                </div>
+                <!-- Panier -->
+                <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark ms-2" aria-label="Panier">
+                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+                    </svg>
+                    @if(session('panier') && count(session('panier')) > 0)
+                    <span class="cart-badge">{{ count(session('panier')) }}</span>
+                    @endif
+                </a>
             </div>
         </div>
     </div>
-    <nav class="bg-gray-100">
-    <div class="flex px-4 py-2 mx-auto space-x-3 overflow-x-auto text-sm max-w-7xl">
-        @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+
+    <!-- Navigation Catégories -->
+    <nav class="bg-gray-100 border-top border-bottom">
+        <div class="gap-2 px-3 py-2 mx-auto overflow-x-auto d-flex max-w-7xl">
+            @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
             <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
-               class="px-3 py-1 text-gray-700 transition-all border border-transparent fw-bold text-decoration-none rounded-pill hover:text-white hover:bg-purple-700">
+                class="px-3 py-1 text-gray-700 transition border border-transparent fw-bold text-decoration-none rounded-pill hover:text-white hover:bg-purple-700">
                 {{ $cat }}
             </a>
-        @endforeach
-    </div>
-</nav>
-
-
-
-
+            @endforeach
+        </div>
+    </nav>
 </header>
-
 
 <!-- Pourquoi choisir GlobalDrop -->
 <section class="py-4 mt-4 bg-white border-top border-bottom">
@@ -311,57 +403,48 @@
         <h2 class="mb-4 text-center fw-bold">
             Pourquoi <span class="main-color">choisir GlobalDrop</span> ?
         </h2>
-
         <div class="row g-4">
             <!-- Item 1 -->
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="gap-3 d-flex">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h5 class="mb-1 fw-semibold text-dark">Livraison rapide</h5>
-                            <p class="mb-0 small text-muted">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
-                        </div>
+            <div class="col-md-4 col-12">
+                <div class="gap-3 feature-card h-100 d-flex">
+                    <div class="flex-shrink-0 feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h5 class="mb-1 fw-semibold text-dark">Livraison rapide</h5>
+                        <p class="mb-0 small text-muted">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
                     </div>
                 </div>
             </div>
-
             <!-- Item 2 -->
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="gap-3 d-flex">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h5 class="mb-1 fw-semibold text-dark">Prix compétitifs</h5>
-                            <p class="mb-0 small text-muted">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
-                        </div>
+            <div class="col-md-4 col-12">
+                <div class="gap-3 feature-card h-100 d-flex">
+                    <div class="flex-shrink-0 feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h5 class="mb-1 fw-semibold text-dark">Prix compétitifs</h5>
+                        <p class="mb-0 small text-muted">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
                     </div>
                 </div>
             </div>
-
             <!-- Item 3 -->
-            <div class="col-md-4">
-                <div class="feature-card h-100">
-                    <div class="gap-3 d-flex">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h5 class="mb-1 fw-semibold text-dark">Paiement sécurisé</h5>
-                            <p class="mb-0 small text-muted">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
-                        </div>
+            <div class="col-md-4 col-12">
+                <div class="gap-3 feature-card h-100 d-flex">
+                    <div class="flex-shrink-0 feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19a7 7 0 007-7H5a7 7 0 007 7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h5 class="mb-1 fw-semibold text-dark">Support client</h5>
+                        <p class="mb-0 small text-muted">Une équipe à votre écoute pour vous aider à tout moment.</p>
                     </div>
                 </div>
             </div>
@@ -369,13 +452,8 @@
     </div>
 </section>
 
-<div class="py-3 text-center bg-light">
-    <small class="text-muted">
-        &copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.
-    </small>
-</div>
-
-<main>
+<!-- Contenu principal -->
+<main class="container my-4">
     @yield('content')
 </main>
 
@@ -525,6 +603,5 @@
 </script>
 
 @stack('scripts')
-
 </body>
 </html>
