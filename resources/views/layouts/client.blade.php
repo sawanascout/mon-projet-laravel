@@ -289,15 +289,16 @@
         </div>
     </div>
     <nav class="bg-gray-100">
-    <div class="flex px-4 py-2 mx-auto space-x-4 overflow-x-auto text-sm text-gray-700 max-w-7xl">
+    <div class="flex px-4 py-2 mx-auto space-x-6 overflow-x-auto text-sm text-gray-700 max-w-7xl">
         @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
             <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
-               class="font-bold hover:text-[#9F7AEA] whitespace-nowrap">
+               class="font-bold text-gray-700 hover:text-[#9F7AEA] whitespace-nowrap no-underline transition-colors duration-200">
                 {{ $cat }}
             </a>
         @endforeach
     </div>
 </nav>
+
 
 </header>
 
