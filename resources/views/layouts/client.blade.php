@@ -92,8 +92,8 @@
             max-width: 400px;
             display: flex;
             margin: 0.5rem 1rem;*/
-            flex-grow: 2;
-            max-width: 400px;
+            flex-grow: 1;
+            max-width: 200px;
              display: flex;
 
 
@@ -529,6 +529,8 @@
                     </div>
                 </article>
             </div>
+            <small>&copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.</small>
+
         </div>
     </section>
 
@@ -549,7 +551,7 @@
                 <i class="bi bi-tiktok"></i>
             </a>
         </div>
-        <small>&copy; {{ date('Y') }} GlobalDrop - La qualité au bout du clic.</small>
+        <small>&copy; {{ date('Y') }} Global Drop - La qualité au bout du clic, la sécurité en plus.</small>
     </footer>
 
     <a href="https://wa.me/22890171119" class="gd-whatsapp-float" aria-label="Contact WhatsApp GlobalDrop" target="_blank" rel="noopener noreferrer">
