@@ -204,17 +204,17 @@
                         </li>
                         @if (auth()->user()->role === 'admin')
                             <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">📊 Dashboard</a>
+                                <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
                             </li>
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">📦 Commandes</a>
+                            <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">Commandes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
+                            <a class="nav-link" href="{{ route('Parrainage.index') }}">Parrainage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('page') }}">🌐 Nous suivre</a>
+                            <a class="nav-link" href="{{ route('page') }}">🌐suivre</a>
                         </li>
                         <li class="nav-item">
                             <a
@@ -227,13 +227,13 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}">🔐 Connexion</a>
+                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}"> Connexion</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐 Nous suivre</a>
+                            <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐Nous suivre</a>
                         </li>
                     @endauth
 
