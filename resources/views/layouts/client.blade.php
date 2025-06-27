@@ -142,8 +142,10 @@
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
         }
-        @media (max-width: 767.98px) {
-            .category-nav {
+        @media (min-width: 992px) {
+    .navbar-collapse {
+        display: flex !important;
+        .category-nav {
                 overflow-x: auto;
                 white-space: nowrap;
             }
@@ -153,10 +155,6 @@
                 border-radius: 50px;
                 padding: 0.375rem 1rem;
             }
-        }
-        @media (min-width: 992px) {
-    .navbar-collapse {
-        display: flex !important;
     }
 }
 
