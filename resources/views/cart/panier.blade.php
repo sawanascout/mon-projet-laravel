@@ -1,8 +1,8 @@
 @extends('layouts.client')
 
 @section('content')
-<div class="container py-5">
-    <h1 class="mb-4">Votre Panier</h1>
+<div class="container px-3 py-4">
+    <h1 class="mb-4 text-center fs-3 text-md-start">Votre Panier</h1>
 
     @php
         $total = 0;
@@ -10,8 +10,8 @@
     @endphp
 
     @if(count($panier) > 0)
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle">
+        <div class="mb-4 table-responsive">
+            <table class="table align-middle table-bordered text-nowrap">
                 <thead class="table-light">
                     <tr>
                         <th>Produit</th>
@@ -29,13 +29,16 @@
                                 $total += $subtotal;
                             @endphp
                             <tr>
-                                <td class="d-flex align-items-center gap-3">
-                                    @if(!empty($produit['photo']))
-                                        <img src="{{ asset('storage/' . $produit['photo']) }}" 
-                                             alt="{{ $produit['nom'] }}" 
-                                             style="width: 60px; height: 60px; object-fit: cover; border-radius: 0.5rem;">
-                                    @endif
-                                    <span>{{ $produit['nom'] }}</span>
+                                <td>
+                                    <div class="gap-2 d-flex flex-column flex-md-row align-items-md-center">
+                                        @if(!empty($produit['photo']))
+                                            <img src="{{ asset('storage/' . $produit['photo']) }}"
+                                                alt="{{ $produit['nom'] }}"
+                                                class="rounded"
+                                                style="width: 60px; height: 60px; object-fit: cover;">
+                                        @endif
+                                        <span class="fw-semibold">{{ $produit['nom'] }}</span>
+                                    </div>
                                 </td>
                                 <td>{{ number_format($produit['prix'], 0, ',', ' ') }} FCFA</td>
                                 <td>{{ $produit['quantite'] }}</td>
@@ -56,30 +59,32 @@
             </table>
         </div>
 
-        <div class="d-flex justify-content-end align-items-center mt-4">
-            <h4 class="me-3">Total :</h4>
-            <h4 class="text-primary fw-bold">{{ number_format($total, 0, ',', ' ') }} FCFA</h4>
+        <!-- Total -->
+        <div class="gap-3 d-flex flex-column flex-md-row justify-content-md-end align-items-md-center">
+            <h4 class="mb-0">Total :</h4>
+            <h4 class="mb-0 text-primary fw-bold">{{ number_format($total, 0, ',', ' ') }} FCFA</h4>
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
+        <!-- Bouton Commander -->
+        <div class="mt-3 d-flex justify-content-md-end">
             @auth
-                <a href="{{ route('commandes.create') }}" class="btn btn-primary px-4 py-2">
+                <a href="{{ route('commandes.create') }}" class="px-4 py-2 text-center btn btn-primary w-100 w-md-auto">
                     Finaliser la commande
                 </a>
             @else
-                <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2">
+                <a href="{{ route('login') }}" class="px-4 py-2 text-center btn btn-primary w-100 w-md-auto">
                     Se connecter pour commander
                 </a>
             @endauth
         </div>
 
     @else
-        <div class="alert alert-info text-center" role="alert">
+        <div class="my-5 text-center alert alert-info" role="alert">
             Votre panier est vide.
         </div>
     @endif
 
-    <div class="mt-4">
+    <div class="mt-4 text-center text-md-start">
         <a href="{{ route('produits.index') }}" class="text-decoration-none text-primary">
             ← Continuer les achats
         </a>
