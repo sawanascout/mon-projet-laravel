@@ -177,8 +177,17 @@
                 <span class="fw-bold text-dark">GlobalDrop</span>
             </a>
 
-            
-<div class="collapse navbar-collapse" id="mainNavbar">
+            <button class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse custom-collapse" id="mainNavbar">
                 <!-- Barre de recherche -->
                 <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
                     <input
