@@ -92,10 +92,10 @@
             max-width: 400px;
             display: flex;
             margin: 0.5rem 1rem;*/
-            flex-grow: 1;
-            max-width: 300px;
-            margin: 0.5rem 1rem;
-            flex: 1 1 300px;
+            flex-grow: 2;
+            max-width: 400px;
+             display: flex;
+
 
 
         }
