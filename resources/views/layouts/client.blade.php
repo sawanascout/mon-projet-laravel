@@ -180,8 +180,16 @@
             
 <div class="col-md-4 d-none d-md-block">
                 <!-- Barre de recherche -->
-                <form action="{{ route('produits.index') }}" method="GET">
-                    <input type="text" name="search" class="form-control rounded-pill border-main-color" placeholder="Rechercher un produit...">
+                <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Rechercher un produit..."
+                        value="{{ request('search') }}"
+                        aria-label="Recherche produit"
+                    />
+                    <button class="btn btn-main" type="submit" aria-label="Lancer la recherche">🔍</button>
                 </form>
 
                 <!-- Menu droite -->
@@ -217,7 +225,6 @@
                         <li class="nav-item">
                             <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}"> Connexion</a>
                         </li>
-                        <a href="{{ route('login') }}" class="btn btn-sm btn-main me-2">Connexion</a>
 
                         <li class="nav-item">
                             <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
