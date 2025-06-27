@@ -161,97 +161,70 @@
         <span id="carousel-text">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</span>
     </div>
 
-    <!-- Navbar principale -->
-    <nav class="bg-white shadow-sm navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('produits.index') }}">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2" />
-                <span class="fw-bold text-dark">GlobalDrop</span>
-            </a>
+    <nav class="bg-white shadow-sm navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{{ route('produits.index') }}">
+            <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2">
+            <span class="fw-bold text-dark">GlobalDrop</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Barre de recherche centrée -->
+            <form action="{{ route('produits.index') }}" method="GET" class="mx-auto w-50 d-flex">
+                <input type="text" name="search" class="form-control rounded-start-pill border-primary" placeholder="Rechercher un produit...">
+                <button type="submit" class="px-4 btn btn-primary rounded-end-pill">🔍</button>
+            </form>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#mainNavbar"
-                aria-controls="mainNavbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <!-- Barre de recherche -->
-                <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
-                    <input
-                        type="text"
-                        name="search"
-                        class="form-control"
-                        placeholder="Rechercher un produit..."
-                        value="{{ request('search') }}"
-                        aria-label="Recherche produit"
-                    />
-                    <button class="btn btn-main" type="submit" aria-label="Lancer la recherche">🔍</button>
-                </form>
-
-                <!-- Menu droite -->
-                <ul class="gap-2 navbar-nav ms-auto align-items-center">
-                    @auth
+            <ul class="gap-2 navbar-nav ms-auto align-items-lg-center">
+                @auth
+                    <li class="nav-item">
+                        <span class="border btn btn-light">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
+                    </li>
+                    @if (auth()->user()->role === 'admin')
                         <li class="nav-item">
-                            <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-primary">📊 Dashboard</a>
                         </li>
-                        @if (auth()->user()->role === 'admin')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">📊 Dashboard</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">📦 Commandes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('page') }}">🌐 Nous suivre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link text-danger"
-                                href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >🚪 Déconnexion</a
-                            >
-                            <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}">🔐 Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐 Nous suivre</a>
-                        </li>
-                    @endauth
-
-                    <!-- Panier Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
-                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
-                        </svg>
+                    @endif
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark" href="{{ route('commandes.mes-commandes') }}">📦 Commandes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-dark" href="{{ route('page') }}">🌐 Nous suivre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">🚪 Déconnexion</a>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}">🔐 Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐 Nous suivre</a>
+                    </li>
+                @endauth
+                <li class="nav-item">
+                    <a href="{{ route('cart.index') }}" class="btn btn-outline-dark position-relative">
+                        🛒
                         @if(session('panier') && count(session('panier')) > 0)
-                            <span class="cart-badge">{{ count(session('panier')) }}</span>
+                            <span class="top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ count(session('panier')) }}
+                            </span>
                         @endif
                     </a>
-                    </li>
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Navigation catégories sous navbar -->
     <nav class="category-nav">
