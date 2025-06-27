@@ -10,429 +10,576 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
-            --primary: #ab3fd6;
+            --gd-primary: #ab3fd6;
+            --gd-primary-dark: #7b26a3;
+            --gd-white: #fff;
+            --gd-light-gray: #f8f9fa;
+            --gd-text-dark: #333;
+            --gd-text-muted: #666;
+            --gd-border-light: #ddd;
+            --gd-radius-lg: 25px;
+            --gd-radius-sm: 6px;
+            --gd-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        /* Reset and base */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: var(--gd-font-family);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            margin: 0;
+            background-color: var(--gd-white);
+            color: var(--gd-text-dark);
         }
-        .main {
-            flex: 1;
-        }
-        .top-bar {
-            background-color: var(--primary);
-            color: #fff;
-            padding: 8px;
+
+        /* Top bar */
+        .gd-topbar {
+            background-color: var(--gd-primary);
+            color: var(--gd-white);
+            padding: 0.5rem 1rem;
             text-align: center;
-            font-size: 14px;
-        }
-        .navbar-brand img {
-            height: 40px;
-        }
-        .nav-link, .nav-pills .nav-link {
-            color: #333 !important;
+            font-size: 0.9rem;
             font-weight: 500;
+        }
+
+        /* Navbar */
+        nav.gd-navbar {
+            background-color: var(--gd-white);
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+        nav.gd-navbar .gd-navbar-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .gd-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--gd-text-dark);
+            font-weight: 700;
+            font-size: 1.25rem;
+            user-select: none;
+        }
+        .gd-logo img {
+            height: 40px;
+            border-radius: var(--gd-radius-sm);
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+        }
+
+        /* Navbar toggler */
+        .gd-navbar-toggler {
+            border: none;
+            background: none;
+            font-size: 1.5rem;
             cursor: pointer;
+            color: var(--gd-primary);
+            display: none;
+        }
+
+        /* Search bar */
+        .gd-searchbar {
+            flex: 1 1 300px;
+            max-width: 600px;
+            display: flex;
+            margin: 0.5rem 1rem;
+        }
+        .gd-searchbar input[type="text"] {
+            flex-grow: 1;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--gd-primary);
+            border-right: none;
+            border-radius: var(--gd-radius-lg) 0 0 var(--gd-radius-lg);
+            font-size: 1rem;
+            outline-offset: 2px;
+            transition: box-shadow 0.3s ease;
+        }
+        .gd-searchbar input[type="text"]:focus {
+            box-shadow: 0 0 8px var(--gd-primary);
+            border-color: var(--gd-primary-dark);
+        }
+        .gd-searchbar button {
+            background-color: var(--gd-primary);
+            color: var(--gd-white);
+            border: 2px solid var(--gd-primary);
+            border-radius: 0 var(--gd-radius-lg) var(--gd-radius-lg) 0;
+            padding: 0 1rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .gd-searchbar button:hover,
+        .gd-searchbar button:focus {
+            background-color: var(--gd-primary-dark);
+            border-color: var(--gd-primary-dark);
+        }
+
+        /* Nav menu */
+        .gd-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: nowrap;
+        }
+        .gd-nav-item {
+            list-style: none;
+        }
+        .gd-nav-link {
+            text-decoration: none;
+            color: var(--gd-text-dark);
+            font-weight: 500;
             transition: color 0.3s ease;
         }
-        .nav-link:hover, .nav-pills .nav-link:hover {
-            color: var(--primary) !important;
+        .gd-nav-link:hover,
+        .gd-nav-link:focus {
+            color: var(--gd-primary);
+            outline: none;
         }
-        .nav-pills .nav-link.active {
-            background-color: var(--primary);
-            color: white !important;
+        .gd-btn-primary {
+            background-color: var(--gd-primary);
+            color: var(--gd-white);
+            border-radius: var(--gd-radius-lg);
+            padding: 0.35rem 1rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        .btn-main {
-            background: var(--primary);
-            color: white;
-            border-radius: 25px;
+        .gd-btn-primary:hover,
+        .gd-btn-primary:focus {
+            background-color: var(--gd-primary-dark);
+            outline: none;
         }
-        .btn-main-outline {
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            border-radius: 25px;
+        .gd-btn-outline-primary {
+            border: 2px solid var(--gd-primary);
+            color: var(--gd-primary);
+            border-radius: var(--gd-radius-lg);
+            padding: 0.35rem 1rem;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-        .btn-main-outline:hover {
-            background: var(--primary);
-            color: white;
+        .gd-btn-outline-primary:hover,
+        .gd-btn-outline-primary:focus {
+            background-color: var(--gd-primary);
+            color: var(--gd-white);
+            outline: none;
         }
-        .whatsapp-float {
+
+        /* Badge panier */
+        .gd-cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--gd-text-dark);
+            cursor: pointer;
+        }
+        .gd-cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background-color: #dc3545;
+            color: var(--gd-white);
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            user-select: none;
+        }
+
+        /* Categories pills */
+        .gd-category-nav {
+            background-color: var(--gd-light-gray);
+            border-top: 1px solid var(--gd-border-light);
+            border-bottom: 1px solid var(--gd-border-light);
+            padding: 0.5rem 0;
+            overflow-x: auto;
+        }
+        .gd-category-list {
+            display: flex;
+            gap: 1rem;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            white-space: nowrap;
+        }
+        .gd-category-link {
+            padding: 0.4rem 1rem;
+            border-radius: var(--gd-radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--gd-text-muted);
+            background-color: transparent;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            user-select: none;
+            display: inline-block;
+        }
+        .gd-category-link.active,
+        .gd-category-link:hover,
+        .gd-category-link:focus {
+            background-color: var(--gd-primary);
+            border-color: var(--gd-primary);
+            color: var(--gd-white);
+            outline: none;
+        }
+
+        /* Features section */
+        .gd-features {
+            padding: 3rem 1rem;
+            max-width: 1140px;
+            margin: 0 auto;
+            background-color: var(--gd-white);
+            border-top: 1px solid var(--gd-border-light);
+            border-bottom: 1px solid var(--gd-border-light);
+        }
+        .gd-features h2 {
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--gd-primary);
+            font-size: 2rem;
+        }
+        .gd-feature-card {
+            background: #fff;
+            border-radius: var(--gd-radius-sm);
+            box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            transition: box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .gd-feature-card:hover,
+        .gd-feature-card:focus-within {
+            box-shadow: 0 4px 12px rgb(171 63 214 / 0.3);
+            outline: none;
+        }
+        .gd-feature-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gd-primary);
+            flex-shrink: 0;
+        }
+        .gd-feature-content h5 {
+            margin: 0 0 0.25rem;
+            font-weight: 700;
+            color: var(--gd-text-dark);
+        }
+        .gd-feature-content p {
+            margin: 0;
+            color: var(--gd-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+
+        /* Footer */
+        footer.gd-footer {
+            background-color: var(--gd-light-gray);
+            padding: 1.5rem 1rem;
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gd-text-muted);
+            user-select: none;
+        }
+        footer.gd-footer .gd-social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        footer.gd-footer .gd-social-icon {
+            color: var(--gd-primary);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        footer.gd-footer .gd-social-icon:hover,
+        footer.gd-footer .gd-social-icon:focus {
+            color: var(--gd-primary-dark);
+            outline: none;
+        }
+
+        /* WhatsApp floating button */
+        .gd-whatsapp-float {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            z-index: 999;
-            background: #25d366;
+            background-color: #25d366;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 16px;
             border-radius: 40px;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        footer {
-            background: #f8f9fa;
-            padding: 20px 0;
-        }
-        .social-icon svg {
-            width: 24px;
-            height: 24px;
-            color: var(--primary);
-            transition: 0.3s;
-        }
-        .social-icon svg:hover {
-            color: #7b26a3;
-        }
-        /* Panier dropdown amélioré */
-        .dropdown-cart {
-            min-width: 320px;
-            max-height: 350px;
-            overflow-y: auto;
-        }
-        .dropdown-cart .item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .dropdown-cart .item img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-        .dropdown-cart .item-details {
-            flex-grow: 1;
-        }
-        .dropdown-cart .item-title {
+            box-shadow: 0 3px 6px rgb(0 0 0 / 0.3);
+            text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 2px;
+            font-size: 1rem;
+            user-select: none;
+            z-index: 1100;
+            transition: background-color 0.3s ease;
         }
-        .dropdown-cart .item-qty-price {
-            font-size: 0.85rem;
-            color: #666;
+        .gd-whatsapp-float:hover,
+        .gd-whatsapp-float:focus {
+            background-color: #1ebe57;
+            outline: none;
+            text-decoration: none;
         }
-        .dropdown-cart .empty-text {
-            padding: 20px;
-            text-align: center;
-            color: #777;
-        }
-        /* Barre recherche intégrée navbar */
-        .search-bar {
-            flex-grow: 1;
-            max-width: 600px;
-        }
-        .search-bar input {
-            border-radius: 50px 0 0 50px !important;
-            border: 1px solid var(--primary) !important;
-            padding-left: 15px;
-        }
-        .search-bar button {
-            border-radius: 0 50px 50px 0 !important;
-            border: 1px solid var(--primary) !important;
-        }
-        /* Catégories nav pills */
-        .category-nav {
-            background: #f8f9fa;
-            padding: 0.5rem 1rem;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-        }
-        @media (min-width: 992px) {
-    .navbar-collapse {
-        display: flex !important;
-    }
-}
 
-@media (max-width: 991.98px) {
-    .navbar-collapse {
-    }
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .gd-navbar-toggler {
+                display: block;
+            }
+            .gd-navbar-collapse {
+                flex-basis: 100%;
+                display: none;
+                margin-top: 0.5rem;
+            }
+            .gd-navbar-collapse.show {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .gd-nav-menu {
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-top: 0.5rem;
+            }
+            .gd-searchbar {
+                max-width: 100%;
+                margin: 0;
+            }
+        }
 
-    .navbar-collapse.show {
-        display: block !important;
-    }
-}
-
-
-
+        /* Cart badge small on mobile */
+        @media (max-width: 575.98px) {
+            .gd-cart-badge {
+                font-size: 0.6rem;
+                padding: 1px 4px;
+                top: -4px;
+                right: -6px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <span id="carousel-text">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</span>
-    </div>
-
-    <!-- Navbar principale -->
-    <nav class="shadow-sm bg-bleue navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('produits.index') }}">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2" />
-                <span class="fw-bold text-dark">GlobalDrop</span>
-            </a>
-
-            <button class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#mainNavbar"
-        aria-controls="mainNavbar"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-</button>
-
-<div class="collapse navbar-collapse" id="mainNavbar">
-                <!-- Barre de recherche -->
-                <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
-                    <input
-                        type="text"
-                        name="search"
-                        class="form-control"
-                        placeholder="Rechercher un produit..."
-                        value="{{ request('search') }}"
-                        aria-label="Recherche produit"
-                    />
-                    <button class="btn btn-main" type="submit" aria-label="Lancer la recherche">🔍</button>
-                </form>
-
-                <!-- Menu droite -->
-                <ul class="gap-2 navbar-nav ms-auto align-items-center">
-                    @auth
-                        <li class="nav-item">
-                            <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
-                        </li>
-                        @if (auth()->user()->role === 'admin')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">Commandes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Parrainage.index') }}">Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('page') }}">🌐suivre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link text-danger"
-                                href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >Déconnexion</a
-                            >
-                            <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}"> Connexion</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐Nous suivre</a>
-                        </li>
-                    @endauth
-
-                    <!-- Panier Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
-                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
-                        </svg>
-                        @if(session('panier') && count(session('panier')) > 0)
-                            <span class="cart-badge">{{ count(session('panier')) }}</span>
-                        @endif
-                    </a>
-                    </li>
-                </ul>
-            </div>
+    <header>
+        <div class="gd-topbar" role="region" aria-label="Informations importantes">
+            <span id="gd-carousel-text" aria-live="polite">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</span>
         </div>
-    </nav>
 
-    <!-- Navigation catégories sous navbar -->
-    <nav class="category-nav">
-        <div class="container">
-            <ul class="overflow-auto nav nav-pills justify-content-center justify-content-md-start flex-nowrap">
+        <nav class="gd-navbar" role="navigation" aria-label="Navigation principale">
+            <div class="gd-navbar-container">
+                <a href="{{ route('produits.index') }}" class="gd-logo">
+                    <img src="{{ asset('images/globaldrop.jpg') }}" alt="Logo GlobalDrop" />
+                    GlobalDrop
+                </a>
+
+                <button class="gd-navbar-toggler" type="button" aria-expanded="false" aria-controls="gd-navbar-menu" aria-label="Basculer le menu de navigation">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="gd-navbar-collapse" id="gd-navbar-menu">
+                    <form action="{{ route('produits.index') }}" method="GET" class="gd-searchbar" role="search" aria-label="Recherche de produit">
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Rechercher un produit..."
+                            value="{{ request('search') }}"
+                            aria-label="Champ de recherche"
+                            autocomplete="off"
+                        />
+                        <button type="submit" aria-label="Lancer la recherche">🔍</button>
+                    </form>
+
+                    <ul class="gd-nav-menu" role="menubar">
+                        @auth
+                            <li class="gd-nav-item" role="none">
+                                <span class="gd-nav-link" role="menuitem" tabindex="0">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
+                            </li>
+                            @if (auth()->user()->role === 'admin')
+                                <li class="gd-nav-item" role="none">
+                                    <a href="{{ route('admin.dashboard') }}" class="gd-nav-link" role="menuitem" tabindex="0">Dashboard</a>
+                                </li>
+                            @endif
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('commandes.mes-commandes') }}" class="gd-nav-link" role="menuitem" tabindex="0">Commandes</a>
+                            </li>
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('Parrainage.index') }}" class="gd-nav-link" role="menuitem" tabindex="0">Parrainage</a>
+                            </li>
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('page') }}" class="gd-nav-link" role="menuitem" tabindex="0">🌐 Nous suivre</a>
+                            </li>
+                            <li class="gd-nav-item" role="none">
+                                <a
+                                    href="{{ route('logout') }}"
+                                    class="gd-nav-link text-danger"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    role="menuitem"
+                                    tabindex="0"
+                                >Déconnexion</a>
+                                <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
+                            </li>
+                        @else
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('login') }}" class="gd-btn-primary" role="menuitem" tabindex="0">Connexion</a>
+                            </li>
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('Parrainage.index') }}" class="gd-btn-outline-primary" role="menuitem" tabindex="0">🎁 Parrainage</a>
+                            </li>
+                            <li class="gd-nav-item" role="none">
+                                <a href="{{ route('page') }}" class="gd-btn-outline-primary" role="menuitem" tabindex="0">🌐 Nous suivre</a>
+                            </li>
+                        @endauth
+
+                        <li class="gd-nav-item" role="none">
+                            <a href="{{ route('cart.index') }}" class="gd-cart-icon" role="menuitem" tabindex="0" aria-label="Voir le panier">
+                                <i class="bi bi-cart3"></i>
+                                @if(session('panier') && count(session('panier')) > 0)
+                                    <span class="gd-cart-badge" aria-live="polite">{{ count(session('panier')) }}</span>
+                                @endif
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="gd-category-nav" aria-label="Navigation catégories">
+            <ul class="gd-category-list" role="menubar">
                 @php
                     $currentCategory = request('category') ?? 'Toutes';
                 @endphp
                 @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <li class="nav-item">
+                    <li role="none">
                         <a
-                            href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
-                            class="nav-link @if($cat === $currentCategory) active @endif"
+                            href="{{ route('produits.index', ['category' => $cat === 'Toutes' ? null : $cat]) }}"
+                            class="gd-category-link @if($cat === $currentCategory) active @endif"
+                            role="menuitem"
+                            tabindex="0"
                         >
                             {{ $cat }}
                         </a>
                     </li>
                 @endforeach
             </ul>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <!-- Pourquoi choisir GlobalDrop -->
-    <section class="py-4 mt-4 bg-white border-top border-bottom">
-        <div class="container">
-            <h2 class="mb-4 text-center fw-bold">
-                Pourquoi <span class="main-color">choisir GlobalDrop</span> ?
-            </h2>
-
-            <div class="row g-4">
-                <!-- Item 1 -->
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <div class="gap-3 d-flex">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z"
-                                    />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="mb-1 fw-semibold text-dark">Livraison rapide</h5>
-                                <p class="mb-0 small text-muted">
-                                    Nous livrons rapidement partout au Togo grâce à notre logistique performante.
-                                </p>
-                            </div>
-                        </div>
+    <section class="gd-features" aria-label="Pourquoi choisir GlobalDrop">
+        <h2>Pourquoi <span>choisir GlobalDrop</span> ?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <article class="gd-feature-card" tabindex="0" aria-label="Livraison rapide">
+                    <div class="gd-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+                        </svg>
                     </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <div class="gap-3 d-flex">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6"
-                                    />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="mb-1 fw-semibold text-dark">Prix compétitifs</h5>
-                                <p class="mb-0 small text-muted">
-                                    Profitez des meilleurs tarifs sur des produits tendance et de qualité.
-                                </p>
-                            </div>
-                        </div>
+                    <div class="gd-feature-content">
+                        <h5>Livraison rapide</h5>
+                        <p>Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
                     </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="col-md-4">
-                    <div class="feature-card h-100">
-                        <div class="gap-3 d-flex">
-                            <div class="feature-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z"
-                                    />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="mb-1 fw-semibold text-dark">Paiement sécurisé</h5>
-                                <p class="mb-0 small text-muted">
-                                    Notre plateforme garantit des paiements sûrs et protégés à 100 %.
-                                </p>
-                            </div>
-                        </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="gd-feature-card" tabindex="0" aria-label="Prix compétitifs">
+                    <div class="gd-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                        </svg>
                     </div>
-                </div>
+                    <div class="gd-feature-content">
+                        <h5>Prix compétitifs</h5>
+                        <p>Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="gd-feature-card" tabindex="0" aria-label="Paiement sécurisé">
+                    <div class="gd-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
+                        </svg>
+                    </div>
+                    <div class="gd-feature-content">
+                        <h5>Paiement sécurisé</h5>
+                        <p>Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <main class="main">@yield('content')</main>
+    <main class="gd-main-content">@yield('content')</main>
 
-    <footer class="py-4 mt-auto bg-light">
-        <div class="container text-center">
-            <div class="gap-4 mb-3 d-flex justify-content-center">
-                <a
-                    href="https://wa.me/22890171119"
-                    target="_blank"
-                    class="text-dark social-icon"
-                    aria-label="WhatsApp"
-                >
-                    <i class="bi bi-whatsapp" style="font-size: 1.5rem"></i>
-                </a>
-                <a
-                    href="https://www.instagram.com/globaldroptg"
-                    target="_blank"
-                    class="text-dark social-icon"
-                    aria-label="Instagram"
-                >
-                    <i class="bi bi-instagram" style="font-size: 1.5rem"></i>
-                </a>
-                <a
-                    href="https://www.facebook.com/share/19BrbhLzb2"
-                    target="_blank"
-                    class="text-dark social-icon"
-                    aria-label="Facebook"
-                >
-                    <i class="bi bi-facebook" style="font-size: 1.5rem"></i>
-                </a>
-                <a
-                    href="https://www.tiktok.com/@globaldrop2428"
-                    target="_blank"
-                    class="text-dark social-icon"
-                    aria-label="TikTok"
-                >
-                    <i class="bi bi-tiktok" style="font-size: 1.5rem"></i>
-                </a>
-            </div>
-            <small class="text-muted">&copy; {{ date('Y') }} GlobalDrop - La qualité au bout du clic.</small>
+    <footer class="gd-footer" role="contentinfo">
+        <div class="gd-social-icons" role="list">
+            <a href="https://wa.me/22890171119" target="_blank" class="gd-social-icon" aria-label="WhatsApp" role="listitem" rel="noopener noreferrer">
+                <i class="bi bi-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/globaldroptg" target="_blank" class="gd-social-icon" aria-label="Instagram" role="listitem" rel="noopener noreferrer">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/share/19BrbhLzb2" target="_blank" class="gd-social-icon" aria-label="Facebook" role="listitem" rel="noopener noreferrer">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.tiktok.com/@globaldrop2428" target="_blank" class="gd-social-icon" aria-label="TikTok" role="listitem" rel="noopener noreferrer">
+                <i class="bi bi-tiktok"></i>
+            </a>
         </div>
+        <small>&copy; {{ date('Y') }} GlobalDrop - La qualité au bout du clic.</small>
     </footer>
 
-    <a href="https://wa.me/22890171119" class="whatsapp-float" aria-label="Contact WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
-            <path
-                d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29z"
-            />
+    <a href="https://wa.me/22890171119" class="gd-whatsapp-float" aria-label="Contact WhatsApp GlobalDrop" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <path d="M20.52 3.48a11.91 11.91 0 0 0-16.84 0 11.91 11.91 0 0 0-2.55 12.93L2 21l4.69-1.23a11.92 11.92 0 0 0 13.83-16.29z" />
         </svg>
         Contact
     </a>
 
     <script>
+        // Navbar toggler mobile
+        const toggler = document.querySelector('.gd-navbar-toggler');
+        const menu = document.getElementById('gd-navbar-menu');
+
+        toggler.addEventListener('click', () => {
+            const expanded = toggler.getAttribute('aria-expanded') === 'true' || false;
+            toggler.setAttribute('aria-expanded', !expanded);
+            menu.classList.toggle('show');
+        });
+
+        // Carousel text messages
         const messages = [
             "Livraison gratuite sur toutes les commandes",
             "Retour facile sous 30 jours",
             "Nouvelle collection disponible maintenant",
             "Profitez de 10% de réduction avec le code WELCOME",
         ];
-        let currentMessage = 0;
-        const carouselText = document.getElementById("carousel-text");
+        let currentIndex = 0;
+        const carouselText = document.getElementById('gd-carousel-text');
+
         setInterval(() => {
-            currentMessage = (currentMessage + 1) % messages.length;
-            carouselText.textContent = messages[currentMessage];
+            currentIndex = (currentIndex + 1) % messages.length;
+            carouselText.textContent = messages[currentIndex];
         }, 4000);
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 </body>
