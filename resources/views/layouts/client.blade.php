@@ -143,22 +143,21 @@
             border-bottom: 1px solid #ddd;
         }
         @media (min-width: 992px) {
-    .custom-collapse {
+    .navbar-collapse {
         display: flex !important;
     }
 }
 
 @media (max-width: 991.98px) {
-    .custom-collapse {
+    .navbar-collapse {
         display: none;
+        border: 2px dashed red;
     }
 
-    .custom-collapse.show {
-        display: flex !important;
-        flex-direction: column;
+    .navbar-collapse.show {
+        display: block !important;
     }
 }
-
 
 
 
@@ -188,7 +187,7 @@
     <span class="navbar-toggler-icon"></span>
 </button>
 
-<div class="collapse custom-collapse" id="mainNavbar">
+<div class="col-md-4 d-none d-md-flex" id="mainNavbar >
                 <!-- Barre de recherche -->
                 <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
                     <input
