@@ -142,24 +142,6 @@
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
         }
-        @media (min-width: 992px) {
-    .navbar-collapse {
-        display: flex !important;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .navbar-collapse {
-        display: none;
-        border: 2px dashed red;
-    }
-
-    .navbar-collapse.show {
-        display: block !important;
-    }
-}
-
-
     </style>
 </head>
 <body>
@@ -168,7 +150,7 @@
     </div>
 
     <!-- Navbar principale -->
-    <nav class="shadow-sm bg-bleue navbar navbar-expand-lg navbar-light sticky-top">
+    <nav class="bg-white shadow-sm navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('produits.index') }}">
