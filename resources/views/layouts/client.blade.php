@@ -91,6 +91,7 @@
             flex: 1 1 280px; /* s'étend max à 280px */
         max-width: 280px;
         min-width: 180px;
+        margin: 0;    /* centrer horizontalement */
         }
         .gd-searchbar input[type="text"] {
             flex-grow: 1;
@@ -235,7 +236,7 @@
         /* Features section */
         .gd-features {
             padding: 3rem 1rem;
-            max-width: 1140px;
+            max-width: 114px;
             margin: 0 auto;
             background-color: var(--gd-white);
             border-top: 1px solid var(--gd-border-light);
