@@ -147,19 +147,88 @@
     <main class="main">
         @yield('content')
     </main>
+<!-- Pourquoi choisir GlobalDrop -->
+<section class="py-4 mt-4 bg-white border-top border-bottom">
+    <div class="container">
+        <h2 class="mb-4 text-center fw-bold">
+            Pourquoi <span class="main-color">choisir GlobalDrop</span> ?
+        </h2>
 
-    <footer class="mt-auto">
-        <div class="container text-center">
-            <div class="mb-3">
-                <a href="#" class="me-3 social-icon">🔗</a>
-                <a href="https://wa.me/22890171119" class="me-3 social-icon" target="_blank">WhatsApp</a>
-                <a href="https://www.instagram.com/globaldroptg" class="me-3 social-icon" target="_blank">Instagram</a>
-                <a href="https://www.facebook.com/share/19BrbhLzb2" class="me-3 social-icon" target="_blank">Facebook</a>
-                <a href="https://www.tiktok.com/@globaldrop2428" class="social-icon" target="_blank">TikTok</a>
+        <div class="row g-4">
+            <!-- Item 1 -->
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="gap-3 d-flex">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16l4-4H3V8l5-5h11a2 2 0 012 2v12a2 2 0 01-2 2H5l-2 2v-4z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="mb-1 fw-semibold text-dark">Livraison rapide</h5>
+                            <p class="mb-0 small text-muted">Nous livrons rapidement partout au Togo grâce à notre logistique performante.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <small class="text-muted">&copy; {{ date('Y') }} GlobalDrop - La qualité au bout du clic.</small>
+
+            <!-- Item 2 -->
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="gap-3 d-flex">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3v3h6v-3c0-1.657-1.343-3-3-3z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="mb-1 fw-semibold text-dark">Prix compétitifs</h5>
+                            <p class="mb-0 small text-muted">Profitez des meilleurs tarifs sur des produits tendance et de qualité.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="gap-3 d-flex">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c.828 0 1.5-.672 1.5-1.5S12.828 8 12 8s-1.5.672-1.5 1.5S11.172 11 12 11z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M10 14h4" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="mb-1 fw-semibold text-dark">Paiement sécurisé</h5>
+                            <p class="mb-0 small text-muted">Notre plateforme garantit des paiements sûrs et protégés à 100 %.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+</section>
+    <footer class="py-4 mt-auto bg-light">
+    <div class="container text-center">
+        <div class="gap-4 mb-3 d-flex justify-content-center">
+            <a href="https://wa.me/22890171119" target="_blank" class="text-dark social-icon" aria-label="WhatsApp">
+                <i class="bi bi-whatsapp" style="font-size: 1.5rem;"></i>
+            </a>
+            <a href="https://www.instagram.com/globaldroptg" target="_blank" class="text-dark social-icon" aria-label="Instagram">
+                <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+            </a>
+            <a href="https://www.facebook.com/share/19BrbhLzb2" target="_blank" class="text-dark social-icon" aria-label="Facebook">
+                <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+            </a>
+            <a href="https://www.tiktok.com/@globaldrop2428" target="_blank" class="text-dark social-icon" aria-label="TikTok">
+                <i class="bi bi-tiktok" style="font-size: 1.5rem;"></i>
+            </a>
+        </div>
+        <small class="text-muted">&copy; {{ date('Y') }} GlobalDrop - La qualité au bout du clic.</small>
+    </div>
+</footer>
 
     <a href="https://wa.me/22890171119" class="whatsapp-float">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
