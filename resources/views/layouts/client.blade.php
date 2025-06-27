@@ -146,6 +146,33 @@
         </div>
     </div>
 </nav>
+<!-- Barre catégories + recherche -->
+<div class="py-2 bg-light border-top border-bottom">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Catégories -->
+      <div class="col-12 col-md-8">
+        <div class="flex-row overflow-auto d-flex flex-nowrap">
+          @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+            <a href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
+               class="btn btn-outline-primary btn-sm rounded-pill me-2 text-nowrap">
+              {{ $cat }}
+            </a>
+          @endforeach
+        </div>
+      </div>
+
+      <!-- Barre de recherche -->
+      <div class="mt-2 col-12 col-md-4 mt-md-0">
+        <form action="{{ route('produits.index') }}" method="GET" class="d-flex">
+          <input type="text" name="search" class="form-control rounded-pill border-primary" placeholder="Rechercher un produit...">
+          <button type="submit" class="btn btn-primary ms-2 rounded-pill">🔍</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Pourquoi choisir GlobalDrop -->
 <section class="py-4 mt-4 bg-white border-top border-bottom">
