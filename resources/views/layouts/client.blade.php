@@ -150,8 +150,6 @@
 
 @media (max-width: 991.98px) {
     .navbar-collapse {
-        display: none;
-        border: 2px dashed red;
     }
 
     .navbar-collapse.show {
