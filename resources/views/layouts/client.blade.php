@@ -88,9 +88,9 @@
 
         /* Search bar */
         .gd-searchbar {
-            max-width: 320px;  /* réduit la largeur max */
-        width: 90%;        /* largeur relative plus petite */
-        margin: 0 auto;    /* centrer horizontalement */
+            flex: 1 1 280px; /* s'étend max à 280px */
+        max-width: 280px;
+        min-width: 180px;
         }
         .gd-searchbar input[type="text"] {
             flex-grow: 1;
