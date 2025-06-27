@@ -143,21 +143,22 @@
             border-bottom: 1px solid #ddd;
         }
         @media (min-width: 992px) {
-    .navbar-collapse {
+    .custom-collapse {
         display: flex !important;
     }
 }
 
 @media (max-width: 991.98px) {
-    .navbar-collapse {
+    .custom-collapse {
         display: none;
-        border: 2px dashed red;
     }
 
-    .navbar-collapse.show {
-        display: block !important;
+    .custom-collapse.show {
+        display: flex !important;
+        flex-direction: column;
     }
 }
+
 
 
 
