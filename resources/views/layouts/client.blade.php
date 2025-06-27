@@ -154,6 +154,12 @@
                 padding: 0.375rem 1rem;
             }
         }
+        @media (min-width: 992px) {
+    .navbar-collapse {
+        display: flex !important;
+    }
+}
+
     </style>
 </head>
 <body>
