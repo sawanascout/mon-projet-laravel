@@ -428,32 +428,6 @@
     </div>
 </footer>
 
-<!-- Banner vidéo publicitaire -->
-<div id="videoAdBanner" class="video-ad-banner d-none">
-    <div class="px-4 container-fluid">
-        <div class="border video-container border-primary">
-            <!-- Bouton de fermeture -->
-            <button id="closeVideoAd" class="video-close-btn">&times;</button>
-            
-            <!-- Bouton volume -->
-            <button id="toggleSound" class="video-sound-btn">🔇 Son</button>
-
-            <!-- Bloc cliquable -->
-            <a href="https://www.tiktok.com/@globaldrop2428?_t=ZM-8xXTCmw7WuD&_r=1" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                <video id="adVideo" autoplay muted loop class="w-100" style="max-height: 400px; object-fit: cover;">
-                    <source src="{{ asset('videos/ma-video.mp4') }}" type="video/mp4">
-                    Votre navigateur ne prend pas en charge la lecture vidéo.
-                </video>
-
-                <!-- Texte superposé -->
-                <div class="video-overlay">
-                    <h2>🔥 Découvrez nos offres exclusives sur TikTok !</h2>
-                    <p>⚡ Dépêchez-vous, les stocks sont limités !</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
 
 <!-- Bouton WhatsApp flottant -->
 <a href="https://wa.me/22890171119" target="_blank" class="whatsapp-float">
