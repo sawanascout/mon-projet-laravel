@@ -221,7 +221,7 @@
                                 class="nav-link text-danger"
                                 href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                >🚪 Déconnexion</a
+                                >Déconnexion</a
                             >
                             <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
                         </li>
