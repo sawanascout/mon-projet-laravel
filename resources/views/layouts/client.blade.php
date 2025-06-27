@@ -234,6 +234,8 @@
                         <li class="nav-item">
                             <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}"> Connexion</a>
                         </li>
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-main me-2">Connexion</a>
+
                         <li class="nav-item">
                             <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
                         </li>
