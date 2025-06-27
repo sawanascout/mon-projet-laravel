@@ -7,7 +7,6 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-    <script src="https://unpkg.com/lucide@latest"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
@@ -32,12 +31,18 @@
         .navbar-brand img {
             height: 40px;
         }
-        .nav-link {
+        .nav-link, .nav-pills .nav-link {
             color: #333 !important;
             font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
-        .nav-link:hover {
+        .nav-link:hover, .nav-pills .nav-link:hover {
             color: var(--primary) !important;
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--primary);
+            color: white !important;
         }
         .btn-main {
             background: var(--primary);
@@ -80,9 +85,9 @@
         .social-icon svg:hover {
             color: #7b26a3;
         }
-        /* Custom dropdown panier */
+        /* Panier dropdown amélioré */
         .dropdown-cart {
-            min-width: 300px;
+            min-width: 320px;
             max-height: 350px;
             overflow-y: auto;
         }
@@ -116,6 +121,39 @@
             text-align: center;
             color: #777;
         }
+        /* Barre recherche intégrée navbar */
+        .search-bar {
+            flex-grow: 1;
+            max-width: 600px;
+        }
+        .search-bar input {
+            border-radius: 50px 0 0 50px !important;
+            border: 1px solid var(--primary) !important;
+            padding-left: 15px;
+        }
+        .search-bar button {
+            border-radius: 0 50px 50px 0 !important;
+            border: 1px solid var(--primary) !important;
+        }
+        /* Catégories nav pills */
+        .category-nav {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        @media (max-width: 767.98px) {
+            .category-nav {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .category-nav .nav-pills .nav-link {
+                display: inline-block;
+                margin-right: 0.5rem;
+                border-radius: 50px;
+                padding: 0.375rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -123,26 +161,43 @@
         <span id="carousel-text">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</span>
     </div>
 
-    <!-- Navbar amélioré -->
-    <nav class="bg-white shadow-sm navbar navbar-expand-lg sticky-top">
+    <!-- Navbar principale -->
+    <nav class="bg-white shadow-sm navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('produits.index') }}">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('produits.index') }}">
                 <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2" />
                 <span class="fw-bold text-dark">GlobalDrop</span>
             </a>
+
             <button
                 class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="gap-2 navbar-nav ms-auto align-items-lg-center">
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <!-- Barre de recherche -->
+                <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Rechercher un produit..."
+                        value="{{ request('search') }}"
+                        aria-label="Recherche produit"
+                    />
+                    <button class="btn btn-main" type="submit" aria-label="Lancer la recherche">🔍</button>
+                </form>
+
+                <!-- Menu droite -->
+                <ul class="gap-2 navbar-nav ms-auto align-items-center">
                     @auth
                         <li class="nav-item">
                             <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
@@ -184,85 +239,40 @@
 
                     <!-- Panier Dropdown -->
                     <li class="nav-item dropdown">
-                        <a
-                            class="btn btn-outline-dark position-relative dropdown-toggle d-flex align-items-center"
-                            href="#"
-                            id="cartDropdown"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            aria-haspopup="true"
-                        >
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span class="ms-1">Panier</span>
-                            @if(session('panier') && count(session('panier')) > 0)
-                                <span
-                                    class="top-0 position-absolute start-100 translate-middle badge rounded-pill bg-danger"
-                                    style="font-size: 0.75rem;"
-                                >
-                                    {{ count(session('panier')) }}
-                                    <span class="visually-hidden">articles dans le panier</span>
-                                </span>
-                            @endif
-                        </a>
-                        <ul class="p-3 dropdown-menu dropdown-menu-end dropdown-cart" aria-labelledby="cartDropdown">
-                            @if(session('panier') && count(session('panier')) > 0)
-                                @foreach(session('panier') as $id => $item)
-                                    <li class="item">
-                                        <img src="{{ $item['image'] ?? asset('images/default-product.png') }}" alt="{{ $item['name'] }}" />
-                                        <div class="item-details">
-                                            <div class="item-title">{{ $item['name'] }}</div>
-                                            <div class="item-qty-price">
-                                                {{ $item['quantity'] }} × {{ number_format($item['price'], 0, ',', ' ') }} FCFA
-                                            </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                                <li class="mt-3 text-center">
-                                    <a href="{{ route('cart.index') }}" class="px-4 btn btn-primary btn-sm rounded-pill">Voir mon panier</a>
-                                </li>
-                            @else
-                                <li class="empty-text">Votre panier est vide.</li>
-                            @endif
-                        </ul>
+                        <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+                        </svg>
+                        @if(session('panier') && count(session('panier')) > 0)
+                            <span class="cart-badge">{{ count(session('panier')) }}</span>
+                        @endif
+                    </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Barre catégories + recherche -->
-    <div class="py-2 bg-light border-top border-bottom">
+    <!-- Navigation catégories sous navbar -->
+    <nav class="category-nav">
         <div class="container">
-            <div class="row align-items-center">
-                <!-- Catégories -->
-                <div class="col-12 col-md-8">
-                    <div class="flex-row overflow-auto d-flex flex-nowrap">
-                        @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                            <a
-                                href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
-                                class="btn btn-outline-primary btn-sm rounded-pill me-2 text-nowrap"
-                                >{{ $cat }}</a
-                            >
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- Barre de recherche -->
-                <div class="mt-2 col-12 col-md-4 mt-md-0">
-                    <form action="{{ route('produits.index') }}" method="GET" class="d-flex">
-                        <input
-                            type="text"
-                            name="search"
-                            class="form-control rounded-pill border-primary"
-                            placeholder="Rechercher un produit..."
-                        />
-                        <button type="submit" class="btn btn-primary ms-2 rounded-pill">🔍</button>
-                    </form>
-                </div>
-            </div>
+            <ul class="overflow-auto nav nav-pills justify-content-center justify-content-md-start flex-nowrap">
+                @php
+                    $currentCategory = request('category') ?? 'Toutes';
+                @endphp
+                @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
+                    <li class="nav-item">
+                        <a
+                            href="{{ route('produits.index', ['category' => $cat == 'Toutes' ? null : $cat]) }}"
+                            class="nav-link @if($cat === $currentCategory) active @endif"
+                        >
+                            {{ $cat }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
-    </div>
+    </nav>
 
     <!-- Pourquoi choisir GlobalDrop -->
     <section class="py-4 mt-4 bg-white border-top border-bottom">
