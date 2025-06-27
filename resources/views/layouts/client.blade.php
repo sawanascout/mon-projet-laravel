@@ -145,18 +145,20 @@
         @media (min-width: 992px) {
     .navbar-collapse {
         display: flex !important;
-        .category-nav {
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            .category-nav .nav-pills .nav-link {
-                display: inline-block;
-                margin-right: 0.5rem;
-                border-radius: 50px;
-                padding: 0.375rem 1rem;
-            }
     }
 }
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: none;
+        border: 2px dashed red;
+    }
+
+    .navbar-collapse.show {
+        display: block !important;
+    }
+}
+
 
     </style>
 </head>
