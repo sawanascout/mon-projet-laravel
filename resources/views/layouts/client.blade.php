@@ -124,8 +124,7 @@
         /* Barre recherche intégrée navbar */
         .search-bar {
             flex-grow: 1;
-            max-width: 500px;
-            margin-right: 1rem;
+            max-width: 600px;
         }
         .search-bar input {
             border-radius: 50px 0 0 50px !important;
@@ -143,50 +142,25 @@
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
         }
-
-        /* Navbar personnalisée */
-        .custom-navbar-collapse {
-            flex-grow: 1;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        /* Affichage responsive bootstrap standard */
         @media (min-width: 992px) {
-            .navbar-collapse {
-                display: flex !important;
-            }
-        }
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                display: none;
-            }
-            .navbar-collapse.show {
-                display: block !important;
-            }
-        }
+    .navbar-collapse {
+        display: flex !important;
+    }
+}
 
-        /* Navbar background et ombre */
-        nav.navbar {
-            background-color: var(--primary);
-            box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-        }
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: none;
+        border: 2px dashed red;
+    }
 
-        /* Couleur liens navbar */
-        nav.navbar .nav-link, nav.navbar .navbar-brand span {
-            color: white !important;
-        }
-        nav.navbar .nav-link:hover {
-            color: #eee !important;
-        }
-        nav.navbar .btn-main {
-            background: #fff;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        nav.navbar .btn-main:hover {
-            background: #ddd;
-        }
+    .navbar-collapse.show {
+        display: block !important;
+    }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -195,19 +169,25 @@
     </div>
 
     <!-- Navbar principale -->
-    <nav class="shadow-sm navbar navbar-expand-lg sticky-top">
+    <nav class="shadow-sm bg-bleue navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center me-3" href="{{ route('produits.index') }}">
                 <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2" />
-                <span class="fw-bold">GlobalDrop</span>
+                <span class="fw-bold text-dark">GlobalDrop</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse custom-navbar-collapse" >
+            <button class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="col-md-4 d-none d-md-flex" id="mainNavbar" >
                 <!-- Barre de recherche -->
                 <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
                     <input
@@ -225,7 +205,7 @@
                 <ul class="gap-2 navbar-nav ms-auto align-items-center">
                     @auth
                         <li class="nav-item">
-                            <span class="nav-link">👋 Bonjour, <strong>{{ auth()->user()->name }}</strong></span>
+                            <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
                         </li>
                         @if (auth()->user()->role === 'admin')
                             <li class="nav-item">
@@ -239,43 +219,45 @@
                             <a class="nav-link" href="{{ route('Parrainage.index') }}">Parrainage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('page') }}">🌐 Suivre</a>
+                            <a class="nav-link" href="{{ route('page') }}">🌐suivre</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                               Déconnexion
-                            </a>
+                            <a
+                                class="nav-link text-danger"
+                                href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                >Déconnexion</a
+                            >
                             <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}">Connexion</a>
+                            <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}"> Connexion</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-light me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-light" href="{{ route('page') }}">🌐 Nous suivre</a>
+                            <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐Nous suivre</a>
                         </li>
                     @endauth
 
                     <!-- Panier Dropdown -->
                     <li class="nav-item dropdown">
-                        <a href="{{ route('cart.index') }}" class="text-white position-relative text-decoration-none">
-                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
-                            </svg>
-                            @if(session('panier') && count(session('panier')) > 0)
-                                <span class="cart-badge">{{ count(session('panier')) }}</span>
-                            @endif
-                        </a>
+                        <a href="{{ route('cart.index') }}" class="position-relative text-decoration-none text-dark">
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7a1 1 0 00.9 1.3h10.9a1 1 0 00.9-1.3L17 13M7 13V6h10v7" />
+                        </svg>
+                        @if(session('panier') && count(session('panier')) > 0)
+                            <span class="cart-badge">{{ count(session('panier')) }}</span>
+                        @endif
+                    </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
 
     <!-- Navigation catégories sous navbar -->
     <nav class="category-nav">
