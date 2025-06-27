@@ -85,68 +85,66 @@
     <div class="top-bar">
         <span id="carousel-text">Livraison rapide & Paiement 100% sécurisé au Togo 🇹🇬</span>
     </div>
-
-    <nav class="bg-white shadow-sm navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('produits.index') }}">
-                <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="mb-2 navbar-nav ms-auto mb-lg-0">
-                    @auth
-                        <li class="nav-item">
-                            <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
-                        </li>
-                        @if (auth()->user()->role === 'admin')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">📦 Mes commandes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('page') }}">🌐 Nous suivre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
-                            <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="btn btn-main btn-sm me-2" href="{{ route('login') }}">Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-main-outline btn-sm me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-main-outline btn-sm" href="{{ route('page') }}">🌐 Nous suivre</a>
-                        </li>
-                    @endauth
+<!-- Navbar amélioré -->
+<nav class="bg-white shadow-sm navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{{ route('produits.index') }}">
+            <img src="{{ asset('images/globaldrop.jpg') }}" alt="GlobalDrop" height="40" class="rounded shadow-sm me-2">
+            <span class="fw-bold text-dark">GlobalDrop</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="gap-2 navbar-nav ms-auto align-items-lg-center">
+                @auth
                     <li class="nav-item">
-                        <a href="{{ route('cart.index') }}" class="btn btn-outline-dark position-relative">
-                            🛒
-                            @if(session('panier') && count(session('panier')) > 0)
-                                <span class="top-0 position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ count(session('panier')) }}
-                                </span>
-                            @endif
-                        </a>
+                        <span class="nav-link">👋 Bonjour, <strong class="text-primary">{{ auth()->user()->name }}</strong></span>
                     </li>
-                </ul>
-            </div>
+                    @if (auth()->user()->role === 'admin')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">📊 Dashboard</a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('commandes.mes-commandes') }}">📦 Commandes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('page') }}">🌐 Nous suivre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">🚪 Déconnexion</a>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="d-none">@csrf</form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-main me-2" href="{{ route('login') }}">🔐 Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark me-2" href="{{ route('Parrainage.index') }}">🎁 Parrainage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark" href="{{ route('page') }}">🌐 Nous suivre</a>
+                    </li>
+                @endauth
+                <li class="nav-item">
+                    <a href="{{ route('cart.index') }}" class="btn btn-outline-dark position-relative">
+                        🛒
+                        @if(session('panier') && count(session('panier')) > 0)
+                            <span class="top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ count(session('panier')) }}
+                            </span>
+                        @endif
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <main class="main">
-        @yield('content')
-    </main>
 <!-- Pourquoi choisir GlobalDrop -->
 <section class="py-4 mt-4 bg-white border-top border-bottom">
     <div class="container">
@@ -210,6 +208,10 @@
         </div>
     </div>
 </section>
+    <main class="main">
+        @yield('content')
+    </main>
+
     <footer class="py-4 mt-auto bg-light">
     <div class="container text-center">
         <div class="gap-4 mb-3 d-flex justify-content-center">
