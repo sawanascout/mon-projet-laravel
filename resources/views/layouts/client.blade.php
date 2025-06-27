@@ -94,6 +94,10 @@
             margin: 0.5rem 1rem;*/
             flex-grow: 1;
             max-width: 600px;
+            margin: 0.5rem 1rem;
+            flex: 1 1 300px;
+
+
         }
         .gd-searchbar input[type="text"] {
             flex-grow: 1;
