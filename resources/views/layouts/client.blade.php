@@ -207,8 +207,7 @@
                 aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse custom-navbar-collapse" id="mainNavbar">
+            <div class="collapse navbar-collapse custom-navbar-collapse" >
                 <!-- Barre de recherche -->
                 <form action="{{ route('produits.index') }}" method="GET" class="my-2 d-flex mx-lg-3 my-lg-0 search-bar">
                     <input
