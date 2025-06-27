@@ -488,7 +488,7 @@
     }
 
     setInterval(rotateMessages, 4000); // Change toutes les 4 secondes
-
+/*
     // Gestion de la bannière vidéo
     const adBanner = document.getElementById('videoAdBanner');
     const closeBtn = document.getElementById('closeVideoAd');
@@ -521,7 +521,7 @@
             video.muted = true;
             toggleSoundBtn.textContent = '🔇 Son';
         }
-    });
+    });*/
 </script>
 
 @stack('scripts')
