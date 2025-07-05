@@ -68,6 +68,8 @@
           Ajouter / Gérer
         </div>
         <div class="card-body d-flex flex-column gap-2">
+          <li><a class="btn btn-link" href="{{ route('admin.modals.admin_index') }}"> Liste des utilisateur </a></li>
+
           <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createProduitModal">Ajouter un produit</button>
           <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#createCategorieModal">Ajouter une catégorie</button>
           <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#createAdminModal">Créer un administrateur</button>
