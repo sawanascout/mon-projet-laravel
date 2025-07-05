@@ -464,7 +464,7 @@
             </div>
         </nav>
 
-        <nav class="gd-category-nav" aria-label="Navigation catégories">
+     <nav class="gd-category-nav" aria-label="Navigation catégories">
     <ul class="gd-category-list" role="menubar">
         @php
             $currentCategory = request('category'); // null si pas présent dans l'URL
@@ -490,6 +490,7 @@
         @endforeach
     </ul>
 </nav>
+
 
     </header>
 
