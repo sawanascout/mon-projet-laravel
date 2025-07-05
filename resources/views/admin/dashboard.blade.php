@@ -55,6 +55,8 @@
             <li><a class="btn btn-link" href="{{ route('admin.utilisateurs.commandes') }}">Utilisateurs par segment</a></li>
             <li><a class="btn btn-link" href="{{ route('admin.clients.segment.role') }}">Utilisateurs par rôle</a></li>
             <li><a class="btn btn-link" href="{{ route('admin.historique.index') }}">Historique commandes</a></li>
+             <li><a class="btn btn-link" href="{{ route('admin.modals.admin_index') }}"> Liste des utilisateur </a></li>
+
           </ul>
         </div>
       </div>
@@ -83,7 +85,6 @@
   @include('admin.modals.commandes-par-date')
   @include('admin.modals.commandes-segment-par-date')
   @include('admin.modals.historiques-create')
-  @include('admin.modals.admin_index')
 
 </div>
 @endsection
