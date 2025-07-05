@@ -30,6 +30,18 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     // Paiements
     Route::resource('paiements', PaiementController::class)->except(['create'])->names('paiements');
 
+
+// Afficher la liste des administrateurs
+Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
+
+// Afficher le formulaire d’édition d’un admin
+Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
+
+// Mettre à jour un admin
+Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
+
+
+
     // Utilisateurs & admins
     Route::post('/ajout-admin', [AdminController::class, 'store'])->name('ajout');
     Route::post('/grant', [AdminController::class, 'addPrivileges'])->name('grant');

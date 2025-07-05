@@ -83,6 +83,7 @@
   @include('admin.modals.commandes-par-date')
   @include('admin.modals.commandes-segment-par-date')
   @include('admin.modals.historiques-create')
+  @include('admin.modals.admin_index')
 
 </div>
 @endsection

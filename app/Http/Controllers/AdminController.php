@@ -254,6 +254,37 @@ class AdminController extends Controller
         }
 
 
+// Affiche la liste des administrateurs
+public function indexAdmins()
+{
+    $admins = User::where('role', 'admin')->get();
+    return view('admin.modals.admin_index', compact('admins'));
+}
+
+// Affiche le formulaire d’édition pour un admin donné
+public function editAdmin($id)
+{
+    $admin = User::where('role', 'admin')->findOrFail($id);
+    return view('admin.modals.admin_edit', compact('admin'));
+}
+
+// Met à jour les informations d’un administrateur
+public function updateAdmin(Request $request, $id)
+{
+    $admin = User::where('role', 'admin')->findOrFail($id);
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $admin->id,
+        'segment' => 'required|string',
+        'telephone' => 'required|string|unique:users,telephone,' . $admin->id,
+    ]);
+
+    $admin->update($validated);
+
+    return redirect()->route('admin.admins.index')->with('success', 'Admin mis à jour avec succès.');
+}
+
 
 
 }
