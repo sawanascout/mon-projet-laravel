@@ -469,18 +469,23 @@
                 @php
                     $currentCategory = request('category') ?? 'Toutes';
                 @endphp
-                @foreach (['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'] as $cat)
-                    <li role="none">
-                        <a
-                            href="{{ route('produits.index', ['category' => $cat === 'Toutes' ? null : $cat]) }}"
-                            class="gd-category-link @if($cat === $currentCategory) active @endif"
-                            role="menuitem"
-                            tabindex="0"
-                        >
-                            {{ $cat }}
-                        </a>
-                    </li>
-                @endforeach
+                @php
+    $categories = ['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'];
+@endphp
+
+@foreach ($categories as $cat)
+    <li role="none">
+        <a
+            href="{{ $cat === 'Toutes' ? route('produits.index') : route('produits.index', ['category' => $cat]) }}"
+            class="gd-category-link @if($cat === $currentCategory || ($cat === 'Toutes' && !$currentCategory)) active @endif"
+            role="menuitem"
+            tabindex="0"
+        >
+            {{ $cat }}
+        </a>
+    </li>
+@endforeach
+
             </ul>
         </nav>
     </header>
