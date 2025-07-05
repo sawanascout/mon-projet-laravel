@@ -55,7 +55,6 @@
             <li><a class="btn btn-link" href="{{ route('admin.utilisateurs.commandes') }}">Utilisateurs par segment</a></li>
             <li><a class="btn btn-link" href="{{ route('admin.clients.segment.role') }}">Utilisateurs par rôle</a></li>
             <li><a class="btn btn-link" href="{{ route('admin.historique.index') }}">Historique commandes</a></li>
-             <li><a class="btn btn-link" href="{{ route('admin.modals.admin_index') }}"> Liste des utilisateur </a></li>
 
           </ul>
         </div>
@@ -68,7 +67,7 @@
           Ajouter / Gérer
         </div>
         <div class="card-body d-flex flex-column gap-2">
-          <li><a class="btn btn-link" href="{{ route('admin.modals.admin_index') }}"> Liste des utilisateur </a></li>
+          <a class="btn btn-outline-warning" href="{{ route('admin.modals.admin_index') }}"> Liste des utilisateur </a>
 
           <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createProduitModal">Ajouter un produit</button>
           <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#createCategorieModal">Ajouter une catégorie</button>
