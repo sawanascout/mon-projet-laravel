@@ -41,9 +41,10 @@
 
                 <!-- Actions -->
                 <div class="mb-3 d-flex justify-content-between align-items-center">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="link-primary small">{{ __('Mot de passe oublié ?') }}</a>
-                    @endif
+                    @if (Route::currentRouteName() === 'client.login')
+    <a href="{{ route('password.request') }}" class="link-primary small">Mot de passe oublié ?</a>
+@endif
+
 
                     <button type="submit" class="px-4 py-2 btn btn-primary fw-semibold">{{ __('Se connecter') }}</button>
                 </div>
