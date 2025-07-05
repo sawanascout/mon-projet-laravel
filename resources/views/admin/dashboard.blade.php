@@ -33,8 +33,9 @@
     </div>
   </div>
 
-  {{-- Actions rapides --}}
-  <div class="dropdown mb-4">
+  {{-- Menu Actions --}}
+<div class="mb-6">
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       Actions rapides
     </button>
@@ -45,22 +46,18 @@
       <li><a class="dropdown-item" href="{{ route('admin.commandes.index') }}">Voir commandes</a></li>
       <li><hr class="dropdown-divider"></li>
       <li class="dropdown-header">Filtres & Actions</li>
-      <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#dateModal">Commandes par date</button></li>
-      <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#dateModalsegment">Commandes par segment par date</button></li>
-      <li><a class="dropdown-item" href="{{ route('admin.utilisateurs.commandes') }}">Utilisateurs avec commandes par segment</a></li>
-      <li><a class="dropdown-item" href="{{ route('admin.clients.segment.role') }}">Utilisateurs par segment et rôle</a></li>
-      <li><a class="dropdown-item" href="{{ route('admin.historique.index') }}">Historique des commandes</a></li>
+      <li>
+        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#dateModal">Commandes par date</a>
+      </li>
+      <li>
+        <a href="#" class="dropdown-item open-modal" data-bs-toggle="modal" data-bs-target="#dateModalsegment">Commandes segment/date</a>
+      </li>
+      <li><a class="dropdown-item" href="{{ route('admin.utilisateurs.commandes') }}">Utilisateurs par segment</a></li>
+      <li><a class="dropdown-item" href="{{ route('admin.clients.segment.role') }}">Utilisateurs par rôle</a></li>
+      <li><a class="dropdown-item" href="{{ route('admin.historique.index') }}">Historique</a></li>
     </ul>
   </div>
-
-  {{-- Boutons modals --}}
-  <div class="mb-5 d-flex flex-wrap gap-3">
-    <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createProduitModal">Ajouter un produit</button>
-    <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#createCategorieModal">Ajouter une catégorie</button>
-    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#createAdminModal">Créer un administrateur</button>
-    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addHistoriqueModal">Ajouter à l’historique</button>
-    <a class="btn btn-outline-warning" href="{{ route('admin.parrainages.index') }}">Voir parrainages</a>
-  </div>
+</div>
 
   {{-- Modals inclus --}}
   @include('admin.modals.produit-create')
