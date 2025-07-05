@@ -74,7 +74,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
     Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
     Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
-    Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy'); // à définir
+    Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy');
 
 
 //////////////client///////////////
