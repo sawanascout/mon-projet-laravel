@@ -65,18 +65,22 @@ Route::get('/admin/parrainage/clics', [AdminParrainageController::class, 'index'
 
     // Graphique avis
     Route::get('/avis-graphique/{produitId}', [AdminController::class, 'avisGraphique'])->name('avis.graphique');
+
+
+     Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
+    Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
+    Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
+    Route::get('/admin', [AdminController::class, 'indexAdmins'])->name('modals.admin_index');
+
 });
 Route::middleware('auth')->group(function () {
     Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name('avis.store');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
-    Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
-    Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
-    Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy');
+   
 
-Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('modals.admin_index');
+Route::get('/admin', [AdminController::class, 'indexAdmins'])->name('modals.admin_index');
 
 //////////////client///////////////
 
