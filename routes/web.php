@@ -31,14 +31,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::resource('paiements', PaiementController::class)->except(['create'])->names('paiements');
 
 
-// Afficher la liste des administrateurs
-Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
 
-// Afficher le formulaire d’édition d’un admin
-Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
-
-// Mettre à jour un admin
-Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
 
 
 
@@ -77,6 +70,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/produits/{produit}/avis', [AvisController::class, 'store'])->name('avis.store');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(function () {
+    Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('admins.index');
+    Route::get('/admins/{id}/edit', [AdminController::class, 'editAdmin'])->name('admins.edit');
+    Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
+    Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy'); // à définir
+});
 
 //////////////client///////////////
 
