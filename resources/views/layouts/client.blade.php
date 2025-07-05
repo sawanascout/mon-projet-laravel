@@ -465,29 +465,32 @@
         </nav>
 
         <nav class="gd-category-nav" aria-label="Navigation catégories">
-            <ul class="gd-category-list" role="menubar">
-                @php
-                    $currentCategory = request('category') ?? 'Toutes';
-                @endphp
-                @php
-    $categories = ['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'];
-@endphp
+    <ul class="gd-category-list" role="menubar">
+        @php
+            $currentCategory = request('category'); // null si pas présent dans l'URL
+            $categories = ['Toutes', 'Mode & Accessoires', 'Pour Hommes', 'Pour Femmes'];
+        @endphp
 
-@foreach ($categories as $cat)
-    <li role="none">
-        <a
-            href="{{ $cat === 'Toutes' ? route('produits.index') : route('produits.index', ['category' => $cat]) }}"
-            class="gd-category-link @if($cat === $currentCategory || ($cat === 'Toutes' && !$currentCategory)) active @endif"
-            role="menuitem"
-            tabindex="0"
-        >
-            {{ $cat }}
-        </a>
-    </li>
-@endforeach
+        @foreach ($categories as $cat)
+            @php
+                $isAll = $cat === 'Toutes';
+                $isActive = ($isAll && !$currentCategory) || ($cat === $currentCategory);
+                $url = $isAll ? route('produits.index') : route('produits.index', ['category' => $cat]);
+            @endphp
+            <li role="none">
+                <a
+                    href="{{ $url }}"
+                    class="gd-category-link {{ $isActive ? 'active' : '' }}"
+                    role="menuitem"
+                    tabindex="0"
+                >
+                    {{ $cat }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
+</nav>
 
-            </ul>
-        </nav>
     </header>
 
     <section class="gd-features" aria-label="Pourquoi choisir GlobalDrop">
