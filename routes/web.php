@@ -76,6 +76,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::put('/admins/{id}', [AdminController::class, 'updateAdmin'])->name('admins.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroyAdmin'])->name('admins.destroy');
 
+Route::get('/admins', [AdminController::class, 'indexAdmins'])->name('modals.admin_index');
 
 //////////////client///////////////
 
