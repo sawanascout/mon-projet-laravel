@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
         // Admin
         User::create([
             'name' => 'KOLANI ',
-            'email' => 'globaldrop2428@gmail.com',
+            'email' => 'sawanaakoh1@gmail.com',//globaldrop2428@gmail.com
             'password' => Hash::make('DropGlobal824'), 
             'role' => 'admin',
             'telephone' => '0664380887',
