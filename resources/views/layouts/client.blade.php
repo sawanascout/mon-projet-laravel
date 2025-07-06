@@ -546,11 +546,16 @@
     <main class="gd-main-content">@yield('content')</main>
 
     <footer class="gd-footer" role="contentinfo">
-        <p class="mb-2">Pays partenaires</p>
         <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
             <img src="{{ asset('images/flags/france.webp') }}" alt="France" width="32" height="22">
-            
+            <img src="{{ asset('images/flags/amerique.png') }}" alt="amerique" width="32" height="22">
+            <img src="{{ asset('images/flags/alemagne.png') }}" alt="alemagne" width="32" height="22">
+            <img src="{{ asset('images/flags/chine.png') }}" alt="chine" width="32" height="22">
+            <img src="{{ asset('images/flags/espagne.png') }}" alt="espagne" width="32" height="22">
+            <img src="{{ asset('images/flags/turquie.png') }}" alt="turquie" width="32" height="22">
+
         </div>
+
         <div class="gd-social-icons" role="list">
             <a href="https://wa.me/22890171119" target="_blank" class="gd-social-icon" aria-label="WhatsApp" role="listitem" rel="noopener noreferrer">
                 <i class="bi bi-whatsapp"></i>
