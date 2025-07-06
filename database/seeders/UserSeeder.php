@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'KOLANI ',
             'email' => 'globaldrop2428@gmail.com',//globaldrop2428@gmail.com
-            'password' => Hash::make('DropGlobal824'), 
+            'password' => Hash::make('DropGlobal8242'), 
             'role' => 'admin',
             'telephone' => '0664380887',
             'segment' => 'premium',
