@@ -552,7 +552,7 @@
             <img src="{{ asset('images/flags/alemagne.png') }}" alt="alemagne" width="32" height="22">
             <img src="{{ asset('images/flags/chine.png') }}" alt="chine" width="32" height="22">
             <img src="{{ asset('images/flags/espagne.png') }}" alt="espagne" width="32" height="22">
-            <img src="{{ asset('images/flags/turquie.png') }}" alt="turquie" width="32" height="22">
+            <img src="{{ asset('images/flags/turquie.jpg') }}" alt="turquie" width="32" height="22">
 
         </div>
 
